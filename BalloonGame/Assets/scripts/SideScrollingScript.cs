@@ -9,7 +9,7 @@ public class SideScrollingScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		startPosition = transform.position;
+		startPosition = gameObject.transform.position;
 	}
 	
 	// Update is called once per frame
