@@ -6,11 +6,13 @@ public class BalloonScript : MonoBehaviour {
     public GameObject characterSprite;
 
     private LineRenderer line;
-
-    public float posChar;
-    public float posBal;
+    private RaycastHit2D hit;
+    private GameObject lastHit;
+    GameObject hitObject;
 
     void Start () {
+        lastHit = null;
+
         line = GetComponent<LineRenderer>();
         line.material = new Material(Shader.Find("Sprites/Default"));
         line.startColor = Color.black;
@@ -26,10 +28,6 @@ public class BalloonScript : MonoBehaviour {
 
     void Update()
     {
-
-        posChar = characterSprite.transform.position.x;
-        posBal = this.gameObject.transform.position.x;
-
         Vector3[] positions = new Vector3[2];
 
         positions[0] = characterSprite.transform.position;
@@ -45,17 +43,28 @@ public class BalloonScript : MonoBehaviour {
         
         line.widthMultiplier = 0.1f;
 
-        RaycastHit2D hit = Physics2D.Raycast(positions[0], positions[1] - positions[0]);
+        hit = Physics2D.Raycast(positions[0], positions[1] - positions[0]);
         if (hit.collider != null)
         {
-            if (hit.collider.gameObject.tag == "Enemy")
+            hitObject = hit.collider.gameObject;
+            if (hitObject != lastHit)
             {
-                Debug.Log("Enemy");
-            } else
-            {
-                Debug.Log("something else");
-            }
+                if (hitObject.tag == "Enemy")
+                {
+                    GameScript.TakeHealOrDamage(-10);
+                    Debug.Log("Enemy");
+                }
+                else
+                {
+                    Debug.Log("something else");
+                }
 
+                lastHit = hitObject;
+            }
+        } else
+        {
+            Debug.Log("stopped colliding");
         }
     }
+    
 }
