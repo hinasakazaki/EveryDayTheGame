@@ -15,7 +15,7 @@ public class BalloonScript : MonoBehaviour {
 
         line = GetComponent<LineRenderer>();
         line.material = new Material(Shader.Find("Sprites/Default"));
-        line.startColor = Color.black;
+        line.startColor = Color.gray;
         line.endColor = Color.white;
 
         // Set some positions
@@ -38,6 +38,7 @@ public class BalloonScript : MonoBehaviour {
 
         curve.AddKey(0.01f, 0.2f);
         curve.AddKey(0.2f, 0.01f);
+        curve.AddKey(0.31f, 0.3f);
 
         line.widthCurve = curve;
         
