@@ -7,6 +7,8 @@ public class SideScrollingScript : MonoBehaviour {
 	public float scrollSpeed;
     public float tileSizeX;
 
+    private bool paused = true;
+
 	// Use this for initialization
 	void Start () {
 		startPosition = gameObject.transform.position;
@@ -14,7 +16,21 @@ public class SideScrollingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeX);
-        transform.position = startPosition + Vector3.left * newPosition;
+        if (!paused)
+        {
+            float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeX);
+            transform.position = startPosition + Vector3.left * newPosition;
+        }
+		
 	}
+
+    public void StartScroll()
+    {
+        paused = false;
+    }
+
+    public void StopScroll()
+    {
+        paused = true;
+    }
 }

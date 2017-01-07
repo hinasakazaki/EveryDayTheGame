@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class GameScript : MonoBehaviour {
 
     public Slider HealthSlider;
+    public GameObject DialogObject;
 
     private static int health;
 
 	// Use this for initialization
 	void Start () {
-        health = 100;
+        health = 0;
+        DialogObject.SetActive(true);
 	}
 	
 	// Update is called once per frame
@@ -29,5 +31,10 @@ public class GameScript : MonoBehaviour {
     public static void TakeHealOrDamage(int x)
     {
         health += x;
+    }
+
+    public void LoadNewLevel(int level)
+    {
+
     }
 }
