@@ -7,6 +7,7 @@ public class GameScript : MonoBehaviour {
 
     public Slider HealthSlider;
     public GameObject DialogObject;
+    public GameObject Audio;
 
     private static int health;
 

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BalloonScript : MonoBehaviour {
-    public GameObject characterSprite;
+    public GameObject post;
 
     private LineRenderer line;
     private RaycastHit2D hit;
     private GameObject lastHit;
     GameObject hitObject;
 
+    private GameObject currentlyAttachedTo;
     void Start () {
         lastHit = null;
 
@@ -19,8 +20,10 @@ public class BalloonScript : MonoBehaviour {
         line.endColor = Color.white;
 
         // Set some positions
+        currentlyAttachedTo = post;
+
         Vector3[] positions = new Vector3[2];
-        positions[0] = characterSprite.transform.position;
+        positions[0] = currentlyAttachedTo.transform.position;
         positions[1] = this.gameObject.transform.position;
         line.numPositions = positions.Length;
         line.SetPositions(positions);
@@ -30,7 +33,7 @@ public class BalloonScript : MonoBehaviour {
     {
         Vector3[] positions = new Vector3[2];
 
-        positions[0] = characterSprite.transform.position;
+        positions[0] = currentlyAttachedTo.transform.position;
         positions[1] = this.gameObject.transform.position;
         line.numPositions = positions.Length;
         line.SetPositions(positions);
@@ -64,8 +67,12 @@ public class BalloonScript : MonoBehaviour {
             }
         } else
         {
-            Debug.Log("stopped colliding");
+         //   Debug.Log("stopped colliding");
         }
     }
     
+    public void ChangeAttached(GameObject attached)
+    {
+        this.currentlyAttachedTo = attached;
+    }
 }
