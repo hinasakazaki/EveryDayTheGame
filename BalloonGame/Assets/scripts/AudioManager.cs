@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour {
 
     public enum SFXList
     {
-        HEAL,
+        HEAL = 1,
         DAMAGE, 
         MEOW1,
         MEOW2,
@@ -37,6 +37,12 @@ public class AudioManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void playSFX(SFXList sfx)
+    {
+        SFX.clip = sfxList[(int)sfx - 1];
+        SFX.Play();
+    }
 
     public void changeBG(BGList song)
     {

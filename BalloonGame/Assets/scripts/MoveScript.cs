@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveScript : MonoBehaviour {
+    public GameScript gameScript;
 
     protected Animator animator;
     float speed = 1.5f;
@@ -11,6 +12,8 @@ public class MoveScript : MonoBehaviour {
     private GameObject balloon;
     private GameObject healer;
     private bool attached;
+    private bool inCollisionWithShroom;
+    private GameObject currMush;
 
     // Use this for initialization
     void Start () {
@@ -70,5 +73,23 @@ public class MoveScript : MonoBehaviour {
             if (attached) balloon.transform.position += Vector3.down * balloonSpeed * Time.deltaTime;
         }
 
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (inCollisionWithShroom && currMush != null)
+            {
+                gameScript.Healing(currMush);
+            }
+        }
+    }
+
+    public void OnSchroomCollisionEntered(GameObject mush)
+    {
+        currMush = mush;
+        inCollisionWithShroom = true;
+    }
+
+    public void OnSchroomCollisionExited()
+    {
+        inCollisionWithShroom = false;
     }
 }

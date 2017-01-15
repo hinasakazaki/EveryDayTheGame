@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BalloonScript : MonoBehaviour {
     public GameObject post;
+    public GameScript gameScript;
 
     private LineRenderer line;
     private RaycastHit2D hit;
@@ -55,7 +56,7 @@ public class BalloonScript : MonoBehaviour {
             {
                 if (hitObject.tag == "Enemy")
                 {
-                    GameScript.TakeHealOrDamage(-10);
+                    gameScript.TakeHealOrDamage(-10);
                     Debug.Log("Enemy");
                 }
                 else
