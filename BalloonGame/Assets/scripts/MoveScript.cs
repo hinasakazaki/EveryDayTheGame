@@ -35,8 +35,12 @@ public class MoveScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0) //left and right are for player character
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0)//left and right are for player character
         {
+            if (healer.gameObject.transform.localPosition.x > 2.88 || (attached && transform.localPosition.x < -93))// out of bounds
+            {
+                return;
+            }
             if (!attached)
             {
                 healer.transform.position += Vector3.left * speed * Time.deltaTime;
@@ -49,11 +53,15 @@ public class MoveScript : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("LeftJoystickX") < 0) // figure out joystick
         {
+            if (healer.gameObject.transform.localPosition.x < -14.5 || (attached && transform.localPosition.x > -80))// bounds
+            {
+                return;
+            }
             if (!attached)
             {
                 healer.transform.position += Vector3.right * speed * Time.deltaTime;
             }
-            else
+            else 
             {
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
