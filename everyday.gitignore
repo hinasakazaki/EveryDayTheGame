@@ -1,18 +1,18 @@
 # =============== #
 # Unity generated #
 # =============== #
-[Tt]emp/
-[Oo]bj/
-[Bb]uild
-/[Ll]ibrary/
-sysinfo.txt
-*.stackdump
+BalloonGame/Temp/
+BalloonGame/Obj/
+BalloonGame/Build
+BalloonGame/Library/
+BalloonGame/sysinfo.txt
+BalloonGame/*.stackdump
  
 # ============================================= #
 # Visual Studio / MonoDevelop / Rider generated #
 # ============================================= #
-[Ee]xported[Oo]bj/
-.vs/
+BalloonGame/[Ee]xported[Oo]bj/
+BalloonGame/.vs/
 /*.userprefs
 /*.csproj
 /*.pidb
@@ -26,9 +26,9 @@ sysinfo.txt
 # ============ #
 # OS generated #
 # ============ #
-.DS_Store*
-._*
-.Spotlight-V100
+*.DS_Store*
+*._*
+*.Spotlight-V100
 .Trashes
 ehthumbs.db
 [Tt]humbs.db
