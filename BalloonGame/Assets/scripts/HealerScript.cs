@@ -18,18 +18,29 @@ public class HealerScript : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collidn");
-        if (collision.gameObject.name.Contains("shroom"))
+        Debug.Log("COLLIDN");
+        if (collision.gameObject.name.Contains("Shroom"))
         {
             Player.GetComponent<MoveScript>().OnSchroomCollisionEntered(collision.gameObject);
+        }
+
+        else if (collision.gameObject.name.Contains("post"))
+        { 
+            Debug.Log("HELL2 O");
+            Player.GetComponent<MoveScript>().OnPostCollisionEntered();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Contains("shroom"))
+        if (collision.gameObject.name.Contains("Shroom"))
         {
             Player.GetComponent<MoveScript>().OnSchroomCollisionExited();
+        }
+        else if (collision.gameObject.name.Contains("post"))
+        {
+            Debug.Log("HELLO");
+            Player.GetComponent<MoveScript>().OnPostCollisionExited();
         }
     }
 }

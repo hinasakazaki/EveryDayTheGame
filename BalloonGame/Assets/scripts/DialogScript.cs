@@ -33,6 +33,9 @@ public class DialogScript : MonoBehaviour {
 
     public void GetOutOfPause()
     {
+        counter = curDialog.next[0];
+        curDialog.pauseAfter = false; //because fulfilled
+        BGDialog.SetActive(true);
         SwitchDialog();
     }
 
@@ -58,7 +61,8 @@ public class DialogScript : MonoBehaviour {
                 inputString = "";
             } else
             {
-                string newDialog = curDialog.dialog.Replace("[playerName]", playerName).Replace("[playerHome]", playerHome);
+                string newDialog = curDialog.dialog.Replace("[playerName]", playerName);
+                newDialog = newDialog.Replace("[playerHome]", playerHome);
                 DialogBody.text = newDialog;
             }
         }
@@ -134,7 +138,8 @@ public class DialogScript : MonoBehaviour {
             else if (action == "Enter")
             {
                 duringInput = false;
-                playerName = inputString;
+                if (counter == 4) { playerName = inputString; }
+                else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString;  } //?>>
                 counter = curDialog.next[0];
                 SwitchDialog();
             }
@@ -157,27 +162,27 @@ public class DialogScript : MonoBehaviour {
 
     private DialogObject[] InitializeDialog()
     {
-        DialogObject[] dialogObjects = { new DialogObject("Hero", "Halp... I'm dying....", null, new int[] {1 }, false), //0
+        DialogObject[] dialogObjects = { new DialogObject("hero", "Halp... I'm dying....", null, new int[] {1 }, false), //0
                                          new DialogObject("You", null, new string[] {"Use mushroom healing powers to save a life", "Ignore" }, new int[] {2, -1}, true),
-                                         new DialogObject("Hero", "Thank you, I feel much better now.", null, new int[] {3}, false),
-                                         new DialogObject("Hero", "What's your name? What are you doing here?", null, new int[] {4}, false),
+                                         new DialogObject("hero", "Thank you, I feel much better now.", null, new int[] {3}, false),
+                                         new DialogObject("hero", "What's your name? What are you doing here?", null, new int[] {4}, false),
                                          new DialogObject("Enter  Name", "InputField", null, new int[] {5}, false),
                                          new DialogObject("PlayerName", "My name is [playerName]. I'm not sure how I ended up here..", null, new int[] {6}, false), //5
-                                         new DialogObject("Hero", "Okay, [playerName], where are you from?", null, new int[] {7}, false),
+                                         new DialogObject("hero", "Okay, [playerName], where are you from?", null, new int[] {7}, false),
                                          new DialogObject("Enter  Home", "InputField", null, new int[] {8}, false),
-                                         new DialogObject("Hero", "That's where the evil neko-king lives.", null, new int[] {9}, false),
-                                         new DialogObject("Hero", "You see, I've been freeing kittens from evil brainwashing by the neko-king.", null, new int[] {10}, false),
-                                         new DialogObject("Hero", "I've come this far, but the kitten who was helping me accidentally got brainwashed by another kitten and she attacked me.", null, new int[] {11}, false),
-                                         new DialogObject("Hero", "They're over there right now.", null, new int[] {12}, false),
-                                         new DialogObject("Hero", "Would you like to come with me to [playerHome]? There's lots of kittens to save, and I could use a mushroom healer.", null, new int[] {13}, false),
+                                         new DialogObject("hero", "That's where the evil neko-king lives.", null, new int[] {9}, false),
+                                         new DialogObject("hero", "You see, I've been freeing kittens from evil brainwashing by the neko-king.", null, new int[] {10}, false),
+                                         new DialogObject("hero", "I've come this far, but the kitten who was helping me accidentally got brainwashed by another kitten and she attacked me.", null, new int[] {11}, false),
+                                         new DialogObject("hero", "They're over there right now.", null, new int[] {12}, false),
+                                         new DialogObject("hero", "Would you like to come with me to [playerHome]? There's lots of kittens to save, and I could use a mushroom healer.", null, new int[] {13}, false),
                                          new DialogObject("PlayerName", null, new string[] {"Sure", "No Thanks"}, new int[] {14, 15}, false),
-                                         new DialogObject("Hero", "Sounds great. Take a hold of the balloon there.", null, new int[] {16}, true), //14 -- here we make sure balloon is caught
-                                         new DialogObject("Hero", "All right, have a good life!", null, new int[] {-2}, true), //15 leads to neutral ending
-                                         new DialogObject("Hero", "Nice, let's get going.", null, new int[] {17}, false),
+                                         new DialogObject("hero", "Sounds great. Take a hold of the balloon there.", null, new int[] {16}, true), //14 -- here we make sure balloon is caught
+                                         new DialogObject("hero", "All right, have a good life!", null, new int[] {-2}, true), //15 leads to neutral ending
+                                         new DialogObject("hero", "Nice, let's get going.", null, new int[] {17}, false),
                                          new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {18, 16}, true), //17, where scroll is halted
 
                                          //Level 1
-                                         new DialogObject("Hero", "Beautiful morning.", null, new int[] {-5}, false)
+                                         new DialogObject("hero", "Beautiful morning.", null, new int[] {-5}, false)
 
 
                                        };
@@ -264,7 +269,7 @@ public class DialogObject
     public readonly string speaker;
     public readonly string dialog;
     public string[] options;
-    public readonly bool pauseAfter;
+    public bool pauseAfter;
     public readonly int[] next; //-1 = bad ending, -2 = neutral end, -3 = good end, -4=halt dialog 0 indexed dialog
 
     public DialogObject(string speaker, string dialog, string[] options, int[] next, bool pause)

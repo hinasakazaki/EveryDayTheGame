@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BalloonScript : MonoBehaviour {
     public GameObject post;
     public GameScript gameScript;
+    public GameObject hero;
+    public Text tutorialText;
 
     private LineRenderer line;
     private RaycastHit2D hit;
@@ -72,8 +75,28 @@ public class BalloonScript : MonoBehaviour {
         }
     }
     
+    public void StartGrabTutorial()
+    {
+        tutorialText.gameObject.SetActive(true);
+    }
+
     public void ChangeAttached(GameObject attached)
     {
         this.currentlyAttachedTo = attached;
+        Animator heroAnim = hero.GetComponent<Animator>();
+
+        //move hero
+       Vector3 temp = new Vector3(0.67f, 1.65f, 0f);
+        hero.transform.position += temp;
+        hero.transform.Rotate(Vector3.right);
+    }
+
+    public void heroHealed()
+    {
+        Animator heroAnim = hero.GetComponent<Animator>();
+        if (!heroAnim.GetBool("revives"))
+        {
+            heroAnim.SetBool("revives", true);
+        }
     }
 }

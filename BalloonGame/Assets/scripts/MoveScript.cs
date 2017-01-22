@@ -13,6 +13,7 @@ public class MoveScript : MonoBehaviour {
     private GameObject healer;
     private bool attached;
     private bool inCollisionWithShroom;
+    private bool inCollisionWithPost;
     private GameObject currMush;
 
     // Use this for initialization
@@ -34,8 +35,6 @@ public class MoveScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0) //left and right are for player character
         {
             if (!attached)
@@ -47,22 +46,17 @@ public class MoveScript : MonoBehaviour {
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
             
-            /*animator.SetBool("left", true);
-            animator.SetBool("up", false);
-            animator.SetBool("right", false);
-            animator.SetBool("blush", false);
-            */
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("LeftJoystickX") < 0) // figure out joystick
         {
             if (!attached)
+            {
                 healer.transform.position += Vector3.right * speed * Time.deltaTime;
-            else transform.position += Vector3.left * speed * Time.deltaTime;
-            /* animator.SetBool("right", true);
-            animator.SetBool("up", false);
-            animator.SetBool("left", false);
-            animator.SetBool("blush", false);
-            */
+            }
+            else
+            {
+                transform.position += Vector3.right * speed * Time.deltaTime;
+            }
         }
         if (Input.GetKey(KeyCode.UpArrow)) //up and down for NPC character
         {
@@ -78,6 +72,14 @@ public class MoveScript : MonoBehaviour {
             if (inCollisionWithShroom && currMush != null)
             {
                 gameScript.Healing(currMush);
+                balloon.GetComponent<BalloonScript>().heroHealed();
+                currMush = null;
+            }
+            else if (inCollisionWithPost)
+            {
+                attached = true;
+                gameScript.CompletedEvent1();
+                balloon.GetComponent<BalloonScript>().ChangeAttached(healer); 
             }
         }
     }
@@ -91,5 +93,18 @@ public class MoveScript : MonoBehaviour {
     public void OnSchroomCollisionExited()
     {
         inCollisionWithShroom = false;
+        currMush = null;
     }
+
+    public void OnPostCollisionEntered()
+    {
+        inCollisionWithPost = true;
+    }
+
+    public void OnPostCollisionExited()
+    {
+        inCollisionWithPost = false;
+
+    }
+
 }

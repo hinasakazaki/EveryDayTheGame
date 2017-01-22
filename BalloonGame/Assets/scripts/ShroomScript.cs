@@ -13,7 +13,6 @@ public class ShroomScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         sparkles = transform.GetChild(0).gameObject;
-        startSparkle();
 	}
 	
 	// Update is called once per frame
@@ -43,8 +42,12 @@ public class ShroomScript : MonoBehaviour {
         }
 	}
 
-    public void startSparkle()
+    public void startSparkle(bool tutorial)
     {
+        if (tutorial)
+        {
+            tutorialText.SetActive(true);
+        }
         started = true;
         sparkles.SetActive(true);
         sparkling = true;
@@ -52,6 +55,7 @@ public class ShroomScript : MonoBehaviour {
 
     public void getConsumed()
     {
+        this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         tutorialText.SetActive(false);
         sparkling = false;
     }
