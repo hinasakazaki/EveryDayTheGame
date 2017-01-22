@@ -11,6 +11,7 @@ public class MoveScript : MonoBehaviour {
 
     private GameObject balloon;
     private GameObject healer;
+    private GameObject hero;
     private bool attached;
     private bool inCollisionWithShroom;
     private bool inCollisionWithPost;
@@ -25,6 +26,7 @@ public class MoveScript : MonoBehaviour {
             if (child.name == "Balloon")
             {
                 balloon = child.gameObject;
+                hero = balloon.transform.GetChild(0).gameObject; //Warning, have to update if more kids
             } else if (child.name == "PlayerSprite")
             {
                 healer = child.gameObject;
@@ -35,6 +37,8 @@ public class MoveScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //this is for every frame
+
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0)//left and right are for player character
         {
             if (healer.gameObject.transform.localPosition.x > 2.88 || (attached && transform.localPosition.x < -93))// out of bounds
@@ -90,6 +94,8 @@ public class MoveScript : MonoBehaviour {
                 balloon.GetComponent<BalloonScript>().ChangeAttached(healer); 
             }
         }
+
+      
     }
 
     public void OnSchroomCollisionEntered(GameObject mush)

@@ -60,18 +60,17 @@ public class BalloonScript : MonoBehaviour {
                 if (hitObject.tag == "Enemy")
                 {
                     gameScript.TakeHealOrDamage(-10);
-                    Debug.Log("Enemy");
                 }
                 else
                 {
-                    Debug.Log("something else");
+
                 }
 
                 lastHit = hitObject;
             }
         } else
         {
-         //   Debug.Log("stopped colliding");
+
         }
     }
     
@@ -82,13 +81,15 @@ public class BalloonScript : MonoBehaviour {
 
     public void ChangeAttached(GameObject attached)
     {
+        tutorialText.gameObject.SetActive(false);
         this.currentlyAttachedTo = attached;
-        Animator heroAnim = hero.GetComponent<Animator>();
 
         //move hero
-       Vector3 temp = new Vector3(0.67f, 1.65f, 0f);
-        hero.transform.position += temp;
-        hero.transform.Rotate(Vector3.right);
+        Animator heroAnim = hero.GetComponent<Animator>();
+        if (!heroAnim.GetBool("jump"))
+        {
+            heroAnim.SetBool("jump", true);
+        }
     }
 
     public void heroHealed()

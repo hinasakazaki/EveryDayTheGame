@@ -18,7 +18,6 @@ public class HealerScript : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("COLLIDN");
         if (collision.gameObject.name.Contains("Shroom"))
         {
             Player.GetComponent<MoveScript>().OnSchroomCollisionEntered(collision.gameObject);
@@ -26,7 +25,6 @@ public class HealerScript : MonoBehaviour {
 
         else if (collision.gameObject.name.Contains("post"))
         { 
-            Debug.Log("HELL2 O");
             Player.GetComponent<MoveScript>().OnPostCollisionEntered();
         }
     }
@@ -39,7 +37,6 @@ public class HealerScript : MonoBehaviour {
         }
         else if (collision.gameObject.name.Contains("post"))
         {
-            Debug.Log("HELLO");
             Player.GetComponent<MoveScript>().OnPostCollisionExited();
         }
     }

@@ -30,8 +30,6 @@ public class GameScript : MonoBehaviour {
         {
             //game end
         }
-
-
     }
 
     public void TriggerEvent()
@@ -45,10 +43,12 @@ public class GameScript : MonoBehaviour {
                 TriggerGrabEvent();
                 break;
             default:
+                TriggerStartScroll();
                 break;
         }
     }
 
+    //trigger events
     private void TriggerHealEvent0()
     {
         //here, we make the mushroom tutorial to come up
@@ -65,6 +65,13 @@ public class GameScript : MonoBehaviour {
     {
         balloon.GetComponent<BalloonScript>().StartGrabTutorial();
     }
+
+    private void TriggerStartScroll()
+    {
+        levelBGs[0].GetComponent<SideScrollingScript>().StartScroll();
+    }
+
+    //complete events
 
     public void CompletedEvent1()
     {
