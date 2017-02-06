@@ -121,4 +121,9 @@ public class MoveScript : MonoBehaviour {
 
     }
 
+    public void TakeDamage(int x)
+    {
+        gameScript.TakeHealOrDamage(-x);
+    }
+
 }

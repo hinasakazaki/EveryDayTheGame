@@ -11,6 +11,10 @@ public class GameScript : MonoBehaviour {
     public GameObject[] levelBGs;
     public GameObject balloon;
 
+    public Slider CatSlider;
+    private int catCount = 40;
+    private bool[] catArray = new bool[40];
+
     private static int health;
     private string[] events = {"Heal1", "Grab", "ScrollStart"};
     private static int eventCounter = 0;
@@ -106,5 +110,14 @@ public class GameScript : MonoBehaviour {
         levelBGs[currLevel].SetActive(false);
         currLevel += 1;
         levelBGs[currLevel].SetActive(true);
+    }
+
+    public void OnCatExorcised(int i)
+    {
+        if (!catArray[i])
+        {
+            catArray[i] = true;
+            CatSlider.value += 1;
+        }
     }
 }

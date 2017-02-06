@@ -89,6 +89,7 @@ public class BalloonScript : MonoBehaviour {
         if (!heroAnim.GetBool("jump"))
         {
             heroAnim.SetBool("jump", true);
+            hero.GetComponent<HeroScript>().StartShooting();
         }
     }
 

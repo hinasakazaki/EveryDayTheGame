@@ -16,10 +16,9 @@ public class SideScrollingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!paused)
+        if (!paused && transform.localPosition.x > -150)
         {
-            float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeX);
-            transform.position = startPosition + Vector3.left * newPosition;
+            transform.position += Vector3.left * scrollSpeed * Time.deltaTime;
         }
 		
 	}
