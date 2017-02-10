@@ -21,6 +21,7 @@ public class HeroScript : MonoBehaviour {
             }
             else if (counter == freq)
             {
+                Debug.Log("Fire");
                 var spawnPoint = new Vector2(transform.position.x, transform.position.y);
                 Instantiate(heartBullet, spawnPoint, Quaternion.identity);
             }
@@ -37,6 +38,6 @@ public class HeroScript : MonoBehaviour {
     public void TakeDamage(int x)
     {
         this.GetComponentInParent<MoveScript>().TakeDamage(x);
-        freq -= 10;
+        freq += 10;
     }
 }
