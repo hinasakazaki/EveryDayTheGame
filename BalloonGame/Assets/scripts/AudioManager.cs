@@ -12,20 +12,28 @@ public class AudioManager : MonoBehaviour {
 
     public enum BGList
     {
-        AT_HOME,
-        TBD,
-        MOMENT_OF_JOY,
-        RISKS,
-        DEPARTING_SOUL
+        AT_HOME = 1,
+        MOMENT_OF_JOY = 2,
+        RISKS = 3,
+        DEPARTING_SOULS = 4,
+        DEPARTING_SOULS_TROMBONE = 5,
+        PONDERING1 = 6,
+        PONDERING2 = 7,
+        PONDERING3 = 8
     }
 
     public enum SFXList
     {
         HEAL = 1,
-        DAMAGE, 
-        MEOW1,
-        MEOW2,
-        MEOW3
+        DAMAGE = 2, 
+        CUTEMEOW1 = 3,
+        CUTEMEOW2 = 4,
+        CUTEMEOW3 = 5,
+        CUTEMEOW4 = 6,
+        CUTEMEOW5 = 7,
+        CUTEMEOW6 = 8,
+        HISS = 9,
+        ANGRYMEOW = 10
     }
 
 	// Use this for initialization
@@ -40,14 +48,13 @@ public class AudioManager : MonoBehaviour {
 
     public void playSFX(SFXList sfx)
     {
-        SFX.clip = sfxList[(int)sfx - 1];
-        SFX.Play();
+        SFX.PlayOneShot(sfxList[(int)sfx - 1], 1.2f);
     }
 
     public void changeBG(BGList song)
     {
         BG.clip = ostList[(int)song - 1];
-        BG.Play();
+        BG.PlayDelayed(0.2f);
     }
 
 

@@ -52,6 +52,8 @@ public class BalloonScript : MonoBehaviour {
         line.widthMultiplier = 0.1f;
 
         hit = Physics2D.Raycast(positions[0], positions[1] - positions[0]);
+
+        /** No balloon damage yet
         if (hit.collider != null)
         {
             hitObject = hit.collider.gameObject;
@@ -72,6 +74,7 @@ public class BalloonScript : MonoBehaviour {
         {
 
         }
+    **/
     }
     
     public void StartGrabTutorial()

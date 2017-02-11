@@ -18,7 +18,7 @@ public class InputScript : MonoBehaviour {
 
     //Game
     public GameObject gameMain;
-    public GameObject healthUI;
+    public GameObject gameUI;
     public GameObject DialogUI;
 
     private bool gameStarted = false;
@@ -215,8 +215,7 @@ public class InputScript : MonoBehaviour {
         MainMenu.SetActive(false);
 
         gameMain.SetActive(true);
-        healthUI.SetActive(true);
-        DialogUI.SetActive(true);
+        gameUI.SetActive(true);
 
         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.RISKS);
         gameStarted = true;

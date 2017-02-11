@@ -123,6 +123,7 @@ public class MoveScript : MonoBehaviour {
 
     public void TakeDamage(int x)
     {
+        Debug.Log("Take damage from MOve Script" + x);
         gameScript.TakeHealOrDamage(-x);
     }
 

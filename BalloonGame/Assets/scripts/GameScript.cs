@@ -9,9 +9,12 @@ public class GameScript : MonoBehaviour {
     public GameObject DialogObject;
     public GameObject Audio;
     public GameObject[] levelBGs;
+    public GameObject player;
     public GameObject balloon;
-
+    public GameObject Endings;
     public Slider CatSlider;
+
+    private GameObject gameUI;
     private int catCount = 40;
     private bool[] catArray = new bool[40];
 
@@ -20,10 +23,19 @@ public class GameScript : MonoBehaviour {
     private static int eventCounter = 0;
     private int currLevel = 0;
 
+    public enum EndingID
+    {
+        BAD_END,
+        NEUTRAL_END,
+        GOOD_END
+    }
+
     // Use this for initialization
     void Start() {
-        health = 0;
+        health = 1;
         DialogObject.SetActive(true);
+        gameUI = CatSlider.transform.parent.gameObject;
+        player = balloon.transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -32,7 +44,26 @@ public class GameScript : MonoBehaviour {
 
         if (health <= 0)
         {
-            //game end
+            TriggerEnding(EndingID.BAD_END);
+        }
+    }
+
+    private void TriggerEnding(EndingID ending)
+    {
+        //remove everything in the game
+        gameUI.SetActive(false);
+        player.SetActive(false);
+        HealthSlider.enabled = false;
+        levelBGs[currLevel].SetActive(false);
+
+        switch (ending)
+        {
+            case EndingID.BAD_END:
+                Endings.GetComponent<EndingScript>().BadEnd();
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
+                break;
+            default:
+                break;
         }
     }
 
@@ -87,6 +118,7 @@ public class GameScript : MonoBehaviour {
     {
         DialogObject.GetComponent<DialogScript>().GetOutOfPause();
         eventCounter += 1;
+        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
     }
 
     //general events
@@ -94,7 +126,6 @@ public class GameScript : MonoBehaviour {
     {
         mush.GetComponent<ShroomScript>().getConsumed();
         Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.HEAL);
-        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
         TakeHealOrDamage(100);
 
         if (eventCounter == 0) { CompletedEvent0();  }
@@ -103,6 +134,11 @@ public class GameScript : MonoBehaviour {
     public void TakeHealOrDamage(int x)
     {
         health += x;
+        if (x < 0)
+        {
+            Debug.Log("Taking damage in GameScript" + x);
+            Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.DAMAGE);
+        }
     }
 
     public void LoadNewLevel()
@@ -118,6 +154,7 @@ public class GameScript : MonoBehaviour {
         {
             catArray[i] = true;
             CatSlider.value += 1;
+            Audio.GetComponent<AudioManager>().playSFX((AudioManager.SFXList)Random.Range((int)AudioManager.SFXList.CUTEMEOW1, (int)AudioManager.SFXList.CUTEMEOW6));
         }
     }
 }
