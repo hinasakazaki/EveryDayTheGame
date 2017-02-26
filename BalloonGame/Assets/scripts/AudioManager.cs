@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour {
 
     public void playSFX(SFXList sfx)
     {
-        SFX.PlayOneShot(sfxList[(int)sfx - 1], 1.2f);
+        SFX.PlayOneShot(sfxList[(int)sfx - 1], 0.8f);
     }
 
     public void changeBG(BGList song)

@@ -17,6 +17,11 @@ public class MoveScript : MonoBehaviour {
     private bool inCollisionWithPost;
     private GameObject currMush;
 
+    private Animator healerAnim;
+
+    bool walkingRight;
+    bool walkingLeft;
+
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
@@ -33,14 +38,19 @@ public class MoveScript : MonoBehaviour {
             }
         }
 
+        healerAnim = healer.GetComponent<Animator>();
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //this is for every frame
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0)//left and right are for player character
         {
+            healerAnim.SetBool("walk_left", true);
+            walkingRight = true;
             if (healer.gameObject.transform.localPosition.x > 2.88 || (attached && transform.localPosition.x < -93))// out of bounds
             {
                 return;
@@ -53,10 +63,12 @@ public class MoveScript : MonoBehaviour {
             {
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
-            
+
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("LeftJoystickX") < 0) // figure out joystick
         {
+            healerAnim.SetBool("walk_right", true);
+            walkingLeft = true;
             if (healer.gameObject.transform.localPosition.x < -14.5 || (attached && transform.localPosition.x > -80))// bounds
             {
                 return;
@@ -65,7 +77,7 @@ public class MoveScript : MonoBehaviour {
             {
                 healer.transform.position += Vector3.right * speed * Time.deltaTime;
             }
-            else 
+            else
             {
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
@@ -91,11 +103,19 @@ public class MoveScript : MonoBehaviour {
             {
                 attached = true;
                 gameScript.CompletedEvent1();
-                balloon.GetComponent<BalloonScript>().ChangeAttached(healer); 
+                balloon.GetComponent<BalloonScript>().ChangeAttached(healer);
             }
         }
-
-      
+        if (!Input.GetKey(KeyCode.LeftArrow))
+        {
+                walkingLeft = false;
+                healerAnim.SetBool("walk_left", false);
+        }
+        if (!Input.GetKey(KeyCode.RightArrow))
+        {
+            walkingRight = false;
+            healerAnim.SetBool("walk_right", false);
+        }
     }
 
     public void OnSchroomCollisionEntered(GameObject mush)

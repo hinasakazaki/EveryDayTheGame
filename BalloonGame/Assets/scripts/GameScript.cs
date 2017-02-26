@@ -13,6 +13,7 @@ public class GameScript : MonoBehaviour {
     public GameObject balloon;
     public GameObject Endings;
     public Slider CatSlider;
+    public Image damageImage;
 
     private GameObject gameUI;
     private int catCount = 40;
@@ -22,6 +23,9 @@ public class GameScript : MonoBehaviour {
     private string[] events = {"Heal1", "Grab", "ScrollStart"};
     private static int eventCounter = 0;
     private int currLevel = 0;
+
+    public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
+    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
 
     public enum EndingID
     {
@@ -46,6 +50,8 @@ public class GameScript : MonoBehaviour {
         {
             TriggerEnding(EndingID.BAD_END);
         }
+
+        damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
     }
 
     private void TriggerEnding(EndingID ending)
@@ -138,6 +144,7 @@ public class GameScript : MonoBehaviour {
         {
             Debug.Log("Taking damage in GameScript" + x);
             Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.DAMAGE);
+            damageImage.color = flashColour;
         }
     }
 

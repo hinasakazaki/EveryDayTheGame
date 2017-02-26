@@ -41,23 +41,24 @@ public class EnemyScript : MonoBehaviour {
             line.numPositions = positions.Length;
             line.SetPositions(positions);
             AnimationCurve curve = new AnimationCurve();
+            var heading = positions[1] - positions[0];
+            var distance = heading.magnitude;
 
-            hit = Physics2D.Raycast(positions[0], positions[1] - positions[0]);
+
+            hit = Physics2D.Raycast(positions[0], heading, distance);
 
             if (hit.collider != null)
             {
                 hitObject = hit.collider.gameObject;
                 if (!colliding && hitObject.GetComponent<HeroScript>() != null && hitObject.tag == "Hero")
                 {
-                    Debug.Log("Hit");
+                    Debug.Log("Hit with cat" + index);
                     hitObject.GetComponent<HeroScript>().TakeDamage(10);
                     colliding = true;
                 }
             }
             else
             {
-                Debug.Log("No Hit");
-
                 colliding = false;
             }
         } 
@@ -65,7 +66,7 @@ public class EnemyScript : MonoBehaviour {
 
     public void Exorcised()
     {
-         radar = false;
+        radar = false;
         line.enabled = false;
         this.transform.parent = healer.transform;
         this.transform.localScale = new Vector3(1f, 1f, 0f);

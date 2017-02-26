@@ -13,6 +13,7 @@ public class BalloonScript : MonoBehaviour {
     private RaycastHit2D hit;
     private GameObject lastHit;
     GameObject hitObject;
+    private Animator heroAnim;
 
     private GameObject currentlyAttachedTo;
     void Start () {
@@ -31,6 +32,8 @@ public class BalloonScript : MonoBehaviour {
         positions[1] = this.gameObject.transform.position;
         line.numPositions = positions.Length;
         line.SetPositions(positions);
+
+        heroAnim = hero.GetComponent<Animator>();
     }
 
     void Update()
@@ -88,7 +91,6 @@ public class BalloonScript : MonoBehaviour {
         this.currentlyAttachedTo = attached;
 
         //move hero
-        Animator heroAnim = hero.GetComponent<Animator>();
         if (!heroAnim.GetBool("jump"))
         {
             heroAnim.SetBool("jump", true);
@@ -98,7 +100,6 @@ public class BalloonScript : MonoBehaviour {
 
     public void heroHealed()
     {
-        Animator heroAnim = hero.GetComponent<Animator>();
         if (!heroAnim.GetBool("revives"))
         {
             heroAnim.SetBool("revives", true);
