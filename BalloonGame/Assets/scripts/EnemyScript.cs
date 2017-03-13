@@ -19,7 +19,6 @@ public class EnemyScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         radar = true;
-        eyePosition = new Vector3(transform.position.x-0.12f, transform.position.y + 0.01f, transform.position.z);
         yValue = transform.position.y;
 	}
 
@@ -27,6 +26,8 @@ public class EnemyScript : MonoBehaviour {
     void Update() {
         if (radar)
         {
+            eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
+
             line = GetComponent<LineRenderer>();
             line.material = new Material(Shader.Find("Sprites/Default"));
             line.startColor = Color.green;
@@ -40,16 +41,44 @@ public class EnemyScript : MonoBehaviour {
             positions[1] = new Vector3(transform.position.x - Mathf.Repeat(Time.time*2, 10), transform.position.y + Mathf.Sin(Time.time * (index+1) *  5));
             line.numPositions = positions.Length;
             line.SetPositions(positions);
-            AnimationCurve curve = new AnimationCurve();
+
+            // line.SetPositions(positions);
+            //   AnimationCurve curve = new AnimationCurve();
+
+            /** For 3d, proven to be accurate 
             var heading = positions[1] - positions[0];
             var distance = heading.magnitude;
+            var direction = heading / distance; // This is now the normalized direction.
 
+            Debug.DrawRay(positions[0], direction, Color.red);
 
-            hit = Physics2D.Raycast(positions[0], heading, distance);
+             */
+            //vector2 origin vector2 direction vfloat distance
+            //hit = Physics2D.Raycast(positions[0], heading, distance);
+            Vector2 eyePosition2D = new Vector2(eyePosition.x, eyePosition.y);
+            Vector2 endOfLinePosition2D = new Vector2(positions[1].x, positions[1].y);
+
+           /// /* this is for 2D
+            var heading = endOfLinePosition2D - eyePosition2D;
+            var distance = heading.magnitude;
+            var direction = heading / distance; // This is now the normalized direction.
+
+            Debug.DrawRay(endOfLinePosition2D, direction, Color.red);
+            //*/
+            hit = Physics2D.Raycast(endOfLinePosition2D, direction, distance); //added anti mask for self. which seems to be working
+           // , 1 << LayerMask.NameToLayer("Enemy"))
+            if (hit)
+            {
+                Debug.Log("hello");
+            }
+            //if (index == 0) Debug.Log("eyePos2d" + eyePosition2D + "endOfLine2d" + endOfLinePosition2D); raycast location should be accurate! 
 
             if (hit.collider != null)
             {
+
                 hitObject = hit.collider.gameObject;
+                Debug.Log("HIit" + hitObject.name + index);
+
                 if (!colliding && hitObject.GetComponent<HeroScript>() != null && hitObject.tag == "Hero")
                 {
                     Debug.Log("Hit with cat" + index);
