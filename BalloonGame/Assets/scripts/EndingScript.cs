@@ -21,6 +21,15 @@ public class EndingScript : MonoBehaviour {
     public void BadEnd()
     {
         badEnd.SetActive(true);
+    }
 
+    public void NeutralEnd()
+    {
+        neutralEnd.SetActive(true);
+    }
+
+    public void HappyEnd()
+    {
+        happyEnd.SetActive(true);
     }
 }

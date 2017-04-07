@@ -14,6 +14,7 @@ public class GameScript : MonoBehaviour {
     public GameObject Endings;
     public Slider CatSlider;
     public Image damageImage;
+    public GameObject sun;
 
     private GameObject gameUI;
     private int catCount = 40;
@@ -26,6 +27,7 @@ public class GameScript : MonoBehaviour {
 
     public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
+    Vector3 firstLocation;
 
     public enum EndingID
     {
@@ -40,10 +42,15 @@ public class GameScript : MonoBehaviour {
         DialogObject.SetActive(true);
         gameUI = CatSlider.transform.parent.gameObject;
         player = balloon.transform.parent.gameObject;
+        firstLocation = player.transform.position;
     }
 
     // Update is called once per frame
     void Update() {
+        if (sun.activeInHierarchy)
+        {
+            sun.transform.Rotate(0, 0, 0.2f);
+        }
         HealthSlider.value = health;
 
         if (health <= 0)
@@ -68,7 +75,13 @@ public class GameScript : MonoBehaviour {
                 Endings.GetComponent<EndingScript>().BadEnd();
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
                 break;
+            case EndingID.GOOD_END:
+                Endings.GetComponent<EndingScript>().HappyEnd();
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
+                break;
             default:
+                Endings.GetComponent<EndingScript>().NeutralEnd();
+
                 break;
         }
     }
@@ -150,9 +163,16 @@ public class GameScript : MonoBehaviour {
 
     public void LoadNewLevel()
     {
+        if (currLevel == 0)
+        {
+            sun.SetActive(false);
+        }
         levelBGs[currLevel].SetActive(false);
         currLevel += 1;
         levelBGs[currLevel].SetActive(true);
+
+        //set player back to usual location
+        player.transform.position = firstLocation;
     }
 
     public void OnCatExorcised(int i)

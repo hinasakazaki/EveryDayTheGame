@@ -65,7 +65,7 @@ public class EnemyScript : MonoBehaviour {
 
             Debug.DrawRay(endOfLinePosition2D, direction, Color.red);
             //*/
-            hit = Physics2D.Raycast(endOfLinePosition2D, direction, distance); //added anti mask for self. which seems to be working
+            hit = Physics2D.Raycast(endOfLinePosition2D, direction, distance, LayerMask.NameToLayer("Enemy")); //added anti mask for self. which seems to be working
            // , 1 << LayerMask.NameToLayer("Enemy"))
             if (hit)
             {

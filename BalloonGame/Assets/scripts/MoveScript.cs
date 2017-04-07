@@ -19,9 +19,6 @@ public class MoveScript : MonoBehaviour {
 
     private Animator healerAnim;
 
-    bool walkingRight;
-    bool walkingLeft;
-
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
@@ -50,7 +47,6 @@ public class MoveScript : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0)//left and right are for player character
         {
             healerAnim.SetBool("walk_left", true);
-            walkingRight = true;
             if (healer.gameObject.transform.localPosition.x > 2.88 || (attached && transform.localPosition.x < -93))// out of bounds
             {
                 return;
@@ -68,7 +64,6 @@ public class MoveScript : MonoBehaviour {
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("LeftJoystickX") < 0) // figure out joystick
         {
             healerAnim.SetBool("walk_right", true);
-            walkingLeft = true;
             if (healer.gameObject.transform.localPosition.x < -14.5 || (attached && transform.localPosition.x > -80))// bounds
             {
                 return;
@@ -108,12 +103,10 @@ public class MoveScript : MonoBehaviour {
         }
         if (!Input.GetKey(KeyCode.LeftArrow))
         {
-                walkingLeft = false;
                 healerAnim.SetBool("walk_left", false);
         }
         if (!Input.GetKey(KeyCode.RightArrow))
         {
-            walkingRight = false;
             healerAnim.SetBool("walk_right", false);
         }
     }
@@ -135,10 +128,15 @@ public class MoveScript : MonoBehaviour {
         inCollisionWithPost = true;
     }
 
+    public void OnDoorCollisionEntered()
+    {
+        gameScript.LoadNewLevel();
+ 
+    }
+
     public void OnPostCollisionExited()
     {
         inCollisionWithPost = false;
-
     }
 
     public void TakeDamage(int x)
