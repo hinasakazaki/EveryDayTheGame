@@ -41,6 +41,22 @@ public class DialogScript : MonoBehaviour {
 
     public void SwitchDialog()
     {
+        switch (counter)//-1 = bad ending, -2 = neutral end, -3 = good end, -4=halt dialog 0 indexed dialog
+        {
+            case -1:
+                gameScript.TriggerEnding(GameScript.EndingID.BAD_END);
+                break;
+            case -2:
+                gameScript.TriggerEnding(GameScript.EndingID.NEUTRAL_END);
+                break;
+            case -3:
+                gameScript.TriggerEnding(GameScript.EndingID.GOOD_END);
+                break;
+
+            default:
+                break;
+        }
+
         if (curDialog != null && curDialog.pauseAfter == true)
         {
             BGDialog.SetActive(false);
@@ -49,7 +65,7 @@ public class DialogScript : MonoBehaviour {
         }
 
         curDialog = dialogObject[counter];
-
+       
         DialogName.text = (curDialog.speaker == "PlayerName") ? playerName : curDialog.speaker;
 
         if (curDialog.options == null) { 
@@ -59,7 +75,8 @@ public class DialogScript : MonoBehaviour {
                 DialogBody.color = Color.gray;
                 duringInput = true;
                 inputString = "";
-            } else
+            } 
+            else
             {
                 string newDialog = curDialog.dialog.Replace("[playerName]", playerName);
                 newDialog = newDialog.Replace("[playerHome]", playerHome);

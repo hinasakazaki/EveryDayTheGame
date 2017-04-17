@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour {
     public int index;
     public GameObject healer;
 
-    bool radar;
+    public bool radar;
     private LineRenderer line;
     private Vector3 eyePosition;
     private RaycastHit2D hit;
@@ -18,9 +18,9 @@ public class EnemyScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        radar = true;
         yValue = transform.position.y;
-	}
+        this.line = GetComponent<LineRenderer>();
+    }
 
     // Update is called once per frame
     void Update() {
@@ -28,7 +28,6 @@ public class EnemyScript : MonoBehaviour {
         {
             eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
 
-            line = GetComponent<LineRenderer>();
             line.material = new Material(Shader.Find("Sprites/Default"));
             line.startColor = Color.green;
             line.endColor = Color.yellow;
@@ -95,8 +94,9 @@ public class EnemyScript : MonoBehaviour {
 
     public void Exorcised()
     {
-        radar = false;
-        line.enabled = false;
+        this.radar = false;
+        this.line.enabled = false;
+
         this.transform.parent = healer.transform;
         this.transform.localScale = new Vector3(1f, 1f, 0f);
         this.transform.localPosition = new Vector3(0.9f + index, -0.2f, 0f);

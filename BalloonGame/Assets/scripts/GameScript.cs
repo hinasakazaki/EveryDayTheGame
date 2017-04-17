@@ -15,8 +15,8 @@ public class GameScript : MonoBehaviour {
     public Slider CatSlider;
     public Image damageImage;
     public GameObject sun;
+    public GameObject gameUI;
 
-    private GameObject gameUI;
     private int catCount = 40;
     private bool[] catArray = new bool[40];
 
@@ -40,7 +40,6 @@ public class GameScript : MonoBehaviour {
     void Start() {
         health = 1;
         DialogObject.SetActive(true);
-        gameUI = CatSlider.transform.parent.gameObject;
         player = balloon.transform.parent.gameObject;
         firstLocation = player.transform.position;
     }
@@ -61,11 +60,12 @@ public class GameScript : MonoBehaviour {
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
     }
 
-    private void TriggerEnding(EndingID ending)
+    public void TriggerEnding(EndingID ending)
     {
         //remove everything in the game
         gameUI.SetActive(false);
         player.SetActive(false);
+        sun.SetActive(false);
         HealthSlider.enabled = false;
         levelBGs[currLevel].SetActive(false);
 
@@ -76,6 +76,7 @@ public class GameScript : MonoBehaviour {
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
                 break;
             case EndingID.GOOD_END:
+                sun.SetActive(true);
                 Endings.GetComponent<EndingScript>().HappyEnd();
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
                 break;

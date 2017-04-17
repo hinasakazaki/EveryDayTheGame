@@ -20,6 +20,7 @@ public class EndingScript : MonoBehaviour {
 
     public void BadEnd()
     {
+        
         badEnd.SetActive(true);
     }
 
