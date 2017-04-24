@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (radar)
+        if (radar && this.gameObject.transform.position.x < 441 && this.gameObject.transform.position.x > 425)
         {
             eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
 

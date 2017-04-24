@@ -36,7 +36,7 @@ public class HeroScript : MonoBehaviour {
 
     public void TakeDamage(int x)
     {
-        Debug.Log("Taking damage at hero levle " + x);
+        Debug.Log("Taking damage at hero " + x);
         this.GetComponentInParent<MoveScript>().TakeDamage(x);
         freq += 10;
     }
