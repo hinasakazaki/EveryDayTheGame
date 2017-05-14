@@ -37,7 +37,7 @@ public class EnemyScript : MonoBehaviour {
             Vector3[] positions = new Vector3[2];
 
             positions[0] = eyePosition;
-            positions[1] = new Vector3(transform.position.x - Mathf.Repeat(Time.time*2, 10), transform.position.y + Mathf.Sin(Time.time * (index+1) *  5));
+            positions[1] = new Vector3(transform.position.x - Mathf.Repeat(Time.time*2, 10), transform.position.y + Mathf.Sin(Time.time * (index+1)%10 *  5));
             line.numPositions = positions.Length;
             line.SetPositions(positions);
 

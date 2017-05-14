@@ -198,8 +198,9 @@ public class DialogScript : MonoBehaviour {
                                          new DialogObject("hero", "Nice, let's get going.", null, new int[] {17}, false),
                                          new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {18, 16}, true), //17, where scroll is halted
 
-                                         //Level 1
-                                         new DialogObject("hero", "Beautiful morning.", null, new int[] {-5}, false)
+                                         //Level 2
+                                         new DialogObject("hero", "What a strange place. Shall we keep going?", null, new int[] {19}, false), //18
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {20, 18}, true), //19, where scroll is halted
 
 
                                        };

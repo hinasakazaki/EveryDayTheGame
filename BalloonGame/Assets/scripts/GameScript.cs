@@ -16,12 +16,15 @@ public class GameScript : MonoBehaviour {
     public Image damageImage;
     public GameObject sun;
     public GameObject gameUI;
+    public Text titleText;
 
+    private bool ended;
     private int catCount = 40;
     private bool[] catArray = new bool[40];
 
     private static int health;
     private string[] events = {"Heal1", "Grab", "ScrollStart"};
+    private string[] titles = { "Level 1: Morning Clouds", "Level 2: Tiled Prison", "Level 3: Setting Sun", "Level 4: Snowy Darkness", "Level 5: Home" };
     private static int eventCounter = 0;
     private int currLevel = 0;
 
@@ -62,6 +65,8 @@ public class GameScript : MonoBehaviour {
 
     public void TriggerEnding(EndingID ending)
     {
+        ended = true;
+
         //remove everything in the game
         gameUI.SetActive(false);
         player.SetActive(false);
@@ -74,6 +79,12 @@ public class GameScript : MonoBehaviour {
             case EndingID.BAD_END:
                 Endings.GetComponent<EndingScript>().BadEnd();
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
+
+                titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
+                titleText.text = "The hero died. \n The end.";
+                titleText.gameObject.SetActive(true);
+
+                //9F1B1EFF
                 break;
             case EndingID.GOOD_END:
                 sun.SetActive(true);
@@ -82,7 +93,9 @@ public class GameScript : MonoBehaviour {
                 break;
             default:
                 Endings.GetComponent<EndingScript>().NeutralEnd();
-
+                titleText.color = Color.white;
+                titleText.text = "The end! \n Restart to play again!";
+                titleText.gameObject.SetActive(true);
                 break;
         }
     }
@@ -97,9 +110,24 @@ public class GameScript : MonoBehaviour {
             case 1:
                 TriggerGrabEvent();
                 break;
-            default:
+            case 2:
+                titleText.color = Color.white;
+                titleText.text = titles[currLevel];
+                titleText.gameObject.SetActive(true);
                 TriggerStartScroll();
+                StartCoroutine(fadeTitleText());
                 break;
+            default:
+                break;
+        }
+    }
+    
+    private IEnumerator fadeTitleText()
+    {
+        yield return new WaitForSeconds(5f);
+        if (!ended)
+        {
+            titleText.gameObject.SetActive(false);
         }
     }
 
@@ -154,6 +182,10 @@ public class GameScript : MonoBehaviour {
     public void TakeHealOrDamage(int x)
     {
         health += x;
+        if (health > 100)
+        {
+            health = 100;
+        }
         if (x < 0)
         {
             Debug.Log("Taking damage in GameScript" + x);
@@ -174,6 +206,8 @@ public class GameScript : MonoBehaviour {
 
         //set player back to usual location
         player.transform.position = firstLocation;
+        DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+
     }
 
     public void OnCatExorcised(int i)
