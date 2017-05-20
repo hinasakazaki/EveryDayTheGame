@@ -37,7 +37,7 @@ public class EnemyScript : MonoBehaviour {
             Vector3[] positions = new Vector3[2];
 
             positions[0] = eyePosition;
-            positions[1] = new Vector3(transform.position.x - Mathf.Repeat(Time.time*2, 10), transform.position.y + Mathf.Sin(Time.time * (index+1)%10 *  5));
+            positions[1] = new Vector3(transform.position.x - Mathf.Repeat(Time.time*2, 10), transform.position.y + Mathf.Sin(Time.time * (index+1)%5));
             line.numPositions = positions.Length;
             line.SetPositions(positions);
 
@@ -66,21 +66,16 @@ public class EnemyScript : MonoBehaviour {
             //*/
             hit = Physics2D.Raycast(endOfLinePosition2D, direction, distance, LayerMask.NameToLayer("Enemy")); //added anti mask for self. which seems to be working
            // , 1 << LayerMask.NameToLayer("Enemy"))
-            if (hit)
-            {
-                Debug.Log("hello");
-            }
+         
             //if (index == 0) Debug.Log("eyePos2d" + eyePosition2D + "endOfLine2d" + endOfLinePosition2D); raycast location should be accurate! 
 
             if (hit.collider != null)
             {
 
                 hitObject = hit.collider.gameObject;
-                Debug.Log("HIit" + hitObject.name + index);
 
                 if (!colliding && hitObject.GetComponent<HeroScript>() != null && hitObject.tag == "Hero")
                 {
-                    Debug.Log("Hit with cat" + index);
                     hitObject.GetComponent<HeroScript>().TakeDamage(10);
                     colliding = true;
                 }

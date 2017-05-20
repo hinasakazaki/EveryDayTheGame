@@ -65,38 +65,43 @@ public class GameScript : MonoBehaviour {
 
     public void TriggerEnding(EndingID ending)
     {
-        ended = true;
-
-        //remove everything in the game
-        gameUI.SetActive(false);
-        player.SetActive(false);
-        sun.SetActive(false);
-        HealthSlider.enabled = false;
-        levelBGs[currLevel].SetActive(false);
-
-        switch (ending)
+        if (!ended)
         {
-            case EndingID.BAD_END:
-                Endings.GetComponent<EndingScript>().BadEnd();
-                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
+            ended = true;
 
-                titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
-                titleText.text = "The hero died. \n The end.";
-                titleText.gameObject.SetActive(true);
+            //remove everything in the game
+            gameUI.SetActive(false);
+            player.SetActive(false);
+            sun.SetActive(false);
+            HealthSlider.enabled = false;
+            levelBGs[currLevel].SetActive(false);
 
-                //9F1B1EFF
-                break;
-            case EndingID.GOOD_END:
-                sun.SetActive(true);
-                Endings.GetComponent<EndingScript>().HappyEnd();
-                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
-                break;
-            default:
-                Endings.GetComponent<EndingScript>().NeutralEnd();
-                titleText.color = Color.white;
-                titleText.text = "The end! \n Restart to play again!";
-                titleText.gameObject.SetActive(true);
-                break;
+            switch (ending)
+            {
+                case EndingID.BAD_END:
+                    Endings.GetComponent<EndingScript>().BadEnd();
+                    Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
+
+                    titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
+                    titleText.text = "The hero died. \n The end.";
+                    titleText.gameObject.SetActive(true);
+
+                    //9F1B1EFF
+                    break;
+                case EndingID.GOOD_END:
+                    sun.SetActive(true);
+                    Endings.GetComponent<EndingScript>().HappyEnd();
+                    Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
+                    break;
+                default:
+                    Endings.GetComponent<EndingScript>().NeutralEnd();
+                    Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING3);
+
+                    titleText.color = Color.white;
+                    titleText.text = "The end! \n Restart to play again!";
+                    titleText.gameObject.SetActive(true);
+                    break;
+            }
         }
     }
 
@@ -151,7 +156,7 @@ public class GameScript : MonoBehaviour {
 
     private void TriggerStartScroll()
     {
-        levelBGs[0].GetComponent<SideScrollingScript>().StartScroll();
+        levelBGs[currLevel].GetComponent<SideScrollingScript>().StartScroll();
     }
 
     //complete events

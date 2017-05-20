@@ -56,7 +56,10 @@ public class ShroomScript : MonoBehaviour {
     public void getConsumed()
     {
         this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        tutorialText.SetActive(false);
+        if (tutorialText != null)
+        {
+            tutorialText.SetActive(false);
+        }
         sparkling = false;
     }
 
