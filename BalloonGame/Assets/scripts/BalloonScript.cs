@@ -40,8 +40,8 @@ public class BalloonScript : MonoBehaviour {
     {
         Vector3[] positions = new Vector3[2];
 
-        positions[0] = currentlyAttachedTo.transform.position;
-        positions[1] = this.gameObject.transform.position;
+        positions[0] = new Vector3(currentlyAttachedTo.transform.position.x + 0.2f , currentlyAttachedTo.transform.position.y);
+        positions[1] = this.gameObject.transform.position; //when I move it left, it looks awk
         line.numPositions = positions.Length;
         line.SetPositions(positions);
         AnimationCurve curve = new AnimationCurve();

@@ -18,6 +18,8 @@ public class GameScript : MonoBehaviour {
     public GameObject gameUI;
     public Text titleText;
 
+    public bool DuringDialog { private set; get; }
+
     private bool ended;
     private int catCount = 40;
     private bool[] catArray = new bool[40];
@@ -41,6 +43,8 @@ public class GameScript : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        DuringDialog = true;
+
         health = 1;
         DialogObject.SetActive(true);
         player = balloon.transform.parent.gameObject;
@@ -116,6 +120,7 @@ public class GameScript : MonoBehaviour {
                 TriggerGrabEvent();
                 break;
             case 2:
+                this.DuringDialog = false;
                 titleText.color = Color.white;
                 titleText.text = titles[currLevel];
                 titleText.gameObject.SetActive(true);
@@ -139,6 +144,8 @@ public class GameScript : MonoBehaviour {
     //trigger events
     private void TriggerHealEvent0()
     {
+        DuringDialog = false;
+
         //here, we make the mushroom tutorial to come up
         foreach (Transform child in levelBGs[0].transform)
         {
@@ -151,27 +158,31 @@ public class GameScript : MonoBehaviour {
 
     private void TriggerGrabEvent()
     {
+        DuringDialog = false;
+
         balloon.GetComponent<BalloonScript>().StartGrabTutorial();
     }
 
     private void TriggerStartScroll()
     {
+        DuringDialog = false;
+
         levelBGs[currLevel].GetComponent<SideScrollingScript>().StartScroll();
     }
 
     //complete events
-
-    public void CompletedEvent1()
-    {
-        DialogObject.GetComponent<DialogScript>().GetOutOfPause();
-        eventCounter += 1;
-    }
-
     public void CompletedEvent0()
     {
+        DuringDialog = true;
         DialogObject.GetComponent<DialogScript>().GetOutOfPause();
         eventCounter += 1;
         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
+    }
+    public void CompletedEvent1()
+    {
+        DuringDialog = true;
+        DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+        eventCounter += 1;
     }
 
     //general events
@@ -201,9 +212,11 @@ public class GameScript : MonoBehaviour {
 
     public void LoadNewLevel()
     {
+        DuringDialog = true;
         if (currLevel == 0)
         {
             sun.SetActive(false);
+            Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING1);
         }
         levelBGs[currLevel].SetActive(false);
         currLevel += 1;
@@ -212,7 +225,6 @@ public class GameScript : MonoBehaviour {
         //set player back to usual location
         player.transform.position = firstLocation;
         DialogObject.GetComponent<DialogScript>().GetOutOfPause();
-
     }
 
     public void OnCatExorcised(int i)

@@ -43,6 +43,11 @@ public class MoveScript : MonoBehaviour {
     void Update()
     {
         //this is for every frame
+        //if in dialog, cant move
+        if (gameScript.DuringDialog)
+        {
+            return;
+        }
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0)//left and right are for player character
         {
@@ -64,7 +69,7 @@ public class MoveScript : MonoBehaviour {
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("LeftJoystickX") < 0) // figure out joystick
         {
             healerAnim.SetBool("walk_right", true);
-            if (healer.gameObject.transform.localPosition.x < -14.5 || (attached && transform.localPosition.x > -80))// bounds
+            if (healer.gameObject.transform.localPosition.x < -18.5 || (attached && transform.localPosition.x > -77))// bounds
             {
                 return;
             }
@@ -131,7 +136,7 @@ public class MoveScript : MonoBehaviour {
     public void OnDoorCollisionEntered()
     {
         gameScript.LoadNewLevel();
- 
+       
     }
 
     public void OnPostCollisionExited()

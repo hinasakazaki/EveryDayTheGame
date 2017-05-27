@@ -6,6 +6,7 @@ public class SideScrollingScript : MonoBehaviour {
 	private Vector3 startPosition;
 	public float scrollSpeed;
     public float tileSizeX;
+    public float limit;
 
     private bool paused = true;
 
@@ -16,7 +17,7 @@ public class SideScrollingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!paused && transform.localPosition.x > -150)
+        if (!paused && transform.localPosition.x > limit)
         {
             transform.position += Vector3.left * scrollSpeed * Time.deltaTime;
         }
