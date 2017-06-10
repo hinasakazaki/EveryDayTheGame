@@ -19,7 +19,8 @@ public class AudioManager : MonoBehaviour {
         DEPARTING_SOULS_TROMBONE = 5,
         PONDERING1 = 6,
         PONDERING2 = 7,
-        PONDERING3 = 8
+        PONDERING3 = 8,
+        PONDERING_SNOW = 9
     }
 
     public enum SFXList

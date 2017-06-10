@@ -27,7 +27,7 @@ public class HealerScript : MonoBehaviour {
         {
             Player.GetComponent<MoveScript>().OnPostCollisionEntered();
         }
-        else if (collision.gameObject.name.Contains("Door1"))
+        else if (collision.gameObject.name.Contains("Door"))
         {
             Player.GetComponent<MoveScript>().OnDoorCollisionEntered();
 

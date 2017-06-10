@@ -135,6 +135,7 @@ public class MoveScript : MonoBehaviour {
 
     public void OnDoorCollisionEntered()
     {
+        Debug.Log("Door collision");
         gameScript.LoadNewLevel();
        
     }

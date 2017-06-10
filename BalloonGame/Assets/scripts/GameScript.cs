@@ -17,6 +17,7 @@ public class GameScript : MonoBehaviour {
     public GameObject sun;
     public GameObject gameUI;
     public Text titleText;
+    public GameObject snow;
 
     public bool DuringDialog { private set; get; }
 
@@ -120,6 +121,7 @@ public class GameScript : MonoBehaviour {
                 TriggerGrabEvent();
                 break;
             case 2:
+                Debug.Log("eventCounter 2");
                 this.DuringDialog = false;
                 titleText.color = Color.white;
                 titleText.text = titles[currLevel];
@@ -127,6 +129,16 @@ public class GameScript : MonoBehaviour {
                 TriggerStartScroll();
                 StartCoroutine(fadeTitleText());
                 break;
+            case 3:
+                Debug.Log("eventCounter 3");
+                this.DuringDialog = false;
+                titleText.color = Color.white;
+                titleText.text = titles[currLevel];
+                titleText.gameObject.SetActive(true);
+                TriggerStartScroll();
+                StartCoroutine(fadeTitleText());
+                break;
+
             default:
                 break;
         }
@@ -167,6 +179,8 @@ public class GameScript : MonoBehaviour {
     {
         DuringDialog = false;
 
+        Debug.Log("currlevel" + currLevel);
+        Debug.Log("currlevel" + levelBGs[currLevel]);
         levelBGs[currLevel].GetComponent<SideScrollingScript>().StartScroll();
     }
 
@@ -213,11 +227,28 @@ public class GameScript : MonoBehaviour {
     public void LoadNewLevel()
     {
         DuringDialog = true;
-        if (currLevel == 0)
+        switch (currLevel)
         {
-            sun.SetActive(false);
-            Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING1);
+            case 0: //going to soda
+                sun.SetActive(false);
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING1);
+                eventCounter += 1;
+                break;
+            case 1: //going to japan
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING3);
+                break;
+            case 2: //going to MN
+                snow.SetActive(true);
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING_SNOW);
+                break;
+            case 3: //going to home
+                snow.SetActive(false);
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.RISKS);
+                break;
+            default:
+                break;
         }
+        
         levelBGs[currLevel].SetActive(false);
         currLevel += 1;
         levelBGs[currLevel].SetActive(true);

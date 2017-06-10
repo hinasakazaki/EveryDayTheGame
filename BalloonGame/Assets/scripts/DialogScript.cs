@@ -41,7 +41,7 @@ public class DialogScript : MonoBehaviour {
 
     public void SwitchDialog()
     {
-        switch (counter)//-1 = bad ending, -2 = neutral end, -3 = good end, -4=halt dialog 0 indexed dialog
+        switch (counter) //-1 = bad ending, -2 = neutral end, -3 = good end, -4=halt dialog 0 indexed dialog
         {
             case -1:
                 gameScript.TriggerEnding(GameScript.EndingID.BAD_END);
@@ -187,8 +187,8 @@ public class DialogScript : MonoBehaviour {
                                          new DialogObject("PlayerName", "My name is [playerName]. I'm not sure how I ended up here..", null, new int[] {6}, false), //5
                                          new DialogObject("hero", "Okay, [playerName], where are you from?", null, new int[] {7}, false),
                                          new DialogObject("Enter  Home", "InputField", null, new int[] {8}, false),
-                                         new DialogObject("hero", "That's where the evil neko-king lives.", null, new int[] {9}, false),
-                                         new DialogObject("hero", "You see, I've been freeing kittens from evil brainwashing by the neko-king.", null, new int[] {10}, false),
+                                         new DialogObject("hero", "That's where the evil neko-lord lives.", null, new int[] {9}, false),
+                                         new DialogObject("hero", "You see, I've been freeing kittens from evil brainwashing by the neko-lord.", null, new int[] {10}, false),
                                          new DialogObject("hero", "I've come this far, but the kitten who was helping me accidentally got brainwashed by another kitten and she attacked me.", null, new int[] {11}, false),
                                          new DialogObject("hero", "They're over there right now.", null, new int[] {12}, false),
                                          new DialogObject("hero", "Would you like to come with me to [playerHome]? There's lots of kittens to save, and I could use a mushroom healer.", null, new int[] {13}, false),
@@ -202,82 +202,37 @@ public class DialogScript : MonoBehaviour {
                                          new DialogObject("hero", "What a strange place. Shall we keep going?", null, new int[] {19}, false), //18
                                          new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {20, 18}, true), //19, where scroll is halted
 
+                                         //Level 3
+                                         new DialogObject("hero", "Sun's starting to set, we better hurry.", null, new int[] {21}, false), //20
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {22, 20}, true),
 
-                                       };
-                                                    
- 
-    /**
+                                         //Level 4
+                                         new DialogObject("hero", "Snow! Snow! Let's go!", null, new int[] {23}, false), //22
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {22, 24}, true),
 
- LEVEL 1: MORNING CLOUDS < 9AM - 11AM - these are theoretical “times” in the day>
-    -this is where the gameplay starts.
-   - brainwashed cats are on clouds and are shooting fireballs with red eyes
-   - hero shoots out hearts and cats return to normal and falls off cloud, following player in a line
+                                         //Level 5
+                                         new DialogObject("hero", "This is it. [playerhome].", null, new int[] {25}, false), //24
+                                         new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {24, 26}, true),
 
-< not quite, but close>
+                                        new DialogObject("neko 1ord", "Hiss!!! You will never defeat me!", null, new int[] {27}, false),
 
- Challenge will be stairs and obstacles and moving background
+                                        new DialogObject("neko 1ord", "meow~ <3", null, new int[] {28}, false),
 
-At the end, there will be a door which takes the player to
-→ 
-LEVEL 2: TILED PRISON (SODA HALL) < 11AM - 5PM >
+                                        new DialogObject("hero", "Well, I think that was it.", null, new int[] {29}, false),
 
-   TODO
-
-At the end, there will be a door which takes the player to
-→ 
-LEVEL 3: SETTING SUN (JAPAN) < 5PM - 7PM >
-
-TODO
-
-At the end, there will be a door which takes the player to
-→ 
-LEVEL 4: SNOWY DARKNESS (MINNESOTA) < 7PM - 9PM >
-
-TODO
-
-At the end, there will be a door which takes the player to
-→ 
-LEVEL 5: HOME < 9PM - 2AM >
-   Neko King:
-        Hiss!!!You will never defeat me!
-       
-
-       < lots of stairs, neko king spawns mini cats that fly>
-        < hardest level >
-
-         Hero: 
-I think that was it.The cats of the world are free!
-
-Cats: Thank you great hero!!
-
-Hero: Thank my friend here, [Name].
-
-Well...
-
-Actually, I haven't known you for just today. I've known you for a long time.
-[ if player's name isn't Chris, Stipes, Christopher]
-In fact, I know your name isn’t[name], it's Chris.
-And my name is Hina. < takes off mask. Dialog name changes to Hina >
-
- You've kept me safe and alive through our journey today, and I hope we can be together for the rest of our lives.
-Will you marry me?
-
-Hero:
-→ OK
-→ Not now
-
-→ Ok
-Hero: Good choice!
-Let's get sustainably sourced engagement rings to mark our promise tomorrow.
-
-The hero and the mushroom healer opened a mushroom soup restaurant x cat cafe together.
-The happy pair lived in good health and cheer for many a long and prosperous days.
-< Happy End >
-
-→ Not now
-Hero: That's cool. Thank you for helping me today. 
-< Neutral End >
-    **/
+                                        new DialogObject("cats", "Thank you brave hero for freeing us!", null, new int[] {30}, false),
+                                        new DialogObject("hero", "Thank my friend here, PlayerName.", null, new int[] {31}, false),
+                                        new DialogObject("hero", "Well...", null, new int[] {32}, false),
+                                        new DialogObject("hero", "Actually, I haven't known you for just today. I've known you for a long time.", null, new int[] {33}, false),
+                                        new DialogObject("hero", "In fact, I know your name isn’t PlayerName, it's Chris.", null, new int[] {34}, false),
+                                        new DialogObject("hero", "And my name is Hina.", null, new int[] {35}, false),
+                                        new DialogObject("hina", "You've kept me safe and alive through our journey today, and I'm so thankful.", null, new int[] {36}, false),
+                                        new DialogObject("hina", "I hope we can be together for the rest of our lives..", null, new int[] {37}, false),
+                                        new DialogObject("hina", "Will you marry me?", null, new int[] {38}, false),
+                                        new DialogObject("chris", null, new string[] {"Sure.", "Not now."}, new int[] {39, 40}, true),
+                                        new DialogObject("hina", "Good choice.", null, new int[] {-3}, false), //39
+                                        new DialogObject("hina", "That's cool. Thank you for helping me today.", null, new int[] {-2}, false), //goes to neutral end
+        };
         return dialogObjects;
     }
 }
@@ -288,7 +243,7 @@ public class DialogObject
     public readonly string dialog;
     public string[] options;
     public bool pauseAfter;
-    public readonly int[] next; //-1 = bad ending, -2 = neutral end, -3 = good end, -4=halt dialog 0 indexed dialog
+    public readonly int[] next; 
 
     public DialogObject(string speaker, string dialog, string[] options, int[] next, bool pause)
     {
