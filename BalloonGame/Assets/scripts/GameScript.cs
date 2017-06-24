@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour {
@@ -80,16 +81,20 @@ public class GameScript : MonoBehaviour {
             sun.SetActive(false);
             HealthSlider.enabled = false;
             levelBGs[currLevel].SetActive(false);
+            GameObject replay = titleText.gameObject.transform.FindChild("ReplayText").gameObject;
 
             switch (ending)
             {
                 case EndingID.BAD_END:
                     Endings.GetComponent<EndingScript>().BadEnd();
                     Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
+                    snow.SetActive(true);
 
                     titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
-                    titleText.text = "The hero died. \n The end.";
+                    titleText.text = "The hero died. \nThe end.";
                     titleText.gameObject.SetActive(true);
+
+                    replay.GetComponent<Text>().color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
 
                     //9F1B1EFF
                     break;
@@ -103,15 +108,28 @@ public class GameScript : MonoBehaviour {
                     Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING3);
 
                     titleText.color = Color.white;
-                    titleText.text = "The end! \n Restart to play again!";
+                    titleText.text = "The two went on separate ways. \nThe end.";
                     titleText.gameObject.SetActive(true);
+                    replay.GetComponent<Text>().color = Color.white;
+
                     break;
             }
+            
+            StartCoroutine(ShowRestartOption(replay));
         }
     }
 
-    public void TriggerEvent()
+    private bool restartOptionAvailable;
+
+    IEnumerator ShowRestartOption(GameObject restartOption)
     {
+        yield return new WaitForSeconds(5);
+        restartOption.SetActive(true);
+        restartOptionAvailable = true;
+    }
+
+    public void TriggerEvent()
+    { 
         switch (eventCounter)
         {
             case 0:
@@ -142,8 +160,13 @@ public class GameScript : MonoBehaviour {
             default:
                 break;
         }
+
+        if (ended == true && restartOptionAvailable)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
-    
+
     private IEnumerator fadeTitleText()
     {
         yield return new WaitForSeconds(5f);

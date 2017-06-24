@@ -56,6 +56,7 @@ public class AudioManager : MonoBehaviour {
     {
         BG.clip = ostList[(int)song - 1];
         BG.PlayDelayed(0.2f);
+        BG.loop = true;
     }
 
 
