@@ -34,10 +34,13 @@ public class HeroScript : MonoBehaviour {
         shooting = true;
     }
 
+    public void UpdateFrequency(int health)
+    {
+        freq = health;
+    }
+
     public void TakeDamage(int x)
     {
-        Debug.Log("Taking damage at hero " + x);
         this.GetComponentInParent<MoveScript>().TakeDamage(x);
-        freq += 10;
     }
 }

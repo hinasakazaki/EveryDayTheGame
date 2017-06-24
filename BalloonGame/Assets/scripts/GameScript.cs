@@ -228,7 +228,7 @@ public class GameScript : MonoBehaviour {
         mush.GetComponent<ShroomScript>().getConsumed();
         Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.HEAL);
         TakeHealOrDamage(100);
-
+        
         if (eventCounter == 0) { CompletedEvent0();  }
     }
 
@@ -245,6 +245,8 @@ public class GameScript : MonoBehaviour {
             Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.DAMAGE);
             damageImage.color = flashColour;
         }
+
+        balloon.transform.GetChild(0).gameObject.GetComponent<HeroScript>().UpdateFrequency(health);
     }
 
     public void LoadNewLevel()

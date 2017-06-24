@@ -14,60 +14,93 @@ public class EnemyScript : MonoBehaviour {
     GameObject hitObject;
     bool colliding = false;
 
+    public int segments;
+    public float xradius;
+    public float yradius;
+
     private float yValue;
 
     // Use this for initialization
     void Start () {
         yValue = transform.position.y;
         this.line = GetComponent<LineRenderer>();
+
+        if (index == 400)
+        {
+            line.SetVertexCount(segments + 1);
+            line.useWorldSpace = false;
+        }
     }
 
     // Update is called once per frame
     void Update() {
+        line.material = new Material(Shader.Find("Sprites/Default"));
+        line.startColor = Color.green;
+        line.endColor = Color.yellow;
+        line.widthMultiplier = 0.1f;
+        line.sortingOrder = 1;
+
         if (radar && this.gameObject.transform.position.x < 441 && this.gameObject.transform.position.x > 425)
         {
-            eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
+            if (index == 400) //or whatever distinguishes nekolord
+            {
+                float x;
+                float y;
+                float z = 0f;
 
-            line.material = new Material(Shader.Find("Sprites/Default"));
-            line.startColor = Color.green;
-            line.endColor = Color.yellow;
-            line.widthMultiplier = 0.1f;
-            line.sortingOrder = 1;
+                float angle = 20f;
 
-            Vector3[] positions = new Vector3[2];
+                for (int i = 0; i < (segments + 1); i++)
+                {
+                    x = Mathf.Sin(Mathf.Deg2Rad * angle) * xradius;
+                    y = Mathf.Cos(Mathf.Deg2Rad * angle) * yradius;
 
-            positions[0] = eyePosition;
-            positions[1] = new Vector3(transform.position.x - Mathf.Repeat(Time.time*2, 10), transform.position.y + Mathf.Sin(Time.time * (index+1)%5));
-            line.numPositions = positions.Length;
-            line.SetPositions(positions);
+                    line.SetPosition(i, new Vector3(x, y, z));
 
-            // line.SetPositions(positions);
-            //   AnimationCurve curve = new AnimationCurve();
+                    angle += (360f / segments);
+                }
+            }
+            else
+            {
+                eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
 
-            /** For 3d, proven to be accurate 
-            var heading = positions[1] - positions[0];
-            var distance = heading.magnitude;
-            var direction = heading / distance; // This is now the normalized direction.
+                Vector3[] positions = new Vector3[2];
 
-            Debug.DrawRay(positions[0], direction, Color.red);
+                positions[0] = eyePosition;
+                positions[1] = new Vector3(transform.position.x - Mathf.Repeat(Time.time * 2, 10), transform.position.y + Mathf.Sin(Time.time * (index + 1) % 5));
+                line.numPositions = positions.Length;
+                line.SetPositions(positions);
 
-             */
-            //vector2 origin vector2 direction vfloat distance
-            //hit = Physics2D.Raycast(positions[0], heading, distance);
-            Vector2 eyePosition2D = new Vector2(eyePosition.x, eyePosition.y);
-            Vector2 endOfLinePosition2D = new Vector2(positions[1].x, positions[1].y);
+                // line.SetPositions(positions);
+                //   AnimationCurve curve = new AnimationCurve();
 
-           /// /* this is for 2D
-            var heading = endOfLinePosition2D - eyePosition2D;
-            var distance = heading.magnitude;
-            var direction = heading / distance; // This is now the normalized direction.
+                /** For 3d, proven to be accurate 
+                var heading = positions[1] - positions[0];
+                var distance = heading.magnitude;
+                var direction = heading / distance; // This is now the normalized direction.
 
-            Debug.DrawRay(endOfLinePosition2D, direction, Color.red);
-            //*/
-            hit = Physics2D.Raycast(endOfLinePosition2D, direction, distance, LayerMask.NameToLayer("Enemy")); //added anti mask for self. which seems to be working
-           // , 1 << LayerMask.NameToLayer("Enemy"))
-         
-            //if (index == 0) Debug.Log("eyePos2d" + eyePosition2D + "endOfLine2d" + endOfLinePosition2D); raycast location should be accurate! 
+                Debug.DrawRay(positions[0], direction, Color.red);
+
+                 */
+                //vector2 origin vector2 direction vfloat distance
+                //hit = Physics2D.Raycast(positions[0], heading, distance);
+                Vector2 eyePosition2D = new Vector2(eyePosition.x, eyePosition.y);
+                Vector2 endOfLinePosition2D = new Vector2(positions[1].x, positions[1].y);
+
+                /// /* this is for 2D
+                var heading = endOfLinePosition2D - eyePosition2D;
+                var distance = heading.magnitude;
+                var direction = heading / distance; // This is now the normalized direction.
+
+                Debug.DrawRay(endOfLinePosition2D, direction, Color.red);
+                //*/
+                hit = Physics2D.Raycast(endOfLinePosition2D, direction, distance, LayerMask.NameToLayer("Enemy")); //added anti mask for self. which seems to be working
+                                                                                                                   // , 1 << LayerMask.NameToLayer("Enemy"))
+
+                //if (index == 0) Debug.Log("eyePos2d" + eyePosition2D + "endOfLine2d" + endOfLinePosition2D); raycast location should be accurate! 
+
+            }
+
 
             if (hit.collider != null)
             {
