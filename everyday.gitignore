@@ -4,7 +4,8 @@
 BalloonGame/Temp/
 BalloonGame/Obj/
 BalloonGame/Build
-BalloonGame/Library/
+BalloonGame/Library/*
+
 BalloonGame/sysinfo.txt
 BalloonGame/*.stackdump
  
@@ -22,6 +23,8 @@ BalloonGame/.vs/
 /*.unityproj
 /*.booproj
 /.idea*/
+/*.meta
+/*.psd
  
 # ============ #
 # OS generated #
