@@ -15,8 +15,7 @@ public class EnemyScript : MonoBehaviour {
     bool colliding = false;
 
     public int segments;
-    public float xradius;
-    public float yradius;
+    public float radius;
 
     private float yValue;
 
@@ -44,6 +43,9 @@ public class EnemyScript : MonoBehaviour {
         {
             if (index == 400) //or whatever distinguishes nekolord
             {
+
+                radius = Mathf.Repeat(Time.time * 6, 10);
+
                 float x;
                 float y;
                 float z = 0f;
@@ -52,8 +54,8 @@ public class EnemyScript : MonoBehaviour {
 
                 for (int i = 0; i < (segments + 1); i++)
                 {
-                    x = Mathf.Sin(Mathf.Deg2Rad * angle) * xradius;
-                    y = Mathf.Cos(Mathf.Deg2Rad * angle) * yradius;
+                    x = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
+                    y = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
 
                     line.SetPosition(i, new Vector3(x, y, z));
 
