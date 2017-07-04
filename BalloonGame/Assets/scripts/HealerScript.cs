@@ -18,31 +18,42 @@ public class HealerScript : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Contains("Shroom"))
+        string collisionName = collision.gameObject.name;
+        if (collisionName.Contains("Shroom"))
         {
             Player.GetComponent<MoveScript>().OnSchroomCollisionEntered(collision.gameObject);
         }
 
-        else if (collision.gameObject.name.Contains("post"))
+        else if (collisionName.Contains("post"))
         {
             Player.GetComponent<MoveScript>().OnPostCollisionEntered();
         }
-        else if (collision.gameObject.name.Contains("Door"))
+        else if (collisionName.Contains("Door"))
         {
             Player.GetComponent<MoveScript>().OnDoorCollisionEntered();
 
+        }
+        else if (collisionName.Contains("ground"))
+        {
+            Player.GetComponent<MoveScript>().grounded = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Contains("Shroom"))
+        string collisionName = collision.gameObject.name;
+
+        if (collisionName.Contains("Shroom"))
         {
             Player.GetComponent<MoveScript>().OnSchroomCollisionExited();
         }
-        else if (collision.gameObject.name.Contains("post"))
+        else if (collisionName.Contains("post"))
         {
             Player.GetComponent<MoveScript>().OnPostCollisionExited();
+        }
+        else if (collisionName.Contains("ground"))
+        {
+            Player.GetComponent<MoveScript>().grounded = false;
         }
     }
 }

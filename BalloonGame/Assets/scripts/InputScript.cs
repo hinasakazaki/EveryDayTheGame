@@ -12,6 +12,8 @@ public class InputScript : MonoBehaviour {
     public GameObject hudMainMenu;
     public GameObject MainMenu;
     public Text menuOptions;
+    public GameObject credits;
+    public GameObject goback;
 
     private string[] menuOptionStrings = { "Start", " \nHow To Play", " \nOption", " \nCredits" };
     private int counter; //0 for start , 1 for how to play, 2 for option 3 for credits
@@ -22,6 +24,7 @@ public class InputScript : MonoBehaviour {
     public GameObject DialogUI;
 
     private bool gameStarted = false;
+    private bool notMainMenu = false;
 
     // Use this for initialization
     void Start() {
@@ -62,7 +65,9 @@ public class InputScript : MonoBehaviour {
                         break;
 
                     case 3:
-                        //Credits screen
+                        credits.SetActive(!notMainMenu);
+                        goback.SetActive(!notMainMenu);
+                        notMainMenu = !notMainMenu;
                         break;
                 }
             }

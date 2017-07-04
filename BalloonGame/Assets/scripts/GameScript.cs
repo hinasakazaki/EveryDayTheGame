@@ -22,6 +22,7 @@ public class GameScript : MonoBehaviour {
 
     public bool DuringDialog { private set; get; }
 
+    private int NekoLordIndex = 400;
     private bool ended;
     private int catCount = 40;
     private bool[] catArray = new bool[40];
@@ -156,7 +157,10 @@ public class GameScript : MonoBehaviour {
                 TriggerStartScroll();
                 StartCoroutine(fadeTitleText());
                 break;
-
+            case 4:
+                Debug.Log("EventCounter 4 - nekolord exorcised");
+                DuringDialog = true;
+                break;
             default:
                 break;
         }
@@ -285,11 +289,14 @@ public class GameScript : MonoBehaviour {
 
     public void OnCatExorcised(int i)
     {
-        if (!catArray[i])
+        if (!catArray[i] && i != NekoLordIndex)
         {
             catArray[i] = true;
             CatSlider.value += 1;
             Audio.GetComponent<AudioManager>().playSFX((AudioManager.SFXList)Random.Range((int)AudioManager.SFXList.CUTEMEOW1, (int)AudioManager.SFXList.CUTEMEOW6));
+            return;
         }
+        eventCounter += 1;
+        TriggerEvent();
     }
 }
