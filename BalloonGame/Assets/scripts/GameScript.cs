@@ -294,9 +294,11 @@ public class GameScript : MonoBehaviour {
             catArray[i] = true;
             CatSlider.value += 1;
             Audio.GetComponent<AudioManager>().playSFX((AudioManager.SFXList)Random.Range((int)AudioManager.SFXList.CUTEMEOW1, (int)AudioManager.SFXList.CUTEMEOW6));
-            return;
         }
-        eventCounter += 1;
-        TriggerEvent();
+        else if (i == NekoLordIndex)
+        {
+            eventCounter += 1;
+            TriggerEvent();
+        }
     }
 }

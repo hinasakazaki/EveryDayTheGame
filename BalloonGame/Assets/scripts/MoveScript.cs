@@ -84,9 +84,9 @@ public class MoveScript : MonoBehaviour {
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
         }
-        if (Input.GetKey(KeyCode.Space) && grounded)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1), ForceMode2D.Impulse);
+            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
         }
         if (Input.GetKey(KeyCode.UpArrow)) //up and down for NPC character
         {

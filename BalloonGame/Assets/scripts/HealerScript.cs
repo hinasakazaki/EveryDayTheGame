@@ -16,6 +16,32 @@ public class HealerScript : MonoBehaviour {
 		
 	}
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        string collisionName = collision.gameObject.name;
+
+        if (collisionName.Contains("ground"))
+        {
+            Player.GetComponent<MoveScript>().grounded = true;
+        }
+        else if (collisionName.Contains("Door"))
+        {
+            Player.GetComponent<MoveScript>().OnDoorCollisionEntered();
+
+        }
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        string collisionName = collision.gameObject.name;
+
+        if (collisionName.Contains("ground"))
+        {
+            Player.GetComponent<MoveScript>().grounded = false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string collisionName = collision.gameObject.name;
@@ -28,15 +54,8 @@ public class HealerScript : MonoBehaviour {
         {
             Player.GetComponent<MoveScript>().OnPostCollisionEntered();
         }
-        else if (collisionName.Contains("Door"))
-        {
-            Player.GetComponent<MoveScript>().OnDoorCollisionEntered();
-
-        }
-        else if (collisionName.Contains("ground"))
-        {
-            Player.GetComponent<MoveScript>().grounded = true;
-        }
+      
+       
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -50,10 +69,6 @@ public class HealerScript : MonoBehaviour {
         else if (collisionName.Contains("post"))
         {
             Player.GetComponent<MoveScript>().OnPostCollisionExited();
-        }
-        else if (collisionName.Contains("ground"))
-        {
-            Player.GetComponent<MoveScript>().grounded = false;
         }
     }
 }
