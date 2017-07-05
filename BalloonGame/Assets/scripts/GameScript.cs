@@ -88,7 +88,14 @@ public class GameScript : MonoBehaviour {
             {
                 case EndingID.BAD_END:
                     Endings.GetComponent<EndingScript>().BadEnd();
-                    Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
+                    if (currLevel == 4)
+                    {
+                        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS_TROMBONE);
+                    }
+                    else
+                    {
+                        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS);
+                    }
                     snow.SetActive(true);
 
                     titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
@@ -102,7 +109,6 @@ public class GameScript : MonoBehaviour {
                 case EndingID.GOOD_END:
                     sun.SetActive(true);
                     Endings.GetComponent<EndingScript>().HappyEnd();
-                    Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
                     break;
                 default:
                     Endings.GetComponent<EndingScript>().NeutralEnd();
@@ -159,6 +165,8 @@ public class GameScript : MonoBehaviour {
                 break;
             case 4:
                 Debug.Log("EventCounter 4 - nekolord exorcised");
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
+                DialogObject.GetComponent<DialogScript>().GetOutOfPause();
                 DuringDialog = true;
                 break;
             default:
@@ -289,7 +297,7 @@ public class GameScript : MonoBehaviour {
 
     public void OnCatExorcised(int i)
     {
-        if (!catArray[i] && i != NekoLordIndex)
+        if (i != NekoLordIndex && !catArray[i])
         {
             catArray[i] = true;
             CatSlider.value += 1;
