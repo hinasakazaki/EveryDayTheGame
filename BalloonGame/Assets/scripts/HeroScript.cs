@@ -22,7 +22,8 @@ public class HeroScript : MonoBehaviour {
             }
             else if (counter == freq)
             {
-                Instantiate(heartBullet, new Vector3(spawnpoint.transform.position.x, spawnpoint.transform.position.y, spawnpoint.transform.position.z), Quaternion.identity);
+                GameObject instantiated = Instantiate(heartBullet, new Vector3(spawnpoint.transform.position.x, spawnpoint.transform.position.y, spawnpoint.transform.position.z), Quaternion.identity);
+                instantiated.GetComponent<Animator>().SetFloat("health", freq);
             }
             counter += 1;
         }
@@ -36,7 +37,6 @@ public class HeroScript : MonoBehaviour {
 
     public void UpdateFrequency(int health)
     {
-        heartBullet.transform.localScale.Set(health / 100, health / 100, transform.localScale.z); //this size setting isnt working, use animation?
         freq = health;
     }
 
