@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HeroScript : MonoBehaviour {
     public GameObject heartBullet;
+    public GameObject spawnpoint;
     private int freq, counter = 0;
     private bool shooting;
 	// Use this for initialization
@@ -21,8 +22,7 @@ public class HeroScript : MonoBehaviour {
             }
             else if (counter == freq)
             {
-                var spawnPoint = new Vector2(transform.position.x, transform.position.y);
-                Instantiate(heartBullet, spawnPoint, Quaternion.identity);
+                Instantiate(heartBullet, new Vector3(spawnpoint.transform.position.x, spawnpoint.transform.position.y, spawnpoint.transform.position.z), Quaternion.identity);
             }
             counter += 1;
         }
@@ -36,6 +36,7 @@ public class HeroScript : MonoBehaviour {
 
     public void UpdateFrequency(int health)
     {
+        heartBullet.transform.localScale.Set(health / 100, health / 100, transform.localScale.z); //this size setting isnt working, use animation?
         freq = health;
     }
 

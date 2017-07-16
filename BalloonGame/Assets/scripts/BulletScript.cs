@@ -17,8 +17,6 @@ public class BulletScript : MonoBehaviour
     void Update()
     {
         transform.position += Vector3.right * speed * Time.deltaTime;
-
-
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

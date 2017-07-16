@@ -212,9 +212,8 @@ public class DialogScript : MonoBehaviour {
 
                                          //Level 5
                                          new DialogObject("hero", "This is it. [playerhome].", null, new int[] {25}, false), //24
-                                         new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {26, 25}, true),
-
-                                        new DialogObject("neko 1ord", "Hiss!!! You will never defeat me!", null, new int[] {27}, false),
+                                        new DialogObject("neko 1ord", "They are coming!!! They will never defeat me! My minions, attack!", null, new int[] {26}, false),
+                                        new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {27, 26}, true),
 
                                         new DialogObject("neko 1ord", "meow~ <3", null, new int[] {28}, false),
 
