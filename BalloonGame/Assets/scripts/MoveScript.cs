@@ -86,7 +86,7 @@ public class MoveScript : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
+            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 4), ForceMode2D.Impulse);
         }
         if (Input.GetKey(KeyCode.UpArrow)) //up and down for NPC character
         {
@@ -126,6 +126,11 @@ public class MoveScript : MonoBehaviour {
     {
         currMush = mush;
         inCollisionWithShroom = true;
+    }
+
+    public void OnTentacleCollisionEntered(GameObject tentacle)
+    {
+        gameScript.OnTentacleCollided();
     }
 
     public void OnSchroomCollisionExited()

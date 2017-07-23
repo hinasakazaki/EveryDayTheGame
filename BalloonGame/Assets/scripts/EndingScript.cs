@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EndingScript : MonoBehaviour {
 
-    public GameObject badEnd;
+    public GameObject healerDead;
+    public GameObject heroDead;
     public GameObject neutralEnd;
     public GameObject happyEnd;
 
@@ -18,10 +19,19 @@ public class EndingScript : MonoBehaviour {
 		
 	}
 
-    public void BadEnd()
+    public void BadEnd(bool healerDied)
     {
-        
-        badEnd.SetActive(true);
+        if (healerDied)
+        {
+            healerDead.SetActive(true);
+            heroDead.SetActive(false);
+
+        }
+        else
+        {
+            heroDead.SetActive(true);
+            healerDead.SetActive(false);
+        }
     }
 
     public void NeutralEnd()

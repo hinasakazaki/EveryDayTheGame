@@ -49,7 +49,10 @@ public class HealerScript : MonoBehaviour {
         {
             Player.GetComponent<MoveScript>().OnSchroomCollisionEntered(collision.gameObject);
         }
-
+        else if (collisionName.Contains("Tentacle"))
+        {
+            Player.GetComponent<MoveScript>().OnTentacleCollisionEntered(collision.gameObject);
+        }
         else if (collisionName.Contains("post"))
         {
             Player.GetComponent<MoveScript>().OnPostCollisionEntered();

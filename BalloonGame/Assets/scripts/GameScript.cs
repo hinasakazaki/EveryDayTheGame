@@ -22,10 +22,12 @@ public class GameScript : MonoBehaviour {
 
     public bool DuringDialog { private set; get; }
 
+    private string PlayerName;
     private int NekoLordIndex = 400;
     private bool ended;
     private int catCount = 40;
     private bool[] catArray = new bool[40];
+    private bool healerDied = false;
 
     private static int health;
     private string[] events = {"Heal1", "Grab", "ScrollStart"};
@@ -46,6 +48,7 @@ public class GameScript : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        healerDied = false;
         DuringDialog = true;
 
         health = 1;
@@ -70,6 +73,17 @@ public class GameScript : MonoBehaviour {
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
     }
 
+    public void SetName(string pn)
+    {
+        this.PlayerName = pn;
+    }
+
+    public void OnTentacleCollided()
+    {
+        healerDied = true;
+        TriggerEnding(EndingID.BAD_END);
+    }
+
     public void TriggerEnding(EndingID ending)
     {
         if (!ended)
@@ -87,7 +101,7 @@ public class GameScript : MonoBehaviour {
             switch (ending)
             {
                 case EndingID.BAD_END:
-                    Endings.GetComponent<EndingScript>().BadEnd();
+                    Endings.GetComponent<EndingScript>().BadEnd(healerDied);
                     if (currLevel == 4)
                     {
                         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS_TROMBONE);
@@ -99,7 +113,9 @@ public class GameScript : MonoBehaviour {
                     snow.SetActive(true);
 
                     titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
-                    titleText.text = "The hero died. \nThe end.";
+                    string tempPlayerName = (PlayerName == null) ? "You were" : PlayerName + "was";
+                    titleText.text = healerDied ? tempPlayerName + " trapped forever. \n The end." : "The hero died. \nThe end.";
+                         
                     titleText.gameObject.SetActive(true);
 
                     replay.GetComponent<Text>().color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);

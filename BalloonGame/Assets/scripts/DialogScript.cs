@@ -155,7 +155,7 @@ public class DialogScript : MonoBehaviour {
             else if (action == "Enter")
             {
                 duringInput = false;
-                if (counter == 4) { playerName = inputString; }
+                if (counter == 4) { playerName = inputString; gameScript.SetName(playerName);  }
                 else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString;  } //?>>
                 counter = curDialog.next[0];
                 SwitchDialog();
