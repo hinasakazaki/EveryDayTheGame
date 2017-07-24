@@ -131,6 +131,7 @@ public class EnemyScript : MonoBehaviour {
         this.transform.localScale = new Vector3(1f, 1f, 0f);
         float i = this.GetComponentInParent<GameScript>().CatSlider.value;
         this.transform.localPosition = new Vector3(0.9f + i, -0.2f, 0f);
+        this.GetComponent<BoxCollider2D>().enabled = false;
 
         if (this.GetComponentInParent<GameScript>() != null)
         {
