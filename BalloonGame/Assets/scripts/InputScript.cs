@@ -12,10 +12,11 @@ public class InputScript : MonoBehaviour {
     public GameObject hudMainMenu;
     public GameObject MainMenu;
     public Text menuOptions;
+    public GameObject options;
     public GameObject credits;
     public GameObject goback;
 
-    private string[] menuOptionStrings = { "Start", " \nHow To Play", " \nOption", " \nCredits" };
+    private string[] menuOptionStrings = { "Start", " \nHow To Play", " \nOptions", " \nCredits" };
     private int counter; //0 for start , 1 for how to play, 2 for option 3 for credits
 
     //Game
@@ -61,9 +62,9 @@ public class InputScript : MonoBehaviour {
                         break;
 
                     case 2:
-                        // Options (Do we need this?
+                        options.SetActive(true);
+                        hudMainMenu.SetActive(false);
                         break;
-
                     case 3:
                         credits.SetActive(!notMainMenu);
                         goback.SetActive(!notMainMenu);
