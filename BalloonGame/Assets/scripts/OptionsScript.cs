@@ -11,6 +11,13 @@ public class OptionsScript : MonoBehaviour {
     private bool setCurrent = false;
     private string currString;
 
+    public GameObject shroomTutorial;
+    public GameObject postTutorial;
+    public GameObject EnterToContinue;
+    public GameObject replay;
+    public GameObject input;
+    public GameObject move;
+
     public enum Actions
     {
         JUMP,
@@ -22,7 +29,7 @@ public class OptionsScript : MonoBehaviour {
         CONTINUE
     }
 
-    private Dictionary<Actions, KeyCode> keyBindings = new Dictionary<Actions, KeyCode>();
+    private static Dictionary<Actions, KeyCode> keyBindings = new Dictionary<Actions, KeyCode>();
      
 	// Use this for initialization
 	void Start () {
@@ -33,15 +40,17 @@ public class OptionsScript : MonoBehaviour {
         keyBindings.Add(Actions.DOWN, KeyCode.DownArrow);
         keyBindings.Add(Actions.INTERACT, KeyCode.X);
         keyBindings.Add(Actions.CONTINUE, KeyCode.KeypadEnter);
-	}
 
-    public Dictionary<Actions, KeyCode> GetKeyBindings()
-    {
-        return keyBindings;
+        this.KeyBindingChangedEvent += shroomTutorial.GetComponent<TextScript>().OnKeybindingChanged;
+        this.KeyBindingChangedEvent += postTutorial.GetComponent<TextScript>().OnKeybindingChanged;
+        this.KeyBindingChangedEvent += replay.GetComponent<TextScript>().OnKeybindingChanged;
+        this.KeyBindingChangedEvent += EnterToContinue.GetComponent<TextScript>().OnKeybindingChanged;
+        this.KeyBindingChangedEvent += input.GetComponent<InputScript>().OnKeybindingChanged;
+        this.KeyBindingChangedEvent += move.GetComponent<MoveScript>().OnKeybindingChanged;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         currString += Input.inputString;
         if (currString.ToLower().Contains("ok"))
@@ -49,6 +58,11 @@ public class OptionsScript : MonoBehaviour {
             Debug.Log("Done with key bind setting, returning to main menu");
             this.gameObject.SetActive(false);
             mainMenu.SetActive(true);
+
+            if (KeyBindingChangedEvent != null)
+            {
+                KeyBindingChangedEvent(this, keyBindings);
+            }
         }
         
         if (Input.GetKeyDown(KeyCode.Return) && setCurrent) //we've already set current, now time to update next one
@@ -170,8 +184,19 @@ public class OptionsScript : MonoBehaviour {
             actions[(int)currentSelected].text = "E";
             setCurrent = true;
         }
-
-        
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            keyBindings[currentSelected] = KeyCode.Space;
+            actions[(int)currentSelected].text = "Space";
+            setCurrent = true;
+        }
     }
 
+
+    // Declare the delegate (if using non-generic pattern).
+    public delegate void KeybindingChangedEventHandler(object sender, Dictionary<Actions, KeyCode> keybindings);
+
+    // Declare the event.
+    public event KeybindingChangedEventHandler KeyBindingChangedEvent;
+   
 }

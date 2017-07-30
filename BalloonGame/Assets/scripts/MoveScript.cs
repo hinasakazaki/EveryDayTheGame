@@ -20,6 +20,18 @@ public class MoveScript : MonoBehaviour {
 
     private Animator healerAnim;
 
+    private KeyCode up = KeyCode.UpArrow, down = KeyCode.DownArrow, jump = KeyCode.Space, enter = KeyCode.Return, interact = KeyCode.X, left = KeyCode.LeftArrow, right = KeyCode.RightArrow;
+    public void OnKeybindingChanged(object sender, Dictionary<OptionsScript.Actions, KeyCode> keybindings)
+    {
+        up = keybindings[OptionsScript.Actions.UP];
+        down = keybindings[OptionsScript.Actions.DOWN];
+        left = keybindings[OptionsScript.Actions.LEFT];
+        right = keybindings[OptionsScript.Actions.RIGHT];
+        jump = keybindings[OptionsScript.Actions.JUMP];
+        interact = keybindings[OptionsScript.Actions.INTERACT];
+        enter = keybindings[OptionsScript.Actions.CONTINUE];
+    }
+
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
@@ -51,7 +63,7 @@ public class MoveScript : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("LeftJoystickX") > 0)//left and right are for player character
+        if (Input.GetKey(left))//left and right are for player character
         {
             healerAnim.SetBool("walk_left", true);
             if (healer.gameObject.transform.localPosition.x > 2.88 || (attached && transform.localPosition.x < -93))// out of bounds
@@ -68,7 +80,7 @@ public class MoveScript : MonoBehaviour {
             }
 
         }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("LeftJoystickX") < 0) // figure out joystick
+        if (Input.GetKey(right)) 
         {
             healerAnim.SetBool("walk_right", true);
             if (healer.gameObject.transform.localPosition.x < -18.5 || (attached && transform.localPosition.x > -77))// bounds
@@ -84,20 +96,20 @@ public class MoveScript : MonoBehaviour {
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        if (Input.GetKeyDown(jump) && grounded)
         {
             healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 4), ForceMode2D.Impulse);
         }
-        if (Input.GetKey(KeyCode.UpArrow)) //up and down for NPC character
+        if (Input.GetKey(up)) //up and down for NPC character
         {
             if (attached) balloon.transform.position += Vector3.up * balloonSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(down))
         {
             if (attached) balloon.transform.position += Vector3.down * balloonSpeed * Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(interact))
         {
             if (inCollisionWithShroom && currMush != null)
             {
@@ -112,11 +124,11 @@ public class MoveScript : MonoBehaviour {
                 balloon.GetComponent<BalloonScript>().ChangeAttached(healer);
             }
         }
-        if (!Input.GetKey(KeyCode.LeftArrow))
+        if (!Input.GetKey(left))
         {
                 healerAnim.SetBool("walk_left", false);
         }
-        if (!Input.GetKey(KeyCode.RightArrow))
+        if (!Input.GetKey(right))
         {
             healerAnim.SetBool("walk_right", false);
         }

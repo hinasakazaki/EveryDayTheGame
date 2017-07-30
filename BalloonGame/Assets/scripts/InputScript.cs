@@ -27,6 +27,12 @@ public class InputScript : MonoBehaviour {
     private bool gameStarted = false;
     private bool notMainMenu = false;
 
+    private KeyCode Enter = KeyCode.Return;
+    public void OnKeybindingChanged(object sender, Dictionary<OptionsScript.Actions, KeyCode> keybindings)
+    {
+        Enter = keybindings[OptionsScript.Actions.CONTINUE];
+    }
+
     // Use this for initialization
     void Start() {
         counter = 0;
@@ -75,7 +81,7 @@ public class InputScript : MonoBehaviour {
         }
 
         //this is for dialog time
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(Enter))
         {
             DialogUI.GetComponent<DialogScript>().OnInput("Enter");
         }
