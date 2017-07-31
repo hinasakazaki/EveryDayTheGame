@@ -87,8 +87,10 @@
     <Compile Include="Assets\scripts\InputScript.cs" />
     <Compile Include="Assets\scripts\MoveScript.cs" />
     <Compile Include="Assets\scripts\MusicScript.cs" />
+    <Compile Include="Assets\scripts\OptionsScript.cs" />
     <Compile Include="Assets\scripts\ShroomScript.cs" />
     <Compile Include="Assets\scripts\SideScrollingScript.cs" />
+    <Compile Include="Assets\scripts\TextScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

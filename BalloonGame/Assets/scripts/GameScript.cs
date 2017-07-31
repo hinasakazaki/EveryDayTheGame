@@ -125,6 +125,9 @@ public class GameScript : MonoBehaviour {
                 case EndingID.GOOD_END:
                     sun.SetActive(true);
                     Endings.GetComponent<EndingScript>().HappyEnd();
+
+                    replay.GetComponent<Text>().color = Color.white;
+                    replay.SetActive(true);
                     break;
                 default:
                     Endings.GetComponent<EndingScript>().NeutralEnd();

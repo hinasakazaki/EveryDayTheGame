@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class OptionsScript : MonoBehaviour {
     public Text[] actions; //size 7
-    public GameObject mainMenu;
     //Jump, Left, Right, Up, Down, Interact, Continue;
     private Actions currentSelected = Actions.JUMP;
     private bool setCurrent = false;
@@ -39,7 +38,7 @@ public class OptionsScript : MonoBehaviour {
         keyBindings.Add(Actions.UP, KeyCode.UpArrow);
         keyBindings.Add(Actions.DOWN, KeyCode.DownArrow);
         keyBindings.Add(Actions.INTERACT, KeyCode.X);
-        keyBindings.Add(Actions.CONTINUE, KeyCode.KeypadEnter);
+        keyBindings.Add(Actions.CONTINUE, KeyCode.Return);
 
         this.KeyBindingChangedEvent += shroomTutorial.GetComponent<TextScript>().OnKeybindingChanged;
         this.KeyBindingChangedEvent += postTutorial.GetComponent<TextScript>().OnKeybindingChanged;
@@ -47,6 +46,9 @@ public class OptionsScript : MonoBehaviour {
         this.KeyBindingChangedEvent += EnterToContinue.GetComponent<TextScript>().OnKeybindingChanged;
         this.KeyBindingChangedEvent += input.GetComponent<InputScript>().OnKeybindingChanged;
         this.KeyBindingChangedEvent += move.GetComponent<MoveScript>().OnKeybindingChanged;
+
+        actions[(int)currentSelected].fontSize = 30;
+        actions[(int)currentSelected].color = Color.gray;
     }
 
     // Update is called once per frame
@@ -57,17 +59,19 @@ public class OptionsScript : MonoBehaviour {
         {
             Debug.Log("Done with key bind setting, returning to main menu");
             this.gameObject.SetActive(false);
-            mainMenu.SetActive(true);
 
             if (KeyBindingChangedEvent != null)
             {
                 KeyBindingChangedEvent(this, keyBindings);
             }
+            currString = "";
         }
         
         if (Input.GetKeyDown(KeyCode.Return) && setCurrent) //we've already set current, now time to update next one
         {
             actions[(int)currentSelected].fontSize = 20;
+            actions[(int)currentSelected].color = Color.black;
+
             if ((int)currentSelected == 6)
             {
                 currentSelected = 0;
@@ -77,6 +81,7 @@ public class OptionsScript : MonoBehaviour {
                 currentSelected += 1;
             }
             actions[(int)currentSelected].fontSize = 30;
+            actions[(int)currentSelected].color = Color.gray;
             setCurrent = false;
         }
 
