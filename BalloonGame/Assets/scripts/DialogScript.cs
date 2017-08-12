@@ -20,7 +20,7 @@ public class DialogScript : MonoBehaviour {
     private bool duringDecision = false;
     private bool duringInput = false;
     private string inputString = "";
-
+    private Color chooseColor = new Color(115f / 255.0f, 139f / 255.0f, 155f / 255.0f);
     // Use this for initialization
     void Start () {
         dialogObject = InitializeDialog();
@@ -65,7 +65,8 @@ public class DialogScript : MonoBehaviour {
         }
 
         curDialog = dialogObject[counter];
-       
+        DialogBody.color = Color.black;
+
         DialogName.text = (curDialog.speaker == "PlayerName") ? playerName : curDialog.speaker;
 
         if (curDialog.options == null) { 
@@ -110,6 +111,7 @@ public class DialogScript : MonoBehaviour {
         }
 
         DialogBody.text = optionsString;
+        DialogBody.color = chooseColor;
     }
 
     private void checkOptionBounds()
@@ -152,15 +154,15 @@ public class DialogScript : MonoBehaviour {
                 inputString = inputString.Substring(0, inputString.Length - 1);
                 DialogBody.text = inputString;
             }
-            else if (action == "Enter")
+            else if (!string.IsNullOrEmpty(inputString) && action == "Enter")
             {
                 duringInput = false;
-                if (counter == 4) { playerName = inputString; gameScript.SetName(playerName);  }
-                else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString;  } //?>>
+                if (counter == 4) { playerName = inputString; gameScript.SetName(playerName); }
+                else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString; } //?>>
                 counter = curDialog.next[0];
                 SwitchDialog();
             }
-            else if (action != "Up" && action != "Down") //have to black list all of the possible inputs.. yay...
+            else if (action != "Up" && action != "Down" && action != "Enter") //have to black list all of the possible inputs.. yay...
             {
                 DialogBody.color = Color.black;
                 inputString += action;
@@ -185,7 +187,7 @@ public class DialogScript : MonoBehaviour {
                                          new DialogObject("hero", "What's your name? What are you doing here?", null, new int[] {4}, false),
                                          new DialogObject("Enter  Name", "InputField", null, new int[] {5}, false),
                                          new DialogObject("PlayerName", "My name is [playerName]. I'm not sure how I ended up here..", null, new int[] {6}, false), //5
-                                         new DialogObject("hero", "Okay, [playerName], where are you from?", null, new int[] {7}, false),
+                                         new DialogObject("hero", "Okay, [playerName], where is your home?", null, new int[] {7}, false),
                                          new DialogObject("Enter  Home", "InputField", null, new int[] {8}, false),
                                          new DialogObject("hero", "That's where the evil neko-lord lives.", null, new int[] {9}, false),
                                          new DialogObject("hero", "You see, I've been freeing kittens from evil brainwashing by the neko-lord.", null, new int[] {10}, false),
@@ -229,8 +231,10 @@ public class DialogScript : MonoBehaviour {
                                         new DialogObject("hina", "I hope we can be together for the rest of our lives..", null, new int[] {37}, false),
                                         new DialogObject("hina", "Will you marry me?", null, new int[] {38}, false),
                                         new DialogObject("chris", null, new string[] {"Sure.", "Not now."}, new int[] {39, 40}, true),
-                                        new DialogObject("hina", "Good choice.", null, new int[] {-3}, false), //39
+                                        new DialogObject("hina", "Good choice.", null, new int[] {41}, false), //39
                                         new DialogObject("hina", "That's cool. Thank you for helping me today.", null, new int[] {-2}, false), //goes to neutral end
+                                        new DialogObject("hina", "Now, that was just a choice you made in game. No consequences.", null, new int[] {42}, false), //41
+                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, false), //goes to happy ending
         };
         return dialogObjects;
     }

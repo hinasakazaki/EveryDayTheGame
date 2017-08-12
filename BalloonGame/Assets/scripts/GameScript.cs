@@ -25,7 +25,7 @@ public class GameScript : MonoBehaviour {
     private string PlayerName;
     private int NekoLordIndex = 400;
     private bool ended;
-    private int catCount = 40;
+    private int catCount = 26;
     private bool[] catArray = new bool[40];
     private bool healerDied = false;
 
@@ -113,7 +113,7 @@ public class GameScript : MonoBehaviour {
                     snow.SetActive(true);
 
                     titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
-                    string tempPlayerName = (PlayerName == null || PlayerName.Length == 0) ? "You were" : PlayerName + "was";
+                    string tempPlayerName = (PlayerName == null || PlayerName.Length == 0) ? "You were" : PlayerName + " was";
                     titleText.text = healerDied ? tempPlayerName + " trapped forever. \n The end." : "The hero died. \nThe end.";
                          
                     titleText.gameObject.SetActive(true);
@@ -124,7 +124,7 @@ public class GameScript : MonoBehaviour {
                     break;
                 case EndingID.GOOD_END:
                     sun.SetActive(true);
-                    Endings.GetComponent<EndingScript>().HappyEnd();
+                    Endings.GetComponent<EndingScript>().HappyEnd(26-catCount);
 
                     replay.GetComponent<Text>().color = Color.white;
                     replay.SetActive(true);
@@ -194,6 +194,8 @@ public class GameScript : MonoBehaviour {
 
         if (ended == true && restartOptionAvailable)
         {
+            eventCounter = 0;
+            health = 0;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

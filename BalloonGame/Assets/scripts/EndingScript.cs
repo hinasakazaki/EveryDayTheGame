@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndingScript : MonoBehaviour {
 
@@ -39,8 +40,9 @@ public class EndingScript : MonoBehaviour {
         neutralEnd.SetActive(true);
     }
 
-    public void HappyEnd()
+    public void HappyEnd(int numCats)
     {
         happyEnd.SetActive(true);
+        happyEnd.GetComponent<Text>().text = string.Format("The happy pair lived in good health and cheer for many a long and prosperous days with their {0} rescued cats.\nThe end.", numCats.ToString());
     }
 }

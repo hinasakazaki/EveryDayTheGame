@@ -46,12 +46,12 @@ public class InputScript : MonoBehaviour {
         if (!gameStarted) //this is for menu option
         {
 
-            if (Input.GetKeyDown(KeyCode.UpArrow) && counter > 0) //up and down for NPC character
+            if (Input.GetKeyDown(KeyCode.UpArrow) && !notMainMenu && counter > 0) //up and down for NPC character
             {
                 counter -= 1;
                 putInSelector();
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow) && counter < 3)
+            if (Input.GetKeyDown(KeyCode.DownArrow) && !notMainMenu && counter < 3)
             {
                 counter += 1;
                 putInSelector();
