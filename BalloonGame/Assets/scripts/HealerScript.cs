@@ -20,15 +20,12 @@ public class HealerScript : MonoBehaviour {
     {
         string collisionName = collision.gameObject.name;
 
+       
         if (collisionName.Contains("ground"))
         {
             Player.GetComponent<MoveScript>().grounded = true;
         }
-        else if (collisionName.Contains("Door"))
-        {
-            Player.GetComponent<MoveScript>().OnDoorCollisionEntered();
-
-        }
+        
     }
 
 
@@ -57,8 +54,13 @@ public class HealerScript : MonoBehaviour {
         {
             Player.GetComponent<MoveScript>().OnPostCollisionEntered();
         }
-      
-       
+        else if (collisionName.Contains("Door"))
+        {
+            Player.GetComponent<MoveScript>().OnDoorCollisionEntered();
+
+        }
+
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -73,5 +75,6 @@ public class HealerScript : MonoBehaviour {
         {
             Player.GetComponent<MoveScript>().OnPostCollisionExited();
         }
+
     }
 }

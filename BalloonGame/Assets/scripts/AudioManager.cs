@@ -34,7 +34,8 @@ public class AudioManager : MonoBehaviour {
         CUTEMEOW5 = 7,
         CUTEMEOW6 = 8,
         HISS = 9,
-        ANGRYMEOW = 10
+        ANGRYMEOW = 10,
+        TENTACLE = 11
     }
 
 	// Use this for initialization

@@ -85,6 +85,19 @@ public class BalloonScript : MonoBehaviour {
         tutorialText.gameObject.SetActive(true);
     }
 
+
+    public void TriggerJumpDown()
+    {
+        heroAnim.SetBool("jump", false);
+        heroAnim.SetBool("comesDown", true);
+    }
+
+    public void TriggerUnmask()
+    {
+        heroAnim.SetBool("unmasked", true);
+    }
+
+
     public void ChangeAttached(GameObject attached)
     {
         tutorialText.gameObject.SetActive(false);

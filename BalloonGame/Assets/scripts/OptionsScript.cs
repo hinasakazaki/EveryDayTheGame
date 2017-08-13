@@ -6,7 +6,7 @@ using UnityEngine;
 public class OptionsScript : MonoBehaviour {
     public Text[] actions; //size 7
     //Jump, Left, Right, Up, Down, Interact, Continue;
-    private Actions currentSelected = Actions.JUMP;
+    private Actions currentSelected = Actions.UP;
     private bool setCurrent = false;
     private string currString;
 
@@ -19,11 +19,11 @@ public class OptionsScript : MonoBehaviour {
 
     public enum Actions
     {
-        JUMP,
-        LEFT,
-        RIGHT,
         UP,
         DOWN,
+        LEFT,
+        RIGHT,
+        JUMP,
         INTERACT,
         CONTINUE
     }
@@ -83,6 +83,31 @@ public class OptionsScript : MonoBehaviour {
             actions[(int)currentSelected].fontSize = 30;
             actions[(int)currentSelected].color = Color.gray;
             setCurrent = false;
+        }
+
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            keyBindings[currentSelected] = KeyCode.UpArrow;
+            actions[(int)currentSelected].text = "Up Arrow";
+            setCurrent = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            keyBindings[currentSelected] = KeyCode.DownArrow;
+            actions[(int)currentSelected].text = "Down Arrow";
+            setCurrent = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            keyBindings[currentSelected] = KeyCode.RightArrow;
+            actions[(int)currentSelected].text = "Right Arrow";
+            setCurrent = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            keyBindings[currentSelected] = KeyCode.LeftArrow;
+            actions[(int)currentSelected].text = "Left Arrow";
+            setCurrent = true;
         }
 
         else if (Input.GetKeyDown(KeyCode.W))

@@ -52,7 +52,12 @@ public class DialogScript : MonoBehaviour {
             case -3:
                 gameScript.TriggerEnding(GameScript.EndingID.GOOD_END);
                 break;
-
+            case 31:
+                gameScript.TriggerJumpDown();
+                break;
+            case 35:
+                gameScript.TriggerUnmask();
+                break;
             default:
                 break;
         }
@@ -213,7 +218,7 @@ public class DialogScript : MonoBehaviour {
                                          new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {24, 22}, true),
 
                                          //Level 5
-                                         new DialogObject("hero", "This is it. [playerhome].", null, new int[] {25}, false), //24
+                                         new DialogObject("hero", "This is it. [playerHome].", null, new int[] {25}, false), //24
                                         new DialogObject("neko 1ord", "They are coming!!! They will never defeat me! My minions, attack!", null, new int[] {26}, false),
                                         new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {27, 26}, true),
 
@@ -222,10 +227,10 @@ public class DialogScript : MonoBehaviour {
                                         new DialogObject("hero", "Well, I think that was it.", null, new int[] {29}, false),
 
                                         new DialogObject("cats", "Thank you brave hero for freeing us!", null, new int[] {30}, false),
-                                        new DialogObject("hero", "Thank my friend here, PlayerName.", null, new int[] {31}, false),
+                                        new DialogObject("hero", "Thank my friend here, [playerName].", null, new int[] {31}, false),
                                         new DialogObject("hero", "Well...", null, new int[] {32}, false),
                                         new DialogObject("hero", "Actually, I haven't known you for just today. I've known you for a long time.", null, new int[] {33}, false),
-                                        new DialogObject("hero", "In fact, I know your name isn’t PlayerName, it's Chris.", null, new int[] {34}, false),
+                                        new DialogObject("hero", "In fact, I know your name isn’t [playerName], it's Chris.", null, new int[] {34}, false),
                                         new DialogObject("hero", "And my name is Hina.", null, new int[] {35}, false),
                                         new DialogObject("hina", "You've kept me safe and alive through our journey today, and I'm so thankful.", null, new int[] {36}, false),
                                         new DialogObject("hina", "I hope we can be together for the rest of our lives..", null, new int[] {37}, false),
@@ -234,7 +239,7 @@ public class DialogScript : MonoBehaviour {
                                         new DialogObject("hina", "Good choice.", null, new int[] {41}, false), //39
                                         new DialogObject("hina", "That's cool. Thank you for helping me today.", null, new int[] {-2}, false), //goes to neutral end
                                         new DialogObject("hina", "Now, that was just a choice you made in game. No consequences.", null, new int[] {42}, false), //41
-                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, false), //goes to happy ending
+                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, true), //goes to happy ending
         };
         return dialogObjects;
     }

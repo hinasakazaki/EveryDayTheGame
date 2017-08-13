@@ -80,6 +80,7 @@ public class GameScript : MonoBehaviour {
 
     public void OnTentacleCollided()
     {
+        Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.TENTACLE);
         healerDied = true;
         TriggerEnding(EndingID.BAD_END);
     }
@@ -114,7 +115,7 @@ public class GameScript : MonoBehaviour {
 
                     titleText.color = new Color32(0x9F, 0x1B, 0x1E, 0xFF);
                     string tempPlayerName = (PlayerName == null || PlayerName.Length == 0) ? "You were" : PlayerName + " was";
-                    titleText.text = healerDied ? tempPlayerName + " trapped forever. \n The end." : "The hero died. \nThe end.";
+                    titleText.text = healerDied ? tempPlayerName + " trapped forever. \nThe end." : "The hero died. \nThe end.";
                          
                     titleText.gameObject.SetActive(true);
 
@@ -124,7 +125,10 @@ public class GameScript : MonoBehaviour {
                     break;
                 case EndingID.GOOD_END:
                     sun.SetActive(true);
-                    Endings.GetComponent<EndingScript>().HappyEnd(26-catCount);
+                    Endings.GetComponent<EndingScript>().HappyEnd((int)CatSlider.value);
+
+                    titleText.text = "";
+                    titleText.gameObject.SetActive(true);
 
                     replay.GetComponent<Text>().color = Color.white;
                     replay.SetActive(true);
@@ -184,6 +188,7 @@ public class GameScript : MonoBehaviour {
                 break;
             case 4:
                 Debug.Log("EventCounter 4 - nekolord exorcised");
+                TriggerStartScroll(true);
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
                 DialogObject.GetComponent<DialogScript>().GetOutOfPause();
                 DuringDialog = true;
@@ -209,6 +214,16 @@ public class GameScript : MonoBehaviour {
         }
     }
 
+    public void TriggerJumpDown()
+    {
+        balloon.GetComponent<BalloonScript>().TriggerJumpDown();
+    }
+
+    public void TriggerUnmask()
+    {
+        balloon.GetComponent<BalloonScript>().TriggerUnmask();
+    }
+
     //trigger events
     private void TriggerHealEvent0()
     {
@@ -231,13 +246,18 @@ public class GameScript : MonoBehaviour {
         balloon.GetComponent<BalloonScript>().StartGrabTutorial();
     }
 
-    private void TriggerStartScroll()
+    private void TriggerStartScroll(bool stop = false)
     {
         DuringDialog = false;
 
         Debug.Log("currlevel" + currLevel);
         Debug.Log("currlevel" + levelBGs[currLevel]);
         levelBGs[currLevel].GetComponent<SideScrollingScript>().StartScroll();
+
+        if (stop)
+        {
+            levelBGs[currLevel].GetComponent<SideScrollingScript>().StopScroll();
+        }
     }
 
     //complete events

@@ -32,6 +32,7 @@ public class InputScript : MonoBehaviour {
     public void OnKeybindingChanged(object sender, Dictionary<OptionsScript.Actions, KeyCode> keybindings)
     {
         Enter = keybindings[OptionsScript.Actions.CONTINUE];
+        notMainMenu = false;
     }
 
     // Use this for initialization
@@ -70,6 +71,7 @@ public class InputScript : MonoBehaviour {
                         notMainMenu = !notMainMenu;
                         break;
                     case 2:
+                        notMainMenu = true;
                         options.SetActive(true);
                         break;
                     case 3:
