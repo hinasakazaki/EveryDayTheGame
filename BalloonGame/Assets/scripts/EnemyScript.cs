@@ -33,11 +33,17 @@ public class EnemyScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+      //  doCollisionWithRadar();
+	}
+
+    private void doCollisionWithRadar()
+    {
         line.material = new Material(Shader.Find("Sprites/Default"));
         line.startColor = Color.green;
         line.endColor = Color.yellow;
         line.widthMultiplier = 0.1f;
         line.sortingOrder = 1;
+
 
         if (radar && this.gameObject.transform.position.x < 441 && this.gameObject.transform.position.x > 425)
         {
@@ -119,9 +125,9 @@ public class EnemyScript : MonoBehaviour {
             {
                 colliding = false;
             }
-        } 
-	}
+        }
 
+    }
     public void Exorcised()
     {
         this.radar = false;

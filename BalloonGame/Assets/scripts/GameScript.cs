@@ -192,6 +192,7 @@ public class GameScript : MonoBehaviour {
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
                 DialogObject.GetComponent<DialogScript>().GetOutOfPause();
                 DuringDialog = true;
+                eventCounter += 1;
                 break;
             default:
                 break;

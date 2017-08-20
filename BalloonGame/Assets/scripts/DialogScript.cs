@@ -235,11 +235,12 @@ public class DialogScript : MonoBehaviour {
                                         new DialogObject("hina", "You've kept me safe and alive through our journey today, and I'm so thankful.", null, new int[] {36}, false),
                                         new DialogObject("hina", "I hope we can be together for the rest of our lives..", null, new int[] {37}, false),
                                         new DialogObject("hina", "Will you marry me?", null, new int[] {38}, false),
-                                        new DialogObject("chris", null, new string[] {"Sure.", "Not now."}, new int[] {39, 40}, true),
+                                        new DialogObject("chris", null, new string[] {"Sure.", "Not now."}, new int[] {39, 40}, false),
                                         new DialogObject("hina", "Good choice.", null, new int[] {41}, false), //39
                                         new DialogObject("hina", "That's cool. Thank you for helping me today.", null, new int[] {-2}, false), //goes to neutral end
                                         new DialogObject("hina", "Now, that was just a choice you made in game. No consequences.", null, new int[] {42}, false), //41
-                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, false), //goes to happy ending
+                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, true), //goes to happy ending
+                                        new DialogObject("", "", null, new int[] {-3}, true)
         };
         return dialogObjects;
     }
