@@ -88,7 +88,12 @@ public class BalloonScript : MonoBehaviour {
 
     public void TriggerJumpDown()
     {
+        hero.GetComponent<HeroScript>().EndShooting();
+
+        this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-7.81f, 5.47f, 0);
+        //transform.localPosition = Vector3.zero;
         heroAnim.SetBool("jump", false);
+        heroAnim.SetBool("unmasked", false);
         heroAnim.SetBool("comesDown", true);
     }
 

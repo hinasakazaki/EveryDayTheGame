@@ -35,6 +35,11 @@ public class HeroScript : MonoBehaviour {
         shooting = true;
     }
 
+    public void EndShooting()
+    {
+        shooting = false;
+    }
+
     public void UpdateFrequency(int health)
     {
         freq = health;

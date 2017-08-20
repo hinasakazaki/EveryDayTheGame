@@ -239,7 +239,7 @@ public class DialogScript : MonoBehaviour {
                                         new DialogObject("hina", "Good choice.", null, new int[] {41}, false), //39
                                         new DialogObject("hina", "That's cool. Thank you for helping me today.", null, new int[] {-2}, false), //goes to neutral end
                                         new DialogObject("hina", "Now, that was just a choice you made in game. No consequences.", null, new int[] {42}, false), //41
-                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, true), //goes to happy ending
+                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, false), //goes to happy ending
         };
         return dialogObjects;
     }
