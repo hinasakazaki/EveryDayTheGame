@@ -189,7 +189,7 @@ public class GameScript : MonoBehaviour {
             case 4:
                 Debug.Log("EventCounter 4 - nekolord exorcised");
                 TriggerStartScroll(true);
-                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
+                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.AT_HOME);
                 DialogObject.GetComponent<DialogScript>().GetOutOfPause();
                 DuringDialog = true;
                 eventCounter += 1;

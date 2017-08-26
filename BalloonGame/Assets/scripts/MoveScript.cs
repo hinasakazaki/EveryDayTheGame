@@ -98,7 +98,7 @@ public class MoveScript : MonoBehaviour {
         }
         if (Input.GetKeyDown(jump) && grounded)
         {
-            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 4), ForceMode2D.Impulse);
+            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 4), ForceMode2D.Impulse);
         }
         if (Input.GetKey(up)) //up and down for NPC character
         {
