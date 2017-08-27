@@ -96,15 +96,16 @@ public class MoveScript : MonoBehaviour {
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
         }
+        Debug.Log(balloon.transform.localPosition.y);
         if (Input.GetKeyDown(jump) && grounded)
         {
             healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 4), ForceMode2D.Impulse);
         }
-        if (Input.GetKey(up)) //up and down for NPC character
+        if (Input.GetKey(up) && balloon.transform.localPosition.y < 7) //up and down for NPC character -49.95
         {
             if (attached) balloon.transform.position += Vector3.up * balloonSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(down))
+        if (Input.GetKey(down) && balloon.transform.localPosition.y > -3)
         {
             if (attached) balloon.transform.position += Vector3.down * balloonSpeed * Time.deltaTime;
         }

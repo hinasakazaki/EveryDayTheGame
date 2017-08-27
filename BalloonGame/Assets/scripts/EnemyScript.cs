@@ -19,26 +19,36 @@ public class EnemyScript : MonoBehaviour {
     public float radius;
 
     private float yValue;
+    private bool notInvoked;
 
     // Use this for initialization
     void Start () {
-        eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
-        InvokeRepeating("LaunchProjectile", 0f, .1f);
+        notInvoked = true;
     }
 
     // Update is called once per frame
     void Update() {
-        
+
+        if (notInvoked && this.gameObject.transform.position.x < 440 && this.gameObject.transform.position.x > 426)
+        {
+            InvokeRepeating("LaunchProjectile", 0f, Random.Range(0.2f, 0.6f)); //we could also make it random within .2f and .6f
+        }
+
+
     }
 
     void LaunchProjectile()
     {
-        if(radar && this.gameObject.transform.position.x < 441 && this.gameObject.transform.position.x > 425)
+        notInvoked = false;
+        if (this.radar == false)
         {
-            GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
-
+            return;
         }
+
+        eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
+        GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
     }
+
     public void Exorcised()
     {
         this.radar = false;

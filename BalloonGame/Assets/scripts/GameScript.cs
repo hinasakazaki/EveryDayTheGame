@@ -288,6 +288,11 @@ public class GameScript : MonoBehaviour {
 
     public void TakeHealOrDamage(int x)
     {
+        if (eventCounter >= 5)
+        {
+            return;
+        }
+
         health += x;
         if (health > 100)
         {

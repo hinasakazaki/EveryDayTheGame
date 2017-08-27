@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CatBulletScript : MonoBehaviour {
 
-    public float speed = 5.0f;
+    public float speed = 1.0f; //maybe randomize between 1 and 3
 
-    public float frequency = 0.5f;  // Speed of sine movement
-    public float magnitude = 0.5f;   // Size of sine movement
+    public float frequency = 2f;  // Speed of sine movement, maybe randomize between 2 and 1
+    public float magnitude = .01f;   // Size of sine movement, maybe randomize between 0.03 and 0.01
     private Vector3 axis;
 
     private Vector3 pos;
@@ -16,7 +16,7 @@ public class CatBulletScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         axis = Vector3.up;
-        Destroy(gameObject, 2.0f);
+        Destroy(gameObject, 3.0f);
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class CatBulletScript : MonoBehaviour {
         GameObject collider = collision.gameObject;
          if (!colliding && collider.GetComponent<HeroScript>() != null && collider.tag == "Hero")
             {
-                collider.GetComponent<HeroScript>().TakeDamage(10);
+                collider.GetComponent<HeroScript>().TakeDamage(1 );
                 colliding = true;
             }
          else
