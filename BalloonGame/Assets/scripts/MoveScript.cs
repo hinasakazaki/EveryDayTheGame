@@ -96,7 +96,6 @@ public class MoveScript : MonoBehaviour {
                 transform.position += Vector3.right * speed * Time.deltaTime;
             }
         }
-        Debug.Log(balloon.transform.localPosition.y);
         if (Input.GetKeyDown(jump) && grounded)
         {
             healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 4), ForceMode2D.Impulse);
