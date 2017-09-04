@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogScript : MonoBehaviour {
-
     public Text DialogName;
     public Text DialogBody;
     public GameObject BGDialog;
@@ -14,8 +13,8 @@ public class DialogScript : MonoBehaviour {
     int counter = 0;
     int optionCounter = 0;
     DialogObject curDialog;
-    private string playerName;
-    private string playerHome;
+    public static string playerName;
+    public static string playerHome;
 
     private bool duringDecision = false;
     private bool duringInput = false;
@@ -25,6 +24,12 @@ public class DialogScript : MonoBehaviour {
     void Start () {
         dialogObject = InitializeDialog();
         SwitchDialog();
+        if (playerName != null && playerHome != null)
+        {
+            gameScript.SimuateStartSequence();
+            curDialog = new DialogObject("", "", null, new int[] { 17 }, false);
+            GetOutOfPause();
+        }
     }
 	
 	// Update is called once per frame
@@ -72,7 +77,7 @@ public class DialogScript : MonoBehaviour {
         curDialog = dialogObject[counter];
         DialogBody.color = Color.black;
 
-        DialogName.text = (curDialog.speaker == "PlayerName") ? playerName : curDialog.speaker;
+        DialogName.text = (curDialog.speaker == "PlayerName") ? playerName : curDialog.speaker; 
 
         if (curDialog.options == null) { 
             if (curDialog.dialog == "InputField")
@@ -162,8 +167,8 @@ public class DialogScript : MonoBehaviour {
             else if (!string.IsNullOrEmpty(inputString) && action == "Enter")
             {
                 duringInput = false;
-                if (counter == 4) { playerName = inputString; gameScript.SetName(playerName); }
-                else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString; } //?>>
+                if (counter == 4) { playerName = inputString; gameScript.SetName(playerName);  }
+                else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString; } 
                 counter = curDialog.next[0];
                 SwitchDialog();
             }

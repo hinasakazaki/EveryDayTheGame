@@ -19,6 +19,7 @@ public class GameScript : MonoBehaviour {
     public GameObject gameUI;
     public Text titleText;
     public GameObject snow;
+    public GameObject tutorialShroom;
 
     public bool DuringDialog { private set; get; }
 
@@ -283,7 +284,11 @@ public class GameScript : MonoBehaviour {
         Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.HEAL);
         TakeHealOrDamage(100);
         
-        if (eventCounter == 0) { CompletedEvent0();  }
+        if (eventCounter == 0)
+        {
+            balloon.GetComponent<BalloonScript>().heroHealed();
+            CompletedEvent0();
+        }
     }
 
     public void TakeHealOrDamage(int x)
@@ -355,5 +360,23 @@ public class GameScript : MonoBehaviour {
             eventCounter += 1;
             TriggerEvent();
         }
+    }
+
+    public void SimuateStartSequence()
+    {
+        balloon.GetComponent<BalloonScript>().heroHealed();
+        tutorialShroom.GetComponent<ShroomScript>().getConsumed();
+        player.transform.position += Vector3.right*3;
+        TakeHealOrDamage(100);
+
+        DuringDialog = true;
+        eventCounter += 1;
+        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
+ 
+        DuringDialog = true;
+        eventCounter += 1;
+
+        player.GetComponent<MoveScript>().ChangeAttached();
+        eventCounter = 3;
     }
 }
