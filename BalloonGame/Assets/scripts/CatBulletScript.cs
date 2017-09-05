@@ -20,7 +20,7 @@ public class CatBulletScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    public virtual void Update () {
         transform.position += Vector3.left * speed * Time.deltaTime;
         transform.position += axis * Mathf.Sin(Time.time * frequency) * magnitude;
     }

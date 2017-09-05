@@ -17,13 +17,15 @@ public class EnemyScript : MonoBehaviour {
 
     public int segments;
     public float radius;
-
     private float yValue;
     private bool notInvoked;
+    private int numBullets = 6;
 
     // Use this for initialization
     void Start () {
         notInvoked = true;
+     
+       
     }
 
     // Update is called once per frame
@@ -40,19 +42,33 @@ public class EnemyScript : MonoBehaviour {
     void LaunchProjectile()
     {
         notInvoked = false;
-        if (this.radar == false)
+        if (this.radar == false || GameScript.ended)
         {
             return;
         }
 
-        eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
-        GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
+        
+        if (index == 400)
+        {
+            eyePosition = new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z);
+            GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
+        }
+        
+        else
+        {
+            eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
+            GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
+        }
     }
+
 
     public void Exorcised()
     {
-        this.radar = false;
 //        this.line.enabled = false;
+        if (!(this.gameObject.transform.position.x < 450 && this.gameObject.transform.position.x > 410))
+        {
+            return;
+        }
 
         this.transform.parent = healer.transform;
         this.transform.localScale = new Vector3(1f, 1f, 0f);
@@ -64,6 +80,7 @@ public class EnemyScript : MonoBehaviour {
         {
             this.GetComponentInParent<GameScript>().OnCatExorcised(index);
         }
+        this.radar = false;
     }
 
 

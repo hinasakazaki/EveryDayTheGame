@@ -53,7 +53,7 @@ public class MoveScript : MonoBehaviour {
 
         if (DialogScript.playerHome != null && DialogScript.playerName != null)
         {
-            healer.transform.position += Vector3.right * 3;
+            healer.transform.position += Vector3.right * 7;
         }
     }
 

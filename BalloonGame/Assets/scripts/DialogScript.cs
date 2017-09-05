@@ -23,13 +23,37 @@ public class DialogScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         dialogObject = InitializeDialog();
-        SwitchDialog();
+       
         if (playerName != null && playerHome != null)
         {
             gameScript.SimuateStartSequence();
-            curDialog = new DialogObject("", "", null, new int[] { 17 }, false);
+            int levelint = 17;
+            switch  (GameScript.currLevel)
+            {
+                case 0:
+                    levelint = 17;
+                    break;
+                case 1:
+                    levelint = 19;
+                    break;
+                case 2:
+                    levelint = 21;
+                    break;
+                case 3:
+                    levelint = 23;
+                    break;
+                case 4:
+                    levelint = 25;
+                    break;
+                default:
+                    levelint = 17;
+                    break;
+            }
+            curDialog = new DialogObject("", "", null, new int[] { levelint }, false);
             GetOutOfPause();
         }
+
+        SwitchDialog();
     }
 	
 	// Update is called once per frame
@@ -230,7 +254,7 @@ public class DialogScript : MonoBehaviour {
 
                                         new DialogObject("neko 1ord", "meow~ <3", null, new int[] {29}, false),
 
-                                        new DialogObject("hero", "Well, I think that was it.", null, new int[] {30}, false),
+                                        new DialogObject("hero", "Well, I think that was it.", null, new int[] {30}, false), //29
 
                                         new DialogObject("cats", "Thank you brave hero for freeing us!", null, new int[] {31}, false),
                                         new DialogObject("hero", "Thank my friend here, [playerName].", null, new int[] {32}, false),

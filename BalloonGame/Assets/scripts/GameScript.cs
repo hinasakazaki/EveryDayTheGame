@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour {
+    //static variables
+    public static bool ended;
+    public static int currLevel;
 
     public Slider HealthSlider;
     public GameObject DialogObject;
@@ -20,12 +23,12 @@ public class GameScript : MonoBehaviour {
     public Text titleText;
     public GameObject snow;
     public GameObject tutorialShroom;
+    public GameObject tutorialTextBalloon;
 
     public bool DuringDialog { private set; get; }
 
     private string PlayerName;
     private int NekoLordIndex = 400;
-    private bool ended;
     private int catCount = 26;
     private bool[] catArray = new bool[40];
     private bool healerDied = false;
@@ -34,7 +37,6 @@ public class GameScript : MonoBehaviour {
     private string[] events = {"Heal1", "Grab", "ScrollStart"};
     private string[] titles = { "Level 1: Morning Clouds", "Level 2: Tiled Prison", "Level 3: Setting Sun", "Level 4: Snowy Darkness", "Level 5: Home" };
     private static int eventCounter = 0;
-    private int currLevel = 0;
 
     public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
@@ -49,6 +51,7 @@ public class GameScript : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        ended = false;
         healerDied = false;
         DuringDialog = true;
 
@@ -56,6 +59,14 @@ public class GameScript : MonoBehaviour {
         DialogObject.SetActive(true);
         player = balloon.transform.parent.gameObject;
         firstLocation = player.transform.position;
+
+        if (currLevel != 0)
+        {
+            levelBGs[0].SetActive(false);
+            sun.SetActive(false);
+            currLevel -= 1;
+            LoadNewLevel(true);
+        }
     }
 
     // Update is called once per frame
@@ -86,6 +97,15 @@ public class GameScript : MonoBehaviour {
         TriggerEnding(EndingID.BAD_END);
     }
 
+    private void RemoveBullets()
+    {
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+        for (int i = 0; i < bullets.Length; i++)
+        {
+            Destroy(bullets[i]);
+        }
+    }
+
     public void TriggerEnding(EndingID ending)
     {
         if (!ended)
@@ -99,6 +119,8 @@ public class GameScript : MonoBehaviour {
             HealthSlider.enabled = false;
             levelBGs[currLevel].SetActive(false);
             GameObject replay = titleText.gameObject.transform.FindChild("ReplayText").gameObject;
+
+            RemoveBullets();
 
             switch (ending)
             {
@@ -157,6 +179,12 @@ public class GameScript : MonoBehaviour {
         yield return new WaitForSeconds(5);
         restartOption.SetActive(true);
         restartOptionAvailable = true;
+    }
+   
+    IEnumerator SetTutorialTextInactive()
+    {
+        yield return new WaitForSeconds(5);
+        tutorialTextBalloon.SetActive(false);
     }
 
     public void TriggerEvent()
@@ -270,11 +298,15 @@ public class GameScript : MonoBehaviour {
         eventCounter += 1;
         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
     }
+
     public void CompletedEvent1()
     {
         DuringDialog = true;
         DialogObject.GetComponent<DialogScript>().GetOutOfPause();
         eventCounter += 1;
+
+        tutorialTextBalloon.SetActive(true);
+        StartCoroutine(SetTutorialTextInactive());
     }
 
     //general events
@@ -313,7 +345,7 @@ public class GameScript : MonoBehaviour {
         balloon.transform.GetChild(0).gameObject.GetComponent<HeroScript>().UpdateFrequency(health);
     }
 
-    public void LoadNewLevel()
+    public void LoadNewLevel(bool fromRestart = false)
     {
         DuringDialog = true;
         switch (currLevel)
@@ -344,7 +376,11 @@ public class GameScript : MonoBehaviour {
 
         //set player back to usual location
         player.transform.position = firstLocation;
-        DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+        
+        if (!fromRestart)
+        {
+            DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+        }
     }
 
     public void OnCatExorcised(int i)
@@ -364,19 +400,19 @@ public class GameScript : MonoBehaviour {
 
     public void SimuateStartSequence()
     {
+      
         balloon.GetComponent<BalloonScript>().heroHealed();
         tutorialShroom.GetComponent<ShroomScript>().getConsumed();
-        player.transform.position += Vector3.right*3;
         TakeHealOrDamage(100);
+        eventCounter += 1;
 
         DuringDialog = true;
-        eventCounter += 1;
+        eventCounter += 1; 
         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
  
         DuringDialog = true;
         eventCounter += 1;
 
         player.GetComponent<MoveScript>().ChangeAttached();
-        eventCounter = 3;
     }
 }
