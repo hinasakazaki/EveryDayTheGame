@@ -13,13 +13,13 @@ public class EnemyScript : MonoBehaviour {
     private LineRenderer line;
     private Vector3 eyePosition;
     private RaycastHit2D hit;
-    GameObject hitObject;
 
     public int segments;
     public float radius;
     private float yValue;
     private bool notInvoked;
-    private int numBullets = 6;
+
+    private int bossHealth = 100;
 
     // Use this for initialization
     void Start () {
@@ -42,7 +42,7 @@ public class EnemyScript : MonoBehaviour {
     void LaunchProjectile()
     {
         notInvoked = false;
-        if (this.radar == false || GameScript.ended)
+        if (this.radar == false || GameScript.ended || !this.gameObject.activeSelf || GameScript.nekolordExorcised)
         {
             return;
         }
@@ -68,6 +68,19 @@ public class EnemyScript : MonoBehaviour {
         if (!(this.gameObject.transform.position.x < 450 && this.gameObject.transform.position.x > 410))
         {
             return;
+        }
+
+        if (index == 400)
+        {
+            if (bossHealth > 0)
+            {
+                bossHealth -= 5;
+                if (this.GetComponentInParent<GameScript>() != null)
+                {
+                    this.GetComponentInParent<GameScript>().OnBossDamaged();
+                }
+                return;
+            }
         }
 
         this.transform.parent = healer.transform;

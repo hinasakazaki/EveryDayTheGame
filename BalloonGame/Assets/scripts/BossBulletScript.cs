@@ -17,6 +17,12 @@ public class BossBulletScript : CatBulletScript {
 
     // Update is called once per frame
     public override void Update () {
+
+        if (GameScript.nekolordExorcised)
+        {
+            Destroy(this);
+        }
+
         time += Time.deltaTime*speed;
 
         float x = Mathf.Cos(time)*r;

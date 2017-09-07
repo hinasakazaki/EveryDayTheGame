@@ -30,10 +30,11 @@ public class CatBulletScript : MonoBehaviour {
         GameObject collider = collision.gameObject;
          if (!colliding && collider.GetComponent<HeroScript>() != null && collider.tag == "Hero")
             {
-                collider.GetComponent<HeroScript>().TakeDamage(1 );
+                collider.GetComponent<HeroScript>().TakeDamage(5);
                 colliding = true;
-            }
-         else
+                Destroy(this.gameObject);
+        }
+        else
         {
             colliding = false;
         }

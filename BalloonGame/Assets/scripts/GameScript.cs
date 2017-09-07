@@ -8,6 +8,14 @@ public class GameScript : MonoBehaviour {
     //static variables
     public static bool ended;
     public static int currLevel;
+    public static float longestTrain;
+    public static int above95;
+    public static int below95;
+    public static int tentacleTrapped;
+    public static bool nekolordExorcised;
+
+    private static int health;
+    private static int eventCounter = 0;
 
     public Slider HealthSlider;
     public GameObject DialogObject;
@@ -17,6 +25,7 @@ public class GameScript : MonoBehaviour {
     public GameObject balloon;
     public GameObject Endings;
     public Slider CatSlider;
+    public Slider BossSlider;
     public Image damageImage;
     public GameObject sun;
     public GameObject gameUI;
@@ -33,10 +42,8 @@ public class GameScript : MonoBehaviour {
     private bool[] catArray = new bool[40];
     private bool healerDied = false;
 
-    private static int health;
     private string[] events = {"Heal1", "Grab", "ScrollStart"};
     private string[] titles = { "Level 1: Morning Clouds", "Level 2: Tiled Prison", "Level 3: Setting Sun", "Level 4: Snowy Darkness", "Level 5: Home" };
-    private static int eventCounter = 0;
 
     public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
@@ -75,6 +82,7 @@ public class GameScript : MonoBehaviour {
         {
             sun.transform.Rotate(0, 0, 0.2f);
         }
+
         HealthSlider.value = health;
 
         if (health <= 0)
@@ -83,6 +91,18 @@ public class GameScript : MonoBehaviour {
         }
 
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+
+        if (!ended)
+        {
+            if (health >= 95)
+            {
+                above95 += 1;
+            }
+            else
+            {
+                below95 += 1;
+            }
+        }
     }
 
     public void SetName(string pn)
@@ -112,6 +132,13 @@ public class GameScript : MonoBehaviour {
         {
             ended = true;
 
+            //save stats
+            if (longestTrain < CatSlider.value)
+            {
+                longestTrain = CatSlider.value;
+            }
+            
+
             //remove everything in the game
             gameUI.SetActive(false);
             player.SetActive(false);
@@ -126,6 +153,10 @@ public class GameScript : MonoBehaviour {
             {
                 case EndingID.BAD_END:
                     Endings.GetComponent<EndingScript>().BadEnd(healerDied);
+                    if (healerDied)
+                    {
+                        tentacleTrapped += 1;
+                    }
                     if (currLevel == 4)
                     {
                         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS_TROMBONE);
@@ -147,6 +178,7 @@ public class GameScript : MonoBehaviour {
                     //9F1B1EFF
                     break;
                 case EndingID.GOOD_END:
+
                     sun.SetActive(true);
                     Endings.GetComponent<EndingScript>().HappyEnd((int)CatSlider.value);
 
@@ -222,6 +254,7 @@ public class GameScript : MonoBehaviour {
                 DialogObject.GetComponent<DialogScript>().GetOutOfPause();
                 DuringDialog = true;
                 eventCounter += 1;
+                RemoveBullets();
                 break;
             default:
                 break;
@@ -251,6 +284,7 @@ public class GameScript : MonoBehaviour {
 
     public void TriggerUnmask()
     {
+        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
         balloon.GetComponent<BalloonScript>().TriggerUnmask();
     }
 
@@ -314,7 +348,7 @@ public class GameScript : MonoBehaviour {
     {
         mush.GetComponent<ShroomScript>().getConsumed();
         Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.HEAL);
-        TakeHealOrDamage(100);
+        TakeHealOrDamage(25);
         
         if (eventCounter == 0)
         {
@@ -353,7 +387,6 @@ public class GameScript : MonoBehaviour {
             case 0: //going to soda
                 sun.SetActive(false);
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING1);
-                eventCounter += 1;
                 break;
             case 1: //going to japan
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING3);
@@ -365,6 +398,7 @@ public class GameScript : MonoBehaviour {
             case 3: //going to home
                 snow.SetActive(false);
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.RISKS);
+                BossSlider.transform.parent.gameObject.SetActive(true);
                 break;
             default:
                 break;
@@ -383,6 +417,11 @@ public class GameScript : MonoBehaviour {
         }
     }
 
+    public void OnBossDamaged()
+    {
+        BossSlider.value -= 5;
+    }
+
     public void OnCatExorcised(int i)
     {
         if (i != NekoLordIndex && !catArray[i])
@@ -393,6 +432,7 @@ public class GameScript : MonoBehaviour {
         }
         else if (i == NekoLordIndex)
         {
+            nekolordExorcised = true;
             eventCounter += 1;
             TriggerEvent();
         }
@@ -400,15 +440,17 @@ public class GameScript : MonoBehaviour {
 
     public void SimuateStartSequence()
     {
-      
+        if (currLevel == 0)
+        {
+            tutorialShroom.GetComponent<ShroomScript>().getConsumed();
+            Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
+        }
         balloon.GetComponent<BalloonScript>().heroHealed();
-        tutorialShroom.GetComponent<ShroomScript>().getConsumed();
         TakeHealOrDamage(100);
         eventCounter += 1;
 
         DuringDialog = true;
         eventCounter += 1; 
-        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
  
         DuringDialog = true;
         eventCounter += 1;

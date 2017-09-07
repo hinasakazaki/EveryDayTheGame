@@ -263,13 +263,11 @@ public class DialogScript : MonoBehaviour {
                                         new DialogObject("hero", "In fact, I know your name isn’t [playerName], it's Chris.", null, new int[] {35}, false),
                                         new DialogObject("hero", "And my name is Hina.", null, new int[] {36}, false),
                                         new DialogObject("hina", "You've kept me safe and alive through our journey today, and I'm so thankful.", null, new int[] {37}, false),
-                                        new DialogObject("hina", "I hope we can be together for the rest of our lives..", null, new int[] {38}, false),
+                                        new DialogObject("hina", "You make me the happiest. I hope we can be together for the rest of our lives..", null, new int[] {38}, false),
                                         new DialogObject("hina", "Let's get married.", null, new int[] {39}, false),
-                                        new DialogObject("chris", null, new string[] {"Sure.", "Not now."}, new int[] {40, 41}, false),
-                                        new DialogObject("hina", "Good choice.", null, new int[] {42}, false), //40
+                                        new DialogObject("chris", null, new string[] {"Sure.", "No thanks."}, new int[] {40, 41}, false),
+                                        new DialogObject("hina", "Good choice.", null, new int[] {-3}, true), //40
                                         new DialogObject("hina", "That's cool. Thank you for helping me today.", null, new int[] {-2}, false), //goes to neutral end
-                                        new DialogObject("hina", "Now, that was just a choice you made in game. No consequences.", null, new int[] {43}, false), //42
-                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, true), //goes to happy ending
                                         new DialogObject("", "", null, new int[] {-3}, true)
         };
         return dialogObjects;

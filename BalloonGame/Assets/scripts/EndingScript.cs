@@ -4,13 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EndingScript : MonoBehaviour {
-
+    
     public GameObject healerDead;
     public GameObject heroDead;
     public GameObject neutralEnd;
     public GameObject happyEnd;
-    public GameObject happyText;
+    public GameObject happyEndGame;
+    public GameObject happyEndUI;
+    public Text happyText;
     public Image fade;
+
+    public Text catTrain;
+    public Text tentacleCount;
+    public Text healthAbove95;
+    public GameObject reportCard; //maybe fade in?
+
 
 	// Use this for initialization
 	void Start () {
@@ -44,9 +52,22 @@ public class EndingScript : MonoBehaviour {
 
     public void HappyEnd(int numCats)
     {
-        happyEnd.SetActive(true);
-        happyText.SetActive(true);
-        happyText.GetComponentInChildren<Text>().text = string.Format("The happy pair lived in good health and cheer for many a long and prosperous days with their {0} rescued cats.\nThe end.", numCats.ToString());
+        catTrain.text = catTrain.text.Replace("0", GameScript.longestTrain.ToString());
+        tentacleCount.text = tentacleCount.text.Replace("0", GameScript.tentacleTrapped.ToString());
+        float total = (GameScript.above95 + GameScript.below95);
+        Debug.Log("above95" + GameScript.above95 + "total" + total);
+
+        float decimalOfAbove95 = (GameScript.above95 / total);
+        Debug.Log("Decimal" + decimalOfAbove95);
+        int percent = (int)(decimalOfAbove95 * 100);
+        Debug.Log("percent" + percent);
+        healthAbove95.text = healthAbove95.text.Replace("0", percent.ToString());
+
+        //  happyEnd.SetActive(true);
+        happyEndGame.SetActive(true);
+        happyEndUI.SetActive(true);
+        happyText.text = happyText.text.Replace("X", numCats.ToString());
+
         StartCoroutine(FadeToBlack());
     }
 

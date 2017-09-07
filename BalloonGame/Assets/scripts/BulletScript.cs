@@ -22,11 +22,12 @@ public class BulletScript : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collider = collision.gameObject;
-        if (collider.tag == "Enemy")
+        if (collider.tag == "Enemy" && !GameScript.ended && !GameScript.nekolordExorcised)
         {
             if (collider.GetComponent<EnemyScript>() != null)
             {
                 collider.GetComponent<EnemyScript>().Exorcised();
+                Destroy(this.gameObject);
             }
         }
     }
