@@ -10,7 +10,7 @@ public class BossBulletScript : CatBulletScript {
 
 	// Use this for initialization
 	void Start () {
-        bossspeed = 5f;
+        bossspeed = 10f;
         r = 0.0001f;
         Destroy(gameObject, 20.0f);
     }

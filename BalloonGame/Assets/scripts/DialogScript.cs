@@ -56,6 +56,10 @@ public class DialogScript : MonoBehaviour {
         SwitchDialog();
     }
 	
+    public void Ended()
+    {
+    }
+     
 	// Update is called once per frame
 	void Update () {
 	}
@@ -91,7 +95,7 @@ public class DialogScript : MonoBehaviour {
                 break;
         }
 
-        if (curDialog != null && curDialog.pauseAfter == true)
+        if (curDialog != null && curDialog.pauseAfter == true && !(isHalting() && optionCounter == 1))
         {
             BGDialog.SetActive(false);
             gameScript.TriggerEvent();
@@ -178,6 +182,7 @@ public class DialogScript : MonoBehaviour {
             {
                 duringDecision = false;
                 counter = curDialog.next[optionCounter];
+
                 SwitchDialog();
             }
         }
@@ -213,6 +218,15 @@ public class DialogScript : MonoBehaviour {
         }
     }
 
+    private bool isHalting()
+    {
+        if (counter == 17 || counter == 19 || counter == 21 || counter == 23 || counter == 26)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private DialogObject[] InitializeDialog()
     {
         DialogObject[] dialogObjects = { new DialogObject("hero", "Halp... I'm dying....", null, new int[] {1 }, false), //0
@@ -241,7 +255,7 @@ public class DialogScript : MonoBehaviour {
 
                                          //Level 3
                                          new DialogObject("hero", "Sun's starting to set, we better hurry.", null, new int[] {22}, false), //21
-                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {23, 22}, true),
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {23, 21}, true),
 
                                          //Level 4
                                          new DialogObject("hero", "Snow! Snow! Let's go!", null, new int[] {24}, false), //23
@@ -250,7 +264,7 @@ public class DialogScript : MonoBehaviour {
                                          //Level 5
                                          new DialogObject("hero", "This is it. [playerHome].", null, new int[] {26}, false), //25
                                         new DialogObject("neko 1ord", "They are coming!!! They will never defeat me! My minions, attack!", null, new int[] {27}, false),
-                                        new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {28, 27}, true),
+                                        new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {28, 26}, true), //27
 
                                         new DialogObject("neko 1ord", "meow~ <3", null, new int[] {29}, false),
 

@@ -33,7 +33,14 @@ public class EnemyScript : MonoBehaviour {
 
         if (notInvoked && this.gameObject.transform.position.x < 440 && this.gameObject.transform.position.x > 426)
         {
-            InvokeRepeating("LaunchProjectile", 0f, Random.Range(0.2f, 0.6f)); //we could also make it random within .2f and .6f
+            if (index == 400)
+            {
+                InvokeRepeating("LaunchProjectile", 0f, 0.1f); 
+            }
+            else
+            {
+                InvokeRepeating("LaunchProjectile", 0f, Random.Range(0.2f, 0.6f)); //we could also make it random within .2f and .6f
+            }
         }
 
 
@@ -50,7 +57,7 @@ public class EnemyScript : MonoBehaviour {
         
         if (index == 400)
         {
-            eyePosition = new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z);
+            eyePosition = new Vector3(transform.position.x, transform.position.y + 0.04f, transform.position.z);
             GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
         }
         

@@ -130,6 +130,8 @@ public class GameScript : MonoBehaviour {
     {
         if (!ended)
         {
+            DialogObject.GetComponent<DialogScript>().Ended();
+
             ended = true;
 
             //save stats
@@ -137,7 +139,6 @@ public class GameScript : MonoBehaviour {
             {
                 longestTrain = CatSlider.value;
             }
-            
 
             //remove everything in the game
             gameUI.SetActive(false);
@@ -262,6 +263,7 @@ public class GameScript : MonoBehaviour {
 
         if (ended == true && restartOptionAvailable)
         {
+            Debug.Log("Restarting");
             eventCounter = 0;
             health = 0;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
