@@ -31,11 +31,12 @@ public class EnemyScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+       
         if (notInvoked && this.gameObject.transform.position.x < 440 && this.gameObject.transform.position.x > 426)
         {
             if (index == 400)
             {
-                InvokeRepeating("LaunchProjectile", 0f, 0.1f); 
+                InvokeRepeating("LaunchProjectile", 0f, 0.1f);
             }
             else
             {
@@ -57,7 +58,7 @@ public class EnemyScript : MonoBehaviour {
         
         if (index == 400)
         {
-            eyePosition = new Vector3(transform.position.x, transform.position.y + 0.04f, transform.position.z);
+            eyePosition = new Vector3(transform.position.x - 1f, transform.position.y + .7f, transform.position.z);
             GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
         }
         

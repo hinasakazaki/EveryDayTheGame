@@ -8,7 +8,7 @@ public class CatBulletScript : MonoBehaviour {
 
     public float frequency = 2f;  // Speed of sine movement, maybe randomize between 2 and 1
     public float magnitude = .01f;   // Size of sine movement, maybe randomize between 0.03 and 0.01
-    private Vector3 axis;
+    public Vector3 axis;
 
     private Vector3 pos;
     bool colliding = false;

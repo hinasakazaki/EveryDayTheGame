@@ -242,7 +242,7 @@ public class DialogScript : MonoBehaviour {
                                          new DialogObject("hero", "I've come this far, but the kitten who was helping me accidentally got brainwashed by another kitten and she attacked me.", null, new int[] {11}, false),
                                          new DialogObject("hero", "They're over there right now.", null, new int[] {12}, false),
                                          new DialogObject("hero", "Would you like to come with me to [playerHome]? There are lots of kittens to save, and I could use a Mushroom Medic.", null, new int[] {13}, false),
-                                         new DialogObject("hero", "I can cure the kittens with my heart but I'll need you to navvigate the balloon and heal me with the mushrooms.", null, new int[] {14}, false), //13
+                                         new DialogObject("hero", "I can cure the kittens with my hearts but I'll need you to navigate the balloon and heal me with the mushrooms.", null, new int[] {14}, false), //13
                                          new DialogObject("PlayerName", null, new string[] {"Sure", "No Thanks"}, new int[] {15, 16}, false), //14
                                          new DialogObject("hero", "Sounds great. Take a hold of the balloon there.", null, new int[] {17}, true), //15-- here we make sure balloon is caught
                                          new DialogObject("hero", "All right, have a good life!", null, new int[] {-2}, true), //16 leads to neutral ending

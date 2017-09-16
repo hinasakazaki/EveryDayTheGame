@@ -28,6 +28,7 @@ public class GameScript : MonoBehaviour {
     public Slider BossSlider;
     public Image damageImage;
     public GameObject sun;
+    public GameObject hearts;
     public GameObject gameUI;
     public Text titleText;
     public GameObject snow;
@@ -209,7 +210,7 @@ public class GameScript : MonoBehaviour {
 
     IEnumerator ShowRestartOption(GameObject restartOption)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         restartOption.SetActive(true);
         restartOptionAvailable = true;
     }
@@ -248,19 +249,20 @@ public class GameScript : MonoBehaviour {
                 TriggerStartScroll();
                 StartCoroutine(fadeTitleText());
                 break;
-            case 4:
-                Debug.Log("EventCounter 4 - nekolord exorcised");
-                TriggerStartScroll(true);
-                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.AT_HOME);
-                DialogObject.GetComponent<DialogScript>().GetOutOfPause();
-                DuringDialog = true;
-                eventCounter += 1;
-                RemoveBullets();
-                break;
             default:
                 break;
         }
 
+        if (nekolordExorcised && !ended)
+        {
+            Debug.Log("EventCounter 4 - nekolord exorcised");
+            TriggerStartScroll(true);
+            Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.AT_HOME);
+            DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+            DuringDialog = true;
+            eventCounter += 1;
+            RemoveBullets();
+        }
         if (ended == true && restartOptionAvailable)
         {
             Debug.Log("Restarting");
@@ -434,6 +436,7 @@ public class GameScript : MonoBehaviour {
         }
         else if (i == NekoLordIndex)
         {
+            hearts.SetActive(true);
             nekolordExorcised = true;
             eventCounter += 1;
             TriggerEvent();

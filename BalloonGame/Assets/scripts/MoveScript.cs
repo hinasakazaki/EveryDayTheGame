@@ -87,7 +87,7 @@ public class MoveScript : MonoBehaviour {
         if (Input.GetKey(right)) 
         {
             healerAnim.SetBool("walk_right", true);
-            if (healer.gameObject.transform.localPosition.x < -18.5 || (attached && transform.localPosition.x > -77))// bounds
+            if (healer.gameObject.transform.localPosition.x < -15 || (attached && transform.localPosition.x > -77))// bounds
             {
                 return;
             }
