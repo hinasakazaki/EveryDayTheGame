@@ -49,7 +49,8 @@ In August of 2016, I had worked on a side scroller with a similar idea called [A
 I think I took some of the code from that, used stand-in assets, and started developing during my winter break.
 Of course, this was done in secret. Hard to do when we live together. 
 
-This screencapture was five days before Christmas 2016.
+This screencapture was taken five days before Christmas 2016.
+
 ![conceptart](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/dev-screenshot.gif)
 
 Back then, I was still attached to Fire Emblem character designs and made variations of existing designs. 
