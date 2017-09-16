@@ -3,13 +3,14 @@ Every Day the Game
 
 ## Play
 [Itch.io](https://hinerz.itch.io/every-day-the-game)
+
 [YouTube Link to Test Playthrough Video](https://youtu.be/f06PjgW0cwk)
 
 ## Concept
 May or June of 2014, we celebrated our first year anniversary at a [paint-your-stuff place](https://www.yelp.com/biz/brushstrokes-studio-berkeley) and I painted this. 
 
-![back](http://url/to/img.png)
-![front](http://url/to/img.png)
+![back](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/mug-back.JPG)
+![front](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/mug-front.JPG)
 
 I didn't think of it as a game idea, but a cutesy little design. 
 
@@ -23,8 +24,8 @@ By April 2016, I think I had some ideas. This is when the cup I painted comes ba
 I watched a video of a proposal through a game, and it was a dungeon crawler. The player (the developer's girlfriend) played as a hero and saved the princess. The hero then proposed to the princess. While this is cute, I thought there was opportunity for improvement, especially requiring the player to shift their perspective from hero to princess. My boyfriend is no princess, and I didn't want him to be trapped for the whole game (this idea is interesting too, but I'm no good with designing puzzles). Instead, I wanted him to be the healer who has to balance his own safety with the hero's effectiveness at dealing damage where they need to. I wanted the hero to be clearly a DPS, but I wanted enemies to be cats, and I don't want cats to be hurt, so I switched it around to be love bullets. (Thanks [No Game No Life](http://no-game-no-life.wikia.com/wiki/Episode_11)!)
 
 I sketched up stuff on bart, and did some concept art. The concept art is from May 2016.
-![sketch](http://url/to/img.png)
-![conceptart](http://url/to/img.png)
+![sketch](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/notebook.JPG)
+![conceptart](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/conceptart.png)
 
 Back at the time, I had been playing a lot of [Fire Emblem: Fates](http://fireemblem.wikia.com/wiki/Fire_Emblem_Fates). 
 I loved the combination of choices/dialogue/story and gameplay. The winter prior, the target player was playing a lot of [Electronic Super Joy](http://www.electronicsuperjoy.com/), a very fast paced and exciting sidescroller. I wanted to make something that combined the two.
@@ -48,13 +49,13 @@ I think I took some of the code from that, used stand-in assets, and started dev
 Of course, this was done in secret. Hard to do when we live together. 
 
 This screencapture was five days before Christmas 2016.
-![conceptart](http://url/to/dev-screenshot.gif)
+![conceptart](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/dev-screenshot.gif)
 
 Back then, I was still attached to Fire Emblem character designs and made variations of existing designs. 
 
 A few months later, I realized that it wasn't very "me", so created the current version character sprites.
 
-![conceptart](http://url/to/character_sprites.png)
+![charactersprites](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/Assets/sprites/charSpriteTest.png)
 
 Early 2017, I reached out to my composer friend [Eric Delgado](https://soundcloud.com/ericdelgadomusic). Eric is the first friend I made in [UC Berkeley Symphony Orchestra](https://orchestra.berkeley.edu/). We met to brainstorm the soundtrack in early January 2017.
 
@@ -70,12 +71,12 @@ At the start of this, the game had only two main mechanics: healing with mushroo
 I got feedback that some obstacles on the ground and jump mechanics would be nice to have. I didn't want to build out elaborate platformer obstacles, and wanted to stick to a simple, but cute one. I chose tentacles as a fun obstacle that could insta-trap and end the game. 
 
 Lots of bugs were found. Here's one of the screenshots one found:
-![conceptart](http://url/to/bug.png)
+![conceptart](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/bug.png)
 
 At this point, I had raycasting and line renderers as the attack mechanic of the enemies (evil cats). I still have the code saved on the [radar](https://github.com/hinasakazaki/EveryDayTheGame/tree/radar) branch. 
 
 It looked like this:
-![radar gif](http://url/to/radar.gif)
+![radar gif](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/radar.gif)
 
 Unfortunately, due to the raycast hits being super finnicky, I changed it to projectiles. It was not worth the bad UX. I probably spent the most time in the project trying to get raycast to work.
 
@@ -89,7 +90,7 @@ Checkpoints were actually quite easy to implement due to the code architecture I
 Some numbers I tweaked: speed & damage caused by bullets (hero bullets & cat bullets), mushroom healing power, sine & consine waves of cat bullets, speed of background scroll in each level. It could still use more work. I think this is pretty subjective. 
 
 One of the last pieces that I implemented that is significant in the game design is report card at the end.
-![report card](http://url/to/reportcard.png)
+![report card](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/reportcard.png)
 
 No matter how many times you fail, you will eventually end up beating the boss with the new checkpoint system.
 I didn't like this, because I wanted each experience to matter. However, an experience is just unpleasant if you have to re-do the same levels over and over again.
