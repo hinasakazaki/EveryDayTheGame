@@ -32,11 +32,17 @@ Back at the time, I had been playing a lot of [Fire Emblem: Fates](http://fireem
 I loved the combination of choices/dialogue/story and gameplay. The winter prior, the target player was playing a lot of [Electronic Super Joy](http://www.electronicsuperjoy.com/), a very fast paced and exciting sidescroller. I wanted to make something that combined the two.
 
 In general, I like games that bind users to "time". If you play my [Labor Day the Game](https://hinerz.itch.io/labor-day-the-game-webplayer-build), each minute is 2 hours of a workday, so the game lasts 4 minutes. Similar idea for [Slinging Ink](https://hinerz.itch.io/slinging-ink). I wanted the game to be broken up to times of the day:
+
 Level 1. Morning Clouds (9AM - 11AM)
+
 Level 2. Tiled Prison (11AM - 5PM)
+
 Level 3. Setting Sun (5PM - 8PM)
+
 Level 4. Snowy Darkness (8PM - 3AM)
+
 Level 5. Home (3AM - 9AM)
+
 The idea is that the day is experienced between the two main characters of the game, and wish for a day like the one experienced for every day for the rest of their lives.
 I tried to correspond each level to shared experiences; however, I will leave this to your imagination.
 
