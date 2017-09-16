@@ -24,6 +24,7 @@ By April 2016, I think I had some ideas. This is when the cup I painted comes ba
 I watched a video of a proposal through a game, and it was a dungeon crawler. The player (the developer's girlfriend) played as a hero and saved the princess. The hero then proposed to the princess. While this is cute, I thought there was opportunity for improvement, especially requiring the player to shift their perspective from hero to princess. My boyfriend is no princess, and I didn't want him to be trapped for the whole game (this idea is interesting too, but I'm no good with designing puzzles). Instead, I wanted him to be the healer who has to balance his own safety with the hero's effectiveness at dealing damage where they need to. I wanted the hero to be clearly a DPS, but I wanted enemies to be cats, and I don't want cats to be hurt, so I switched it around to be love bullets. (Thanks [No Game No Life](http://no-game-no-life.wikia.com/wiki/Episode_11)!)
 
 I sketched up stuff on bart, and did some concept art. The concept art is from May 2016.
+
 ![sketch](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/notebook.JPG)
 ![conceptart](https://github.com/hinasakazaki/EveryDayTheGame/blob/projectile/BalloonGame/docs/conceptart.png)
 
@@ -104,22 +105,22 @@ Nor does he really want something that is showy. For example, he'd definitely no
 
 So, in the end, this was for me, so I can keep making shoddy pixel art animations, coding for fun, reflecting on game design and development.
 
-## Credits
+# Credits
 
 There is a Credits section in the actual game, but here it is again:
 
-# Design, Art, and Development
+## Design, Art, and Development
 Every Day the Game
 By hinerz
 
-# Music
+## Music
 Every Day The Game Original Soundtrack
 By Eric Delgado
 
 Hurt
 By Freesound timgormly 
 
-# Background Images
+## Background Images
 
 Shinto Gate
 By Michael Huang, US
