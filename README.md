@@ -2,9 +2,9 @@ Every Day the Game
 ===========
 
 ## Play
-[Itch.io](https://hinerz.itch.io/every-day-the-game)
+Download at [Itch.io](https://hinerz.itch.io/every-day-the-game)
 
-[YouTube Link to Test Playthrough Video](https://youtu.be/f06PjgW0cwk)
+Watch PlayThrough Video on [YouTube](https://youtu.be/f06PjgW0cwk)
 
 ## Concept
 May or June of 2014, we celebrated our first year anniversary at a [paint-your-stuff place](https://www.yelp.com/biz/brushstrokes-studio-berkeley) and I painted this. 
