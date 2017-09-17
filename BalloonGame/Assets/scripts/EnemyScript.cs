@@ -7,20 +7,107 @@ public class EnemyScript : MonoBehaviour {
     public int index;
     public GameObject healer;
 
+    public GameObject catBullet;
+
     public bool radar;
     private LineRenderer line;
     private Vector3 eyePosition;
     private RaycastHit2D hit;
-    GameObject hitObject;
-    bool colliding = false;
 
     public int segments;
     public float radius;
-
     private float yValue;
+    private bool notInvoked;
+
+    private int bossHealth = 100;
 
     // Use this for initialization
     void Start () {
+        notInvoked = true;
+     
+       
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+       
+        if (notInvoked && this.gameObject.transform.position.x < 440 && this.gameObject.transform.position.x > 426)
+        {
+            if (index == 400)
+            {
+                InvokeRepeating("LaunchProjectile", 0f, 0.1f);
+            }
+            else
+            {
+                InvokeRepeating("LaunchProjectile", 0f, Random.Range(0.2f, 0.6f)); //we could also make it random within .2f and .6f
+            }
+        }
+
+
+    }
+
+    void LaunchProjectile()
+    {
+        notInvoked = false;
+        if (this.radar == false || GameScript.ended || !this.gameObject.activeInHierarchy || GameScript.nekolordExorcised)
+        {
+            return;
+        }
+
+        
+        if (index == 400)
+        {
+            eyePosition = new Vector3(transform.position.x - 1f, transform.position.y + .7f, transform.position.z);
+            GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
+        }
+        
+        else
+        {
+            eyePosition = new Vector3(transform.position.x - 0.12f, transform.position.y + 0.01f, transform.position.z);
+            GameObject instantiated = Instantiate(catBullet, eyePosition, Quaternion.identity);
+        }
+    }
+
+
+    public void Exorcised()
+    {
+//        this.line.enabled = false;
+        if (!(this.gameObject.transform.position.x < 450 && this.gameObject.transform.position.x > 410))
+        {
+            return;
+        }
+
+        if (index == 400)
+        {
+            if (bossHealth > 0)
+            {
+                bossHealth -= 5;
+                if (this.GetComponentInParent<GameScript>() != null)
+                {
+                    this.GetComponentInParent<GameScript>().OnBossDamaged();
+                }
+                return;
+            }
+        }
+
+        this.transform.parent = healer.transform;
+        this.transform.localScale = new Vector3(1f, 1f, 0f);
+        float i = this.GetComponentInParent<GameScript>().CatSlider.value;
+        this.transform.localPosition = new Vector3(0.9f + i, -0.2f, 0f);
+        this.GetComponent<BoxCollider2D>().enabled = false;
+
+        if (this.GetComponentInParent<GameScript>() != null)
+        {
+            this.GetComponentInParent<GameScript>().OnCatExorcised(index);
+        }
+        this.radar = false;
+    }
+
+
+
+    private void setupLineRadar()
+    {
         yValue = transform.position.y;
         this.line = GetComponent<LineRenderer>();
 
@@ -30,12 +117,6 @@ public class EnemyScript : MonoBehaviour {
             line.useWorldSpace = false;
         }
     }
-
-    // Update is called once per frame
-    void Update() {
-      //  doCollisionWithRadar();
-	}
-
     private void doCollisionWithRadar()
     {
         line.material = new Material(Shader.Find("Sprites/Default"));
@@ -110,6 +191,7 @@ public class EnemyScript : MonoBehaviour {
             }
 
 
+            /**
             if (hit.collider != null)
             {
 
@@ -125,25 +207,10 @@ public class EnemyScript : MonoBehaviour {
             {
                 colliding = false;
             }
+    **/
         }
 
     }
-    public void Exorcised()
-    {
-        this.radar = false;
-        this.line.enabled = false;
 
-        this.transform.parent = healer.transform;
-        this.transform.localScale = new Vector3(1f, 1f, 0f);
-        float i = this.GetComponentInParent<GameScript>().CatSlider.value;
-        this.transform.localPosition = new Vector3(0.9f + i, -0.2f, 0f);
-        this.GetComponent<BoxCollider2D>().enabled = false;
 
-        if (this.GetComponentInParent<GameScript>() != null)
-        {
-            this.GetComponentInParent<GameScript>().OnCatExorcised(index);
-        }
-    }
-
-   
 }

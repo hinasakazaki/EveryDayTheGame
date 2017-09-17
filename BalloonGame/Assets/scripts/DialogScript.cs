@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogScript : MonoBehaviour {
-
     public Text DialogName;
     public Text DialogBody;
     public GameObject BGDialog;
@@ -14,8 +13,8 @@ public class DialogScript : MonoBehaviour {
     int counter = 0;
     int optionCounter = 0;
     DialogObject curDialog;
-    private string playerName;
-    private string playerHome;
+    public static string playerName;
+    public static string playerHome;
 
     private bool duringDecision = false;
     private bool duringInput = false;
@@ -24,9 +23,43 @@ public class DialogScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         dialogObject = InitializeDialog();
+       
+        if (playerName != null && playerHome != null)
+        {
+            gameScript.SimuateStartSequence();
+            int levelint = 17;
+            switch  (GameScript.currLevel)
+            {
+                case 0:
+                    levelint = 17;
+                    break;
+                case 1:
+                    levelint = 19;
+                    break;
+                case 2:
+                    levelint = 21;
+                    break;
+                case 3:
+                    levelint = 23;
+                    break;
+                case 4:
+                    levelint = 25;
+                    break;
+                default:
+                    levelint = 17;
+                    break;
+            }
+            curDialog = new DialogObject("", "", null, new int[] { levelint }, false);
+            GetOutOfPause();
+        }
+
         SwitchDialog();
     }
 	
+    public void Ended()
+    {
+    }
+     
 	// Update is called once per frame
 	void Update () {
 	}
@@ -62,7 +95,7 @@ public class DialogScript : MonoBehaviour {
                 break;
         }
 
-        if (curDialog != null && curDialog.pauseAfter == true)
+        if (curDialog != null && curDialog.pauseAfter == true && !(isHalting() && optionCounter == 1))
         {
             BGDialog.SetActive(false);
             gameScript.TriggerEvent();
@@ -70,9 +103,15 @@ public class DialogScript : MonoBehaviour {
         }
 
         curDialog = dialogObject[counter];
+        DialogName.color = Color.black;
         DialogBody.color = Color.black;
+        if (counter == 26)
+        {
+            DialogName.color = Color.red;
+            DialogBody.color = Color.red;
+        }
 
-        DialogName.text = (curDialog.speaker == "PlayerName") ? playerName : curDialog.speaker;
+        DialogName.text = (curDialog.speaker == "PlayerName") ? playerName : curDialog.speaker; 
 
         if (curDialog.options == null) { 
             if (curDialog.dialog == "InputField")
@@ -149,6 +188,7 @@ public class DialogScript : MonoBehaviour {
             {
                 duringDecision = false;
                 counter = curDialog.next[optionCounter];
+
                 SwitchDialog();
             }
         }
@@ -162,8 +202,8 @@ public class DialogScript : MonoBehaviour {
             else if (!string.IsNullOrEmpty(inputString) && action == "Enter")
             {
                 duringInput = false;
-                if (counter == 4) { playerName = inputString; gameScript.SetName(playerName); }
-                else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString; } //?>>
+                if (counter == 4) { playerName = inputString; gameScript.SetName(playerName);  }
+                else if (counter == 7) { counter = curDialog.next[0]; playerHome = inputString; } 
                 counter = curDialog.next[0];
                 SwitchDialog();
             }
@@ -184,6 +224,15 @@ public class DialogScript : MonoBehaviour {
         }
     }
 
+    private bool isHalting()
+    {
+        if (counter == 17 || counter == 19 || counter == 21 || counter == 23 || counter == 26)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private DialogObject[] InitializeDialog()
     {
         DialogObject[] dialogObjects = { new DialogObject("hero", "Halp... I'm dying....", null, new int[] {1 }, false), //0
@@ -195,51 +244,50 @@ public class DialogScript : MonoBehaviour {
                                          new DialogObject("hero", "Okay, [playerName], where is your home?", null, new int[] {7}, false),
                                          new DialogObject("Enter  Home", "InputField", null, new int[] {8}, false),
                                          new DialogObject("hero", "That's where the evil neko-lord lives.", null, new int[] {9}, false),
-                                         new DialogObject("hero", "You see, I've been freeing kittens from evil brainwashing by the neko-lord.", null, new int[] {10}, false),
+                                         new DialogObject("hero", "You see, I've been freeing kittens from the neko-lord’s evil brainwashing.", null, new int[] {10}, false),
                                          new DialogObject("hero", "I've come this far, but the kitten who was helping me accidentally got brainwashed by another kitten and she attacked me.", null, new int[] {11}, false),
                                          new DialogObject("hero", "They're over there right now.", null, new int[] {12}, false),
-                                         new DialogObject("hero", "Would you like to come with me to [playerHome]? There's lots of kittens to save, and I could use a mushroom healer.", null, new int[] {13}, false),
-                                         new DialogObject("PlayerName", null, new string[] {"Sure", "No Thanks"}, new int[] {14, 15}, false),
-                                         new DialogObject("hero", "Sounds great. Take a hold of the balloon there.", null, new int[] {16}, true), //14 -- here we make sure balloon is caught
-                                         new DialogObject("hero", "All right, have a good life!", null, new int[] {-2}, true), //15 leads to neutral ending
-                                         new DialogObject("hero", "Nice, let's get going.", null, new int[] {17}, false),
-                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {18, 16}, true), //17, where scroll is halted
+                                         new DialogObject("hero", "Would you like to come with me to [playerHome]? There are lots of kittens to save, and I could use a Mushroom Medic.", null, new int[] {13}, false),
+                                         new DialogObject("hero", "I can cure the kittens with my hearts but I'll need you to navigate the balloon and heal me with the mushrooms.", null, new int[] {14}, false), //13
+                                         new DialogObject("PlayerName", null, new string[] {"Sure", "No Thanks"}, new int[] {15, 16}, false), //14
+                                         new DialogObject("hero", "Sounds great. Take a hold of the balloon there.", null, new int[] {17}, true), //15-- here we make sure balloon is caught
+                                         new DialogObject("hero", "All right, have a good life!", null, new int[] {-2}, true), //16 leads to neutral ending
+                                         new DialogObject("hero", "Nice, let's get going.", null, new int[] {18}, false), //17
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {19, 17}, true), //18, where scroll is halted
 
                                          //Level 2
-                                         new DialogObject("hero", "What a strange place. Shall we keep going?", null, new int[] {19}, false), //18
-                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {20, 18}, true), //19, where scroll is halted
+                                         new DialogObject("hero", "What a strange place. Shall we keep going?", null, new int[] {20}, false), //19
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {21, 19}, true), //20, where scroll is halted
 
                                          //Level 3
-                                         new DialogObject("hero", "Sun's starting to set, we better hurry.", null, new int[] {21}, false), //20
-                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {22, 20}, true),
+                                         new DialogObject("hero", "Sun's starting to set, we better hurry.", null, new int[] {22}, false), //21
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {23, 21}, true),
 
                                          //Level 4
-                                         new DialogObject("hero", "Snow! Snow! Let's go!", null, new int[] {23}, false), //22
-                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {24, 22}, true),
+                                         new DialogObject("hero", "Snow! Snow! Let's go!", null, new int[] {24}, false), //23
+                                         new DialogObject("PlayerName", null, new string[] {"Ok", "Hold on"}, new int[] {25, 23}, true),
 
                                          //Level 5
-                                         new DialogObject("hero", "This is it. [playerHome].", null, new int[] {25}, false), //24
-                                        new DialogObject("neko 1ord", "They are coming!!! They will never defeat me! My minions, attack!", null, new int[] {26}, false),
-                                        new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {27, 26}, true),
+                                         new DialogObject("hero", "This is it. [playerHome].", null, new int[] {26}, false), //25
+                                        new DialogObject("neko 1ord", "The hero is coming!!! My minions, attack!", null, new int[] {27}, false),
+                                        new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {28, 26}, true), //27
 
-                                        new DialogObject("neko 1ord", "meow~ <3", null, new int[] {28}, false),
+                                        new DialogObject("neko 1ord", "meow~ <3", null, new int[] {29}, false),
 
-                                        new DialogObject("hero", "Well, I think that was it.", null, new int[] {29}, false),
+                                        new DialogObject("hero", "Well, I think that was it.", null, new int[] {30}, false), //29
 
-                                        new DialogObject("cats", "Thank you brave hero for freeing us!", null, new int[] {30}, false),
-                                        new DialogObject("hero", "Thank my friend here, [playerName].", null, new int[] {31}, false),
-                                        new DialogObject("hero", "Well...", null, new int[] {32}, false),
-                                        new DialogObject("hero", "Actually, I haven't known you for just today. I've known you for a long time.", null, new int[] {33}, false),
-                                        new DialogObject("hero", "In fact, I know your name isn’t [playerName], it's Chris.", null, new int[] {34}, false),
-                                        new DialogObject("hero", "And my name is Hina.", null, new int[] {35}, false),
-                                        new DialogObject("hina", "You've kept me safe and alive through our journey today, and I'm so thankful.", null, new int[] {36}, false),
-                                        new DialogObject("hina", "I hope we can be together for the rest of our lives..", null, new int[] {37}, false),
-                                        new DialogObject("hina", "Will you marry me?", null, new int[] {38}, false),
-                                        new DialogObject("chris", null, new string[] {"Sure.", "Not now."}, new int[] {39, 40}, false),
-                                        new DialogObject("hina", "Good choice.", null, new int[] {41}, false), //39
+                                        new DialogObject("cats", "Thank you brave hero for freeing us!", null, new int[] {31}, false),
+                                        new DialogObject("hero", "Thank my friend here, [playerName].", null, new int[] {32}, false),
+                                        new DialogObject("hero", "Well...", null, new int[] {33}, false),
+                                        new DialogObject("hero", "Actually, I haven't known you for just today. I've known you for a long time.", null, new int[] {34}, false),
+                                        new DialogObject("hero", "In fact, I know your name isn’t [playerName], it's Chris.", null, new int[] {35}, false),
+                                        new DialogObject("hero", "And my name is Hina.", null, new int[] {36}, false),
+                                        new DialogObject("hina", "You've kept me safe and alive through our journey today, and I'm so thankful.", null, new int[] {37}, false),
+                                        new DialogObject("hina", "You make me the happiest. I hope we can be together for the rest of our lives..", null, new int[] {38}, false),
+                                        new DialogObject("hina", "Let's get married.", null, new int[] {39}, false),
+                                        new DialogObject("chris", null, new string[] {"Sure.", "No thanks."}, new int[] {40, 41}, false),
+                                        new DialogObject("hina", "Good choice.", null, new int[] {-3}, true), //40
                                         new DialogObject("hina", "That's cool. Thank you for helping me today.", null, new int[] {-2}, false), //goes to neutral end
-                                        new DialogObject("hina", "Now, that was just a choice you made in game. No consequences.", null, new int[] {42}, false), //41
-                                        new DialogObject("hina", "Real Life hina has something for you. When that's done, you can see what the future holds.", null, new int[] {-3}, true), //goes to happy ending
                                         new DialogObject("", "", null, new int[] {-3}, true)
         };
         return dialogObjects;

@@ -50,7 +50,7 @@ public class AudioManager : MonoBehaviour {
 
     public void playSFX(SFXList sfx)
     {
-        SFX.PlayOneShot(sfxList[(int)sfx - 1], 0.8f);
+        SFX.PlayOneShot(sfxList[(int)sfx - 1], 0.5f);
     }
 
     public void changeBG(BGList song)

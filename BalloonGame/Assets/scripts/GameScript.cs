@@ -5,6 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour {
+    //static variables
+    public static bool ended;
+    public static int currLevel;
+    public static float longestTrain;
+    public static int above95;
+    public static int below95;
+    public static int tentacleTrapped;
+    public static bool nekolordExorcised;
+
+    private static int health;
+    private static int eventCounter = 0;
 
     public Slider HealthSlider;
     public GameObject DialogObject;
@@ -14,26 +25,26 @@ public class GameScript : MonoBehaviour {
     public GameObject balloon;
     public GameObject Endings;
     public Slider CatSlider;
+    public Slider BossSlider;
     public Image damageImage;
     public GameObject sun;
+    public GameObject hearts;
     public GameObject gameUI;
     public Text titleText;
     public GameObject snow;
+    public GameObject tutorialShroom;
+    public GameObject tutorialTextBalloon;
 
     public bool DuringDialog { private set; get; }
 
     private string PlayerName;
     private int NekoLordIndex = 400;
-    private bool ended;
     private int catCount = 26;
     private bool[] catArray = new bool[40];
     private bool healerDied = false;
 
-    private static int health;
     private string[] events = {"Heal1", "Grab", "ScrollStart"};
     private string[] titles = { "Level 1: Morning Clouds", "Level 2: Tiled Prison", "Level 3: Setting Sun", "Level 4: Snowy Darkness", "Level 5: Home" };
-    private static int eventCounter = 0;
-    private int currLevel = 0;
 
     public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
@@ -48,6 +59,7 @@ public class GameScript : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        ended = false;
         healerDied = false;
         DuringDialog = true;
 
@@ -55,6 +67,14 @@ public class GameScript : MonoBehaviour {
         DialogObject.SetActive(true);
         player = balloon.transform.parent.gameObject;
         firstLocation = player.transform.position;
+
+        if (currLevel != 0)
+        {
+            levelBGs[0].SetActive(false);
+            sun.SetActive(false);
+            currLevel -= 1;
+            LoadNewLevel(true);
+        }
     }
 
     // Update is called once per frame
@@ -63,6 +83,7 @@ public class GameScript : MonoBehaviour {
         {
             sun.transform.Rotate(0, 0, 0.2f);
         }
+
         HealthSlider.value = health;
 
         if (health <= 0)
@@ -71,6 +92,18 @@ public class GameScript : MonoBehaviour {
         }
 
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+
+        if (!ended)
+        {
+            if (health >= 95)
+            {
+                above95 += 1;
+            }
+            else
+            {
+                below95 += 1;
+            }
+        }
     }
 
     public void SetName(string pn)
@@ -85,11 +118,28 @@ public class GameScript : MonoBehaviour {
         TriggerEnding(EndingID.BAD_END);
     }
 
+    private void RemoveBullets()
+    {
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+        for (int i = 0; i < bullets.Length; i++)
+        {
+            Destroy(bullets[i]);
+        }
+    }
+
     public void TriggerEnding(EndingID ending)
     {
         if (!ended)
         {
+            DialogObject.GetComponent<DialogScript>().Ended();
+
             ended = true;
+
+            //save stats
+            if (longestTrain < CatSlider.value)
+            {
+                longestTrain = CatSlider.value;
+            }
 
             //remove everything in the game
             gameUI.SetActive(false);
@@ -99,10 +149,16 @@ public class GameScript : MonoBehaviour {
             levelBGs[currLevel].SetActive(false);
             GameObject replay = titleText.gameObject.transform.FindChild("ReplayText").gameObject;
 
+            RemoveBullets();
+
             switch (ending)
             {
                 case EndingID.BAD_END:
                     Endings.GetComponent<EndingScript>().BadEnd(healerDied);
+                    if (healerDied)
+                    {
+                        tentacleTrapped += 1;
+                    }
                     if (currLevel == 4)
                     {
                         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.DEPARTING_SOULS_TROMBONE);
@@ -124,6 +180,7 @@ public class GameScript : MonoBehaviour {
                     //9F1B1EFF
                     break;
                 case EndingID.GOOD_END:
+
                     sun.SetActive(true);
                     Endings.GetComponent<EndingScript>().HappyEnd((int)CatSlider.value);
 
@@ -153,9 +210,15 @@ public class GameScript : MonoBehaviour {
 
     IEnumerator ShowRestartOption(GameObject restartOption)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         restartOption.SetActive(true);
         restartOptionAvailable = true;
+    }
+   
+    IEnumerator SetTutorialTextInactive()
+    {
+        yield return new WaitForSeconds(5);
+        tutorialTextBalloon.SetActive(false);
     }
 
     public void TriggerEvent()
@@ -186,20 +249,23 @@ public class GameScript : MonoBehaviour {
                 TriggerStartScroll();
                 StartCoroutine(fadeTitleText());
                 break;
-            case 4:
-                Debug.Log("EventCounter 4 - nekolord exorcised");
-                TriggerStartScroll(true);
-                Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
-                DialogObject.GetComponent<DialogScript>().GetOutOfPause();
-                DuringDialog = true;
-                eventCounter += 1;
-                break;
             default:
                 break;
         }
 
+        if (nekolordExorcised && !ended)
+        {
+            Debug.Log("EventCounter 4 - nekolord exorcised");
+            TriggerStartScroll(true);
+            Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.AT_HOME);
+            DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+            DuringDialog = true;
+            eventCounter += 1;
+            RemoveBullets();
+        }
         if (ended == true && restartOptionAvailable)
         {
+            Debug.Log("Restarting");
             eventCounter = 0;
             health = 0;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -222,6 +288,7 @@ public class GameScript : MonoBehaviour {
 
     public void TriggerUnmask()
     {
+        Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.MOMENT_OF_JOY);
         balloon.GetComponent<BalloonScript>().TriggerUnmask();
     }
 
@@ -269,11 +336,15 @@ public class GameScript : MonoBehaviour {
         eventCounter += 1;
         Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
     }
+
     public void CompletedEvent1()
     {
         DuringDialog = true;
         DialogObject.GetComponent<DialogScript>().GetOutOfPause();
         eventCounter += 1;
+
+        tutorialTextBalloon.SetActive(true);
+        StartCoroutine(SetTutorialTextInactive());
     }
 
     //general events
@@ -281,13 +352,22 @@ public class GameScript : MonoBehaviour {
     {
         mush.GetComponent<ShroomScript>().getConsumed();
         Audio.GetComponent<AudioManager>().playSFX(AudioManager.SFXList.HEAL);
-        TakeHealOrDamage(100);
+        TakeHealOrDamage(25);
         
-        if (eventCounter == 0) { CompletedEvent0();  }
+        if (eventCounter == 0)
+        {
+            balloon.GetComponent<BalloonScript>().heroHealed();
+            CompletedEvent0();
+        }
     }
 
     public void TakeHealOrDamage(int x)
     {
+        if (eventCounter >= 5)
+        {
+            return;
+        }
+
         health += x;
         if (health > 100)
         {
@@ -303,7 +383,7 @@ public class GameScript : MonoBehaviour {
         balloon.transform.GetChild(0).gameObject.GetComponent<HeroScript>().UpdateFrequency(health);
     }
 
-    public void LoadNewLevel()
+    public void LoadNewLevel(bool fromRestart = false)
     {
         DuringDialog = true;
         switch (currLevel)
@@ -311,7 +391,6 @@ public class GameScript : MonoBehaviour {
             case 0: //going to soda
                 sun.SetActive(false);
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING1);
-                eventCounter += 1;
                 break;
             case 1: //going to japan
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING3);
@@ -323,6 +402,7 @@ public class GameScript : MonoBehaviour {
             case 3: //going to home
                 snow.SetActive(false);
                 Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.RISKS);
+                BossSlider.transform.parent.gameObject.SetActive(true);
                 break;
             default:
                 break;
@@ -334,7 +414,16 @@ public class GameScript : MonoBehaviour {
 
         //set player back to usual location
         player.transform.position = firstLocation;
-        DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+        
+        if (!fromRestart)
+        {
+            DialogObject.GetComponent<DialogScript>().GetOutOfPause();
+        }
+    }
+
+    public void OnBossDamaged()
+    {
+        BossSlider.value -= 5;
     }
 
     public void OnCatExorcised(int i)
@@ -347,8 +436,30 @@ public class GameScript : MonoBehaviour {
         }
         else if (i == NekoLordIndex)
         {
+            hearts.SetActive(true);
+            nekolordExorcised = true;
             eventCounter += 1;
             TriggerEvent();
         }
+    }
+
+    public void SimuateStartSequence()
+    {
+        if (currLevel == 0)
+        {
+            tutorialShroom.GetComponent<ShroomScript>().getConsumed();
+            Audio.GetComponent<AudioManager>().changeBG(AudioManager.BGList.PONDERING2);
+        }
+        balloon.GetComponent<BalloonScript>().heroHealed();
+        TakeHealOrDamage(100);
+        eventCounter += 1;
+
+        DuringDialog = true;
+        eventCounter += 1; 
+ 
+        DuringDialog = true;
+        eventCounter += 1;
+
+        player.GetComponent<MoveScript>().ChangeAttached();
     }
 }

@@ -51,6 +51,10 @@ public class MoveScript : MonoBehaviour {
 
         healerAnim = healer.GetComponent<Animator>();
 
+        if (DialogScript.playerHome != null && DialogScript.playerName != null)
+        {
+            healer.transform.position += Vector3.right * 7;
+        }
     }
 
     // Update is called once per frame
@@ -83,7 +87,7 @@ public class MoveScript : MonoBehaviour {
         if (Input.GetKey(right)) 
         {
             healerAnim.SetBool("walk_right", true);
-            if (healer.gameObject.transform.localPosition.x < -18.5 || (attached && transform.localPosition.x > -77))// bounds
+            if (healer.gameObject.transform.localPosition.x < -15 || (attached && transform.localPosition.x > -77))// bounds
             {
                 return;
             }
@@ -98,13 +102,13 @@ public class MoveScript : MonoBehaviour {
         }
         if (Input.GetKeyDown(jump) && grounded)
         {
-            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 4), ForceMode2D.Impulse);
+            healer.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 4), ForceMode2D.Impulse); //TODO Fix AddForce esp w.r.t. balloon
         }
-        if (Input.GetKey(up)) //up and down for NPC character
+        if (Input.GetKey(up) && balloon.transform.localPosition.y < 7) //up and down for NPC character -49.95
         {
             if (attached) balloon.transform.position += Vector3.up * balloonSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(down))
+        if (Input.GetKey(down) && balloon.transform.localPosition.y > -3)
         {
             if (attached) balloon.transform.position += Vector3.down * balloonSpeed * Time.deltaTime;
         }
@@ -114,14 +118,13 @@ public class MoveScript : MonoBehaviour {
             if (inCollisionWithShroom && currMush != null)
             {
                 gameScript.Healing(currMush);
-                balloon.GetComponent<BalloonScript>().heroHealed();
                 currMush = null;
             }
             else if (inCollisionWithPost)
             {
                 attached = true;
-                gameScript.CompletedEvent1();
                 balloon.GetComponent<BalloonScript>().ChangeAttached(healer);
+                gameScript.CompletedEvent1();
             }
         }
         if (!Input.GetKey(left))
@@ -174,4 +177,9 @@ public class MoveScript : MonoBehaviour {
         gameScript.TakeHealOrDamage(-x);
     }
 
+    public void ChangeAttached()
+    {
+        attached = true;
+        balloon.GetComponent<BalloonScript>().ChangeAttached(healer);
+    }
 }
