@@ -50,7 +50,7 @@ public class EnemyScript : MonoBehaviour {
     void LaunchProjectile()
     {
         notInvoked = false;
-        if (this.radar == false || GameScript.ended || !this.gameObject.activeSelf || GameScript.nekolordExorcised)
+        if (this.radar == false || GameScript.ended || !this.gameObject.activeInHierarchy || GameScript.nekolordExorcised)
         {
             return;
         }

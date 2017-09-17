@@ -103,7 +103,13 @@ public class DialogScript : MonoBehaviour {
         }
 
         curDialog = dialogObject[counter];
+        DialogName.color = Color.black;
         DialogBody.color = Color.black;
+        if (counter == 26)
+        {
+            DialogName.color = Color.red;
+            DialogBody.color = Color.red;
+        }
 
         DialogName.text = (curDialog.speaker == "PlayerName") ? playerName : curDialog.speaker; 
 
@@ -263,7 +269,7 @@ public class DialogScript : MonoBehaviour {
 
                                          //Level 5
                                          new DialogObject("hero", "This is it. [playerHome].", null, new int[] {26}, false), //25
-                                        new DialogObject("neko 1ord", "They are coming!!! They will never defeat me! My minions, attack!", null, new int[] {27}, false),
+                                        new DialogObject("neko 1ord", "The hero is coming!!! My minions, attack!", null, new int[] {27}, false),
                                         new DialogObject("PlayerName", null, new string[] {"Let's go.", "Wait up."}, new int[] {28, 26}, true), //27
 
                                         new DialogObject("neko 1ord", "meow~ <3", null, new int[] {29}, false),
