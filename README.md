@@ -106,11 +106,34 @@ I'm hoping that the report card functionality gives more replay value, though, i
 The first priority of this game is telling a story. That's why we have checkpoints, so you can progress through without getting too angry.
 But in addition, I wanted to make sure that the player knows what they did in the game mattered in the end. Even if the player gets a proposal at the end no matter what they did to get there, the numbers mean something. 
 
-## Conclusions
+## Before I do it...
 The target player, my (hopefully) future spouse doesn't care for surprises.
 Nor does he really want something that is showy. For example, he'd definitely not enjoy getting proposed to in the middle of a baseball field during a game. In fact, he probably knows that an official proposal is coming up soon, and that I'm working on a secret project.
 
 So, in the end, this was for me, so I can keep making shoddy pixel art animations, coding for fun, reflecting on game design and development.
+
+## Postmortem
+First things first, we are now engaged. He selected "Sure"!
+
+I was very very nervous to get him to play the game. It went like this:
+Me: "You know my side project I've been working on secretly?"
+Him: "Vaguely.."
+Me: "It's done now, so you can play it. But beware, you might not be able to come back to this side of the world after you play it" (Trying to suggest it's a big decision to play the game)
+Him: "Will it wreck me?"
+Me: "Maybe..."
+Him: "Oookay."
+Me: "Ok can you play it at 5pm today?"
+Him: "Ok."
+
+A few things to note:
+1. Game was pretty hard. He focused on the game and not the actual story or visuals. He did not get any of the references.
+2. It was definitely a surprise. After beating the last boss (who, by the way, I probably forgot to mention is my parents' cat Rin) he looked very surprised and delighted.
+3. Me hovering behind him, watching his every move during the game (and backseat gaming) was maybe a little uncomfortable for him.
+
+Overall, I'm glad I did this, and wouldn't change much (apparently the "mask" on the hero looked like a blindfold.. I agree...).
+One thing to note for those of you wanting to do creative marriage proposals -- it's not very dramatic or visually interesting.
+People have photos of engagements where they're on a boat, top of a mountain, on one knee.... this is just people looking at screens. 
+Well, whatever works, right?
 
 # Credits
 
